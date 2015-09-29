@@ -7,6 +7,11 @@ var express 		= require('express'),
 	bodyParser 		= require('body-parser'),
 	compression		= require('compression'),
 	port 			= process.env.PORT || 1330,
+	expressSession = require('express-session'),
+	passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy,
+	passportLocalMongoose = require('passport-local-mongoose'),
+	flash    = require('connect-flash'),
 	methodOverride 	= require('method-override');
 	db 				= require('mongoose') //shhh this is global for our schemas
 
@@ -28,6 +33,26 @@ app.use('/controllers',express.static(__dirname, 'public/controllers'));
 app.use(cookieParser()); 
 
 
+//PASSPORT ============================================
+var initPassport = require('./config/init');
+initPassport(passport);
+
+app.use(expressSession({
+    // store: new RedisStore({ host: redisHost, port: redisPort, client: client }),
+    secret: 'keyboard cat',
+    // resave: true,
+    cookie: {
+        httpOnly: true,
+        secure: true
+    },
+    cookie: { 
+        maxAge : 3600000 
+    }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 //BROWSER =============================================
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -37,12 +62,14 @@ app.use(function(req, res, next) {
 
 // SCHEMAS ============================================
 require('./db/groceryItemSchema.js')
+require('./db/userSchema.js')
 
 // MODELS =============================================
 GroceryItem = db.model('GroceryItem', groceryItem)
+User = db.model('User', userSchema)
 
 //ROUTES ==============================================
-require('./routes/routes.js')(app); 
+require('./routes/routes.js')(app, passport); 
 
 //LISTEN ==============================================
 app.listen(port);
