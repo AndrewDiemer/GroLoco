@@ -1,0 +1,400 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		61E183F8168BBF157E6F8D29 /* libPods-GrocoLoco.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C611234D44B71BD4FBB269 /* libPods-GrocoLoco.a */; };
+		A702E9221BBC01C9001F24DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9211BBC01C9001F24DC /* main.m */; };
+		A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9241BBC01C9001F24DC /* GLAppDelegate.m */; };
+		A702E9281BBC01C9001F24DC /* GLMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9271BBC01C9001F24DC /* GLMainViewController.m */; };
+		A702E92B1BBC01C9001F24DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A702E9291BBC01C9001F24DC /* Main.storyboard */; };
+		A702E92D1BBC01C9001F24DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A702E92C1BBC01C9001F24DC /* Assets.xcassets */; };
+		A702E9301BBC01C9001F24DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */; };
+		A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */; settings = {ASSET_TAGS = (); }; };
+		A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E93C1BBC5992001F24DC /* GLLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9401BBC5B81001F24DC /* GLHomeViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A702E9441BBC5BF7001F24DC /* GLSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01C611234D44B71BD4FBB269 /* libPods-GrocoLoco.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GrocoLoco.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D1F75F61033C4AF2DCA9A53 /* Pods-GrocoLoco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrocoLoco.release.xcconfig"; path = "Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco.release.xcconfig"; sourceTree = "<group>"; };
+		8C416E4FB11360EE7CBB402D /* Pods-GrocoLoco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrocoLoco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco.debug.xcconfig"; sourceTree = "<group>"; };
+		A702E91D1BBC01C9001F24DC /* GrocoLoco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrocoLoco.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A702E9211BBC01C9001F24DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A702E9231BBC01C9001F24DC /* GLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLAppDelegate.h; sourceTree = "<group>"; };
+		A702E9241BBC01C9001F24DC /* GLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLAppDelegate.m; sourceTree = "<group>"; };
+		A702E9261BBC01C9001F24DC /* GLMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLMainViewController.h; sourceTree = "<group>"; };
+		A702E9271BBC01C9001F24DC /* GLMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLMainViewController.m; sourceTree = "<group>"; };
+		A702E92A1BBC01C9001F24DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A702E92C1BBC01C9001F24DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A702E92F1BBC01C9001F24DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A702E9311BBC01C9001F24DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A702E9371BBC4DB0001F24DC /* GrocoLocoPrefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GrocoLocoPrefix.pch; sourceTree = "<group>"; };
+		A702E9381BBC4FF6001F24DC /* GLNetworkingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLNetworkingManager.h; sourceTree = "<group>"; };
+		A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLNetworkingManager.m; sourceTree = "<group>"; };
+		A702E93B1BBC5992001F24DC /* GLLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLLoginViewController.h; sourceTree = "<group>"; };
+		A702E93C1BBC5992001F24DC /* GLLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLLoginViewController.m; sourceTree = "<group>"; };
+		A702E93E1BBC5A3A001F24DC /* GLConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLConstants.h; sourceTree = "<group>"; };
+		A702E93F1BBC5B81001F24DC /* GLHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeViewController.h; sourceTree = "<group>"; };
+		A702E9401BBC5B81001F24DC /* GLHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeViewController.m; sourceTree = "<group>"; };
+		A702E9421BBC5BF7001F24DC /* GLSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSignUpViewController.h; sourceTree = "<group>"; };
+		A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSignUpViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A702E91A1BBC01C9001F24DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61E183F8168BBF157E6F8D29 /* libPods-GrocoLoco.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		26B57AEEE70EE93BC927061B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8C416E4FB11360EE7CBB402D /* Pods-GrocoLoco.debug.xcconfig */,
+				1D1F75F61033C4AF2DCA9A53 /* Pods-GrocoLoco.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A702E9141BBC01C9001F24DC = {
+			isa = PBXGroup;
+			children = (
+				A702E91F1BBC01C9001F24DC /* GrocoLoco */,
+				A702E91E1BBC01C9001F24DC /* Products */,
+				26B57AEEE70EE93BC927061B /* Pods */,
+				C9ED506970679FECF02A91C5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A702E91E1BBC01C9001F24DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A702E91D1BBC01C9001F24DC /* GrocoLoco.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A702E91F1BBC01C9001F24DC /* GrocoLoco */ = {
+			isa = PBXGroup;
+			children = (
+				A702E9231BBC01C9001F24DC /* GLAppDelegate.h */,
+				A702E9241BBC01C9001F24DC /* GLAppDelegate.m */,
+				A702E9261BBC01C9001F24DC /* GLMainViewController.h */,
+				A702E9271BBC01C9001F24DC /* GLMainViewController.m */,
+				A702E93B1BBC5992001F24DC /* GLLoginViewController.h */,
+				A702E93C1BBC5992001F24DC /* GLLoginViewController.m */,
+				A702E9421BBC5BF7001F24DC /* GLSignUpViewController.h */,
+				A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */,
+				A702E93F1BBC5B81001F24DC /* GLHomeViewController.h */,
+				A702E9401BBC5B81001F24DC /* GLHomeViewController.m */,
+				A702E9381BBC4FF6001F24DC /* GLNetworkingManager.h */,
+				A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */,
+				A702E9291BBC01C9001F24DC /* Main.storyboard */,
+				A702E92C1BBC01C9001F24DC /* Assets.xcassets */,
+				A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */,
+				A702E9311BBC01C9001F24DC /* Info.plist */,
+				A702E9201BBC01C9001F24DC /* Supporting Files */,
+			);
+			path = GrocoLoco;
+			sourceTree = "<group>";
+		};
+		A702E9201BBC01C9001F24DC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A702E9371BBC4DB0001F24DC /* GrocoLocoPrefix.pch */,
+				A702E9211BBC01C9001F24DC /* main.m */,
+				A702E93E1BBC5A3A001F24DC /* GLConstants.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C9ED506970679FECF02A91C5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				01C611234D44B71BD4FBB269 /* libPods-GrocoLoco.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A702E91C1BBC01C9001F24DC /* GrocoLoco */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A702E9341BBC01C9001F24DC /* Build configuration list for PBXNativeTarget "GrocoLoco" */;
+			buildPhases = (
+				300024CD36D2196DAA9F23AA /* Check Pods Manifest.lock */,
+				A702E9191BBC01C9001F24DC /* Sources */,
+				A702E91A1BBC01C9001F24DC /* Frameworks */,
+				A702E91B1BBC01C9001F24DC /* Resources */,
+				F2B1443C6F9A27B62BE7734A /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GrocoLoco;
+			productName = GrocoLoco;
+			productReference = A702E91D1BBC01C9001F24DC /* GrocoLoco.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A702E9151BBC01C9001F24DC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = GL;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Mark Hall";
+				TargetAttributes = {
+					A702E91C1BBC01C9001F24DC = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
+			};
+			buildConfigurationList = A702E9181BBC01C9001F24DC /* Build configuration list for PBXProject "GrocoLoco" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A702E9141BBC01C9001F24DC;
+			productRefGroup = A702E91E1BBC01C9001F24DC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A702E91C1BBC01C9001F24DC /* GrocoLoco */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A702E91B1BBC01C9001F24DC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A702E9301BBC01C9001F24DC /* LaunchScreen.storyboard in Resources */,
+				A702E92D1BBC01C9001F24DC /* Assets.xcassets in Resources */,
+				A702E92B1BBC01C9001F24DC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		300024CD36D2196DAA9F23AA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F2B1443C6F9A27B62BE7734A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A702E9191BBC01C9001F24DC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A702E9441BBC5BF7001F24DC /* GLSignUpViewController.m in Sources */,
+				A702E9281BBC01C9001F24DC /* GLMainViewController.m in Sources */,
+				A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */,
+				A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */,
+				A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */,
+				A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */,
+				A702E9221BBC01C9001F24DC /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A702E9291BBC01C9001F24DC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A702E92A1BBC01C9001F24DC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A702E92F1BBC01C9001F24DC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A702E9321BBC01C9001F24DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A702E9331BBC01C9001F24DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A702E9351BBC01C9001F24DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C416E4FB11360EE7CBB402D /* Pods-GrocoLoco.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/GrocoLoco/GrocoLocoPrefix.pch";
+				INFOPLIST_FILE = GrocoLoco/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.markhall.GrocoLoco;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A702E9361BBC01C9001F24DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D1F75F61033C4AF2DCA9A53 /* Pods-GrocoLoco.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/GrocoLoco/GrocoLocoPrefix.pch";
+				INFOPLIST_FILE = GrocoLoco/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.markhall.GrocoLoco;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A702E9181BBC01C9001F24DC /* Build configuration list for PBXProject "GrocoLoco" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A702E9321BBC01C9001F24DC /* Debug */,
+				A702E9331BBC01C9001F24DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A702E9341BBC01C9001F24DC /* Build configuration list for PBXNativeTarget "GrocoLoco" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A702E9351BBC01C9001F24DC /* Debug */,
+				A702E9361BBC01C9001F24DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A702E9151BBC01C9001F24DC /* Project object */;
+}

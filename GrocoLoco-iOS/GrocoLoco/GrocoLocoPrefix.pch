@@ -1,0 +1,19 @@
+//
+//  GrocoLocoPrefix.pch
+//  GrocoLoco
+//
+//  Created by Mark Hall on 2015-09-30.
+//  Copyright © 2015 Mark Hall. All rights reserved.
+//
+
+#ifndef GrocoLocoPrefix_pch
+#define GrocoLocoPrefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "AFNetworking.h"
+#import "GLNetworkingManager.h"
+#import "GLConstants.h"
+
+#endif /* GrocoLocoPrefix_pch */
