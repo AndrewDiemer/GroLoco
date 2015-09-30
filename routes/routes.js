@@ -18,7 +18,14 @@ var object = {
 module.exports = function (app){
 
     app.get('/grocerylists', isAuthenticated, function(req,res){
-
+        GroceryList.find({'User':req.user}, function(err, grocerylists){
+            if(err)
+                res.send(err)
+            if(grocerylists)
+                res.send(grocerylists)
+            else
+                res.send(404)
+        })
     })
 
     app.post('/addtolist', isAuthenticated, function(req, res) {
