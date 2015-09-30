@@ -2,24 +2,73 @@
 var passport = require('passport');
 //ROUTES ===========================================================
 
+var object = {
+    GroceryListName: 'soemthing here',
+    List: [{
+        ItemName:'banana',
+        Quantity: 2
+    },{
+        ItemName:'oudas',
+        Quantity: 2
+    }]
+}
+
+
+
 module.exports = function (app){
 
-    app.post('/newItem', function(req, res) {
-        console.log('Posting a new item')
+    app.get('/grocerylists', isAuthenticated, function(req,res){
 
-        var newItem = new GroceryItem({
-            ItemName       : req.body.itemName,
-            SKU            : req.body.sku,
-            LocationID     : req.body.locationID,
+    })
+
+    app.post('/addtolist', isAuthenticated, function(req, res) {
+
+        var groceryListName = req.body.GroceryListName;
+
+        for(var i = 0; i < req.body.List.length;i++){
+             GroceryList.findOneAndUpdate({
+                'User': req.user,
+                'GroceryListName': groceryListName
+            },{
+                $push:{'List': JSON.parse(req.body.List[i])}
+            },{
+                safe:true, upsert:true, new: true
+            },
+            function(err, groceryList){
+                if(err)
+                    res.send(err)
+                if(groceryList)
+                    res.send(200)
+            })
+        }
+    });
+
+    app.post('/newgrocerylist', isAuthenticated, function(req, res) {
+
+        var newGroceryList = new GroceryList({
+            'User'              : req.user,
+            'GroceryListName'   : req.body.GroceryListName
         });
 
-        newItem.save(function(err, user){
+        newGroceryList.save(function(err, newGroceryList){
             if(err)
                 res.send(err)
-            if(user)
-                res.send(user)
+            if(newGroceryList){
+                User.findOneAndUpdate({
+                    'Email': req.user.Email
+                },{
+                    $push:{'GroceryList':newGroceryList}
+                },{
+                    safe:true, upsert:true, new: true
+                },
+                function(err,user){
+                    if(err)
+                        res.send(err)
+                    if(user)
+                        res.send(user)
+                })
+            }
         })
-
     });
 
 
