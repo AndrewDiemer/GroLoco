@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>IQKeyboardManager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-GrocoLoco.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2A3AD613508CE1241F0642AC3DEE0685</key>
+		<key>04B166B96E93A7DDCB42797E0B45DF2B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC2D7F89429C71A2E1926C733A34FCFF</key>
+		<key>61E591ED38334B121233841FB1CE0D1B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>899621BF64656268CE90AEDC07387D3C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A73116EADFD4EE5CAB1D9899D249ED2C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

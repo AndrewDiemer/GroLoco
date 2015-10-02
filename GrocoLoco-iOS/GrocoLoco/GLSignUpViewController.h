@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GLSignUpViewController : UIViewController
+@interface GLSignUpViewController : GLBaseViewController
 
 @end

@@ -18,6 +18,9 @@
 		A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E93C1BBC5992001F24DC /* GLLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9401BBC5B81001F24DC /* GLHomeViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9441BBC5BF7001F24DC /* GLSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9461BBC80BC001F24DC /* GLBaseViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */; settings = {ASSET_TAGS = (); }; };
+		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,12 @@
 		A702E9401BBC5B81001F24DC /* GLHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeViewController.m; sourceTree = "<group>"; };
 		A702E9421BBC5BF7001F24DC /* GLSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSignUpViewController.h; sourceTree = "<group>"; };
 		A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSignUpViewController.m; sourceTree = "<group>"; };
+		A702E9451BBC80BC001F24DC /* GLBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLBaseViewController.h; sourceTree = "<group>"; };
+		A702E9461BBC80BC001F24DC /* GLBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLBaseViewController.m; sourceTree = "<group>"; };
+		A702E94E1BBDAE32001F24DC /* GLGroceryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLGroceryItem.h; sourceTree = "<group>"; };
+		A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGroceryItem.m; sourceTree = "<group>"; };
+		A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeTableViewCell.h; sourceTree = "<group>"; };
+		A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,19 +97,14 @@
 		A702E91F1BBC01C9001F24DC /* GrocoLoco */ = {
 			isa = PBXGroup;
 			children = (
+				A702E9291BBC01C9001F24DC /* Main.storyboard */,
 				A702E9231BBC01C9001F24DC /* GLAppDelegate.h */,
 				A702E9241BBC01C9001F24DC /* GLAppDelegate.m */,
-				A702E9261BBC01C9001F24DC /* GLMainViewController.h */,
-				A702E9271BBC01C9001F24DC /* GLMainViewController.m */,
-				A702E93B1BBC5992001F24DC /* GLLoginViewController.h */,
-				A702E93C1BBC5992001F24DC /* GLLoginViewController.m */,
-				A702E9421BBC5BF7001F24DC /* GLSignUpViewController.h */,
-				A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */,
-				A702E93F1BBC5B81001F24DC /* GLHomeViewController.h */,
-				A702E9401BBC5B81001F24DC /* GLHomeViewController.m */,
+				A702E94D1BBDAE12001F24DC /* Model Objects */,
+				A702E94B1BBDA23B001F24DC /* Login/Sign up */,
+				A702E94C1BBDA24C001F24DC /* Home */,
 				A702E9381BBC4FF6001F24DC /* GLNetworkingManager.h */,
 				A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */,
-				A702E9291BBC01C9001F24DC /* Main.storyboard */,
 				A702E92C1BBC01C9001F24DC /* Assets.xcassets */,
 				A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */,
 				A702E9311BBC01C9001F24DC /* Info.plist */,
@@ -117,6 +121,41 @@
 				A702E93E1BBC5A3A001F24DC /* GLConstants.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A702E94B1BBDA23B001F24DC /* Login/Sign up */ = {
+			isa = PBXGroup;
+			children = (
+				A702E9261BBC01C9001F24DC /* GLMainViewController.h */,
+				A702E9271BBC01C9001F24DC /* GLMainViewController.m */,
+				A702E93B1BBC5992001F24DC /* GLLoginViewController.h */,
+				A702E93C1BBC5992001F24DC /* GLLoginViewController.m */,
+				A702E9421BBC5BF7001F24DC /* GLSignUpViewController.h */,
+				A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */,
+			);
+			name = "Login/Sign up";
+			sourceTree = "<group>";
+		};
+		A702E94C1BBDA24C001F24DC /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				A702E93F1BBC5B81001F24DC /* GLHomeViewController.h */,
+				A702E9401BBC5B81001F24DC /* GLHomeViewController.m */,
+				A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */,
+				A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		A702E94D1BBDAE12001F24DC /* Model Objects */ = {
+			isa = PBXGroup;
+			children = (
+				A702E9451BBC80BC001F24DC /* GLBaseViewController.h */,
+				A702E9461BBC80BC001F24DC /* GLBaseViewController.m */,
+				A702E94E1BBDAE32001F24DC /* GLGroceryItem.h */,
+				A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */,
+			);
+			name = "Model Objects";
 			sourceTree = "<group>";
 		};
 		C9ED506970679FECF02A91C5 /* Frameworks */ = {
@@ -234,12 +273,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A702E9441BBC5BF7001F24DC /* GLSignUpViewController.m in Sources */,
+				A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */,
 				A702E9281BBC01C9001F24DC /* GLMainViewController.m in Sources */,
 				A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */,
 				A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */,
 				A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */,
 				A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */,
+				A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */,
 				A702E9221BBC01C9001F24DC /* main.m in Sources */,
+				A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

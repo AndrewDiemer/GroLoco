@@ -19,15 +19,17 @@
 
 - (IBAction)signUpPressed:(id)sender
 {
-
+    [self showFullScreenHUD];
     [GLNetworkingManager createNewUserWithName:self.nameField.text
                                       Password:self.passwordField.text
                                          Email:self.emailField.text
                                     completion:^(NSDictionary* response, NSError* error) {
+                                        [self hideFullScreenHUD];
                                         if (!error) {
                                             [self performSegueWithIdentifier:GL_SIGN_UP_SEGUE sender:self];
                                         }
                                         else {
+                                            [self showError:error.description];
                                         }
                                     }];
 }
