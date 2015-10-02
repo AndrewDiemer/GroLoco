@@ -61,12 +61,14 @@ app.use(function(req, res, next) {
 });
 
 // SCHEMAS ============================================
-require('./db/groceryItemSchema.js')
 require('./db/userSchema.js')
+require('./db/groceryItemSchema.js')
+require('./db/groceryListSchema.js')
 
 // MODELS =============================================
-GroceryItem = db.model('GroceryItem', groceryItem)
 User = db.model('User', userSchema)
+GroceryItem = db.model('GroceryItem', groceryItemSchema)
+GroceryList = db.model('GroceryList', groceryListSchema)
 
 //ROUTES ==============================================
 require('./routes/routes.js')(app, passport); 
