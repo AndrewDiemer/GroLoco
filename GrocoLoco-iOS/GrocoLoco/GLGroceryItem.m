@@ -37,4 +37,10 @@
               };
 }
 
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ %ld", self.itemName, (long)self.quantity];
+}
+
 @end

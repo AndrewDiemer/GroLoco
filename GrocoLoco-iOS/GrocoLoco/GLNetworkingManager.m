@@ -7,6 +7,7 @@
 //
 
 #import "GLNetworkingManager.h"
+#import "GLGroceryItem.h"
 
 @implementation GLNetworkingManager
 
@@ -45,18 +46,39 @@
         }];
 }
 
-+ (void)getGroceryListsForCurrentUserCompletion:(void (^)(NSDictionary* response, NSError* error))completionBlock
++ (void)getGroceryListsForCurrentUserCompletion:(void (^)(NSArray* response, NSError* error))completionBlock
 {
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
 
     [manager GET:@"https://grocolocoapp.herokuapp.com/grocerylists"
         parameters:nil
         success:^(AFHTTPRequestOperation* _Nonnull operation, id _Nonnull responseObject) {
-            completionBlock(responseObject, nil);
+            NSLog(@"%@",responseObject);
+            completionBlock([GLNetworkingManager parseGroceryListResults:responseObject], nil);
         }
         failure:^(AFHTTPRequestOperation* _Nonnull operation, NSError* _Nonnull error) {
             completionBlock(nil, error);
         }];
+}
+
++ (NSArray *)parseGroceryListResults:(NSDictionary *)response
+{
+    NSMutableArray *array = @[].mutableCopy;
+    
+    for (NSDictionary *dict in response){
+        NSMutableDictionary *newDict = @{@"GroceryListName" : dict[@"GroceryListName"]}.mutableCopy;
+        
+        NSMutableArray *listArray = @[].mutableCopy;
+        
+        for (NSDictionary *itemDict in dict[@"List"]){
+            [listArray addObject:[[GLGroceryItem alloc] initWithDictionary:itemDict]];
+        }
+        
+        newDict[@"List"] = listArray;
+        
+        [array addObject:newDict];
+    }
+    return array;
 }
 
 + (void)createNewGroceryList:(NSString*)groceryListName completion:(void (^)(NSDictionary* response, NSError* error))completionBlock
@@ -79,11 +101,13 @@
 {
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     NSDictionary* params = @{ @"GroceryListName" : groceryListName,
                               @"List" : items
                               };
+    NSLog(@"%@", params);
     [manager POST:@"https://grocolocoapp.herokuapp.com/addtolist"
         parameters:params
         success:^(AFHTTPRequestOperation* _Nonnull operation, id _Nonnull responseObject) {
