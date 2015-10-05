@@ -21,3 +21,4 @@ static NSString *GL_SIGN_UP_SEGUE = @"GLShowMainFromSignUp";
 //****************************************//
 
 static NSString *GL_HOME_TABLEVIEW_CELL = @"GLHomeTableViewCell";
+static NSString *GL_HOME_ADD_NEW_TABLEVIEW_CELL = @"GLHomeAddNewTableViewCell";

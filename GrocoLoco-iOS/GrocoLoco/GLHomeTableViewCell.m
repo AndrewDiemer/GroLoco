@@ -18,7 +18,6 @@
     self.itemNameField.text = item.itemName;
     self.itemQuantityLabel.text = [NSString stringWithFormat:@"%ld", (long)item.quantity];
     self.itemQuantityStepper.value = item.quantity;
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (IBAction)stepperPressed:(UIStepper *)sender
@@ -40,6 +39,21 @@
     }
     else{
         self.itemNameField.text = self.item.itemName;
+    }
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+
+    if (editing){
+        self.itemQuantityStepper.hidden = NO;
+        [self.itemNameField setBorderStyle: UITextBorderStyleRoundedRect];
+    }
+    else{
+        self.itemQuantityStepper.hidden = YES;
+        [self.itemNameField setBorderStyle: UITextBorderStyleNone];
+
     }
 }
 

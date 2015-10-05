@@ -120,7 +120,7 @@
                                 <animations/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GLHomeTableViewCell" rowHeight="80" id="HV1-HN-3Xe" customClass="GLHomeTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GLHomeTableViewCell" rowHeight="80" id="HV1-HN-3Xe" customClass="GLHomeTableViewCell">
                                         <rect key="frame" x="0.0" y="50" width="600" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HV1-HN-3Xe" id="DHf-wq-nP8">
@@ -170,6 +170,55 @@
                                             <outlet property="itemNameField" destination="wOg-M4-Ygr" id="e9n-e0-TIy"/>
                                             <outlet property="itemQuantityLabel" destination="7AF-b0-T34" id="eht-tF-ro7"/>
                                             <outlet property="itemQuantityStepper" destination="K56-b4-taJ" id="C0k-sE-aTn"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="GLHomeAddNewTableViewCell" rowHeight="80" id="T1n-9K-Lox" customClass="GLHomeAddNewTableViewCell">
+                                        <rect key="frame" x="0.0" y="130" width="600" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T1n-9K-Lox" id="Psf-0M-rO6">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Item" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WIN-mn-i19">
+                                                    <rect key="frame" x="16" y="16" width="419" height="47"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="47" id="6dp-ib-lxF"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n07-Bq-0Je">
+                                                    <rect key="frame" x="573" y="30" width="11" height="21"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Rdf-rR-uQG">
+                                                    <rect key="frame" x="457" y="25" width="94" height="29"/>
+                                                    <animations/>
+                                                    <connections>
+                                                        <action selector="stepperPressed:" destination="T1n-9K-Lox" eventType="valueChanged" id="S78-6e-1A3"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="n07-Bq-0Je" firstAttribute="leading" secondItem="Rdf-rR-uQG" secondAttribute="trailing" constant="22" id="KQI-rn-0vu"/>
+                                                <constraint firstItem="WIN-mn-i19" firstAttribute="leading" secondItem="Psf-0M-rO6" secondAttribute="leading" constant="16" id="LhJ-pz-t3B"/>
+                                                <constraint firstItem="n07-Bq-0Je" firstAttribute="centerY" secondItem="Psf-0M-rO6" secondAttribute="centerY" id="TB4-zN-HEP"/>
+                                                <constraint firstItem="Rdf-rR-uQG" firstAttribute="centerY" secondItem="Psf-0M-rO6" secondAttribute="centerY" id="UwU-xt-hDO"/>
+                                                <constraint firstAttribute="trailing" secondItem="n07-Bq-0Je" secondAttribute="trailing" constant="16" id="eQ5-kE-rXt"/>
+                                                <constraint firstItem="Rdf-rR-uQG" firstAttribute="leading" secondItem="WIN-mn-i19" secondAttribute="trailing" constant="22" id="iGP-Gn-DIw"/>
+                                                <constraint firstItem="WIN-mn-i19" firstAttribute="centerY" secondItem="Psf-0M-rO6" secondAttribute="centerY" id="igZ-9I-g4P"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="itemNameField" destination="WIN-mn-i19" id="Eid-Ak-g3f"/>
+                                            <outlet property="itemQuantityLabel" destination="n07-Bq-0Je" id="J8Q-Nc-eCH"/>
+                                            <outlet property="itemQuantityStepper" destination="Rdf-rR-uQG" id="qXy-BZ-KLw"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

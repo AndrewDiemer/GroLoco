@@ -116,4 +116,24 @@
         }];
 }
 
++ (void)editGroceryItem:(NSString *)groceryListName item:(NSDictionary *)item itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSMutableDictionary *params = item.mutableCopy;
+    params[@"_id"] = ID;
+    params[@"GroceryListName"] = groceryListName;
+    
+    NSLog(@"%@", params);
+    
+    [manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitem" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+}
+
 @end

@@ -21,6 +21,7 @@
 		A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9461BBC80BC001F24DC /* GLBaseViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		A7ADCB311BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7ADCB301BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,8 @@
 		A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGroceryItem.m; sourceTree = "<group>"; };
 		A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeTableViewCell.h; sourceTree = "<group>"; };
 		A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeTableViewCell.m; sourceTree = "<group>"; };
+		A7ADCB2F1BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeAddNewTableViewCell.h; sourceTree = "<group>"; };
+		A7ADCB301BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeAddNewTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +146,8 @@
 				A702E9401BBC5B81001F24DC /* GLHomeViewController.m */,
 				A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */,
 				A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */,
+				A7ADCB2F1BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.h */,
+				A7ADCB301BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 				A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */,
 				A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */,
 				A702E9221BBC01C9001F24DC /* main.m in Sources */,
+				A7ADCB311BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m in Sources */,
 				A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
