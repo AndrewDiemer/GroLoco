@@ -53,7 +53,6 @@
     [manager GET:@"https://grocolocoapp.herokuapp.com/grocerylists"
         parameters:nil
         success:^(AFHTTPRequestOperation* _Nonnull operation, id _Nonnull responseObject) {
-            NSLog(@"%@",responseObject);
             completionBlock([GLNetworkingManager parseGroceryListResults:responseObject], nil);
         }
         failure:^(AFHTTPRequestOperation* _Nonnull operation, NSError* _Nonnull error) {
@@ -107,7 +106,6 @@
     NSDictionary* params = @{ @"GroceryListName" : groceryListName,
                               @"List" : items
                               };
-    NSLog(@"%@", params);
     [manager POST:@"https://grocolocoapp.herokuapp.com/addtolist"
         parameters:params
         success:^(AFHTTPRequestOperation* _Nonnull operation, id _Nonnull responseObject) {

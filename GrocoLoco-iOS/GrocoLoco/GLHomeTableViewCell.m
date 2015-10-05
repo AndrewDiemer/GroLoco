@@ -18,6 +18,7 @@
     self.itemNameField.text = item.itemName;
     self.itemQuantityLabel.text = [NSString stringWithFormat:@"%ld", (long)item.quantity];
     self.itemQuantityStepper.value = item.quantity;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (IBAction)stepperPressed:(UIStepper *)sender
@@ -29,6 +30,17 @@
 - (IBAction)editingNameEnded:(UITextField *)sender
 {
     self.item.itemName = sender.text;
+}
+
+-(void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    if (selected){
+        self.itemNameField.attributedText = [[NSAttributedString alloc] initWithString:self.item.itemName attributes:@{ NSStrikethroughStyleAttributeName : [NSNumber numberWithInteger:NSUnderlineStyleSingle] }];
+    }
+    else{
+        self.itemNameField.text = self.item.itemName;
+    }
 }
 
 @end

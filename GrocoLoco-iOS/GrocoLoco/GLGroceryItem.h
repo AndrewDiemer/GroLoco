@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *itemName;
 @property (nonatomic, assign) NSInteger quantity;
+@property (nonatomic, strong) NSString *ID;
 
 - (instancetype)initWithName:(NSString *)name andQuantity:(NSInteger)quantity;
 - (instancetype)initWithDictionary: (NSDictionary *)dictionary;

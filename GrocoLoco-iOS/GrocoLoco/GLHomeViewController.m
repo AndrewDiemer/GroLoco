@@ -34,16 +34,18 @@
     self.doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneAction)];
 
     self.navigationItem.leftBarButtonItem = self.editButton;
-
     
-    [GLNetworkingManager getGroceryListsForCurrentUserCompletion:^(NSArray *response, NSError *error) {
-        self.data = response.mutableCopy;
-        [self.tableView reloadData];
-    }];
-    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(loadGroceryLists:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 //    [GLNetworkingManager createNewGroceryList:@"Metro" completion:^(NSDictionary *response, NSError *error) {
 //        NSLog(@"%@",response);
 //    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self loadGroceryLists:nil];
 }
 
 #pragma mark -
@@ -59,8 +61,11 @@
     
     if (indexPath.row < [groceryListDict[@"List"] count]){
         item = groceryListDict[@"List"][indexPath.row];
+        cell.itemNameField.delegate = self;
     }
-    
+    else{
+        cell.itemNameField.placeholder = @"New Item";
+    }
     cell.item = item;
     [cell.itemNameField addTarget:self action:@selector(doneEditing:) forControlEvents:UIControlEventEditingDidEnd];
     
@@ -101,8 +106,6 @@
         if (indexPath.row != [groceryListDict[@"List"] count]){
             return UITableViewCellEditingStyleDelete;
         }
-
-        return UITableViewCellEditingStyleNone;
     }
 
     return UITableViewCellEditingStyleNone;
@@ -116,6 +119,19 @@
         [tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
+
+
+#pragma mark -
+#pragma mark UITextFieldDelegate
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return [self.tableView isEditing];
+}
+
+
+#pragma mark -
+#pragma mark Helper Methods
 
 - (void)editAction
 {
@@ -131,6 +147,10 @@
 
 - (void)doneEditing:(UITextField *)sender
 {
+    if (sender.text.length == 0){
+        return;
+    }
+    
     CGPoint pointInTable = [sender convertPoint:sender.bounds.origin toView:self.tableView];
     
     NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:pointInTable];
@@ -159,6 +179,19 @@
         }
     }];
     
+}
+
+-(void)loadGroceryLists:(UIRefreshControl *)refreshControl
+{
+    [self showFullScreenHUD];
+    [GLNetworkingManager getGroceryListsForCurrentUserCompletion:^(NSArray *response, NSError *error) {
+        if (refreshControl){
+            [refreshControl endRefreshing];
+        }
+        [self hideFullScreenHUD];
+        self.data = response.mutableCopy;
+        [self.tableView reloadData];
+    }];
 }
 
 @end

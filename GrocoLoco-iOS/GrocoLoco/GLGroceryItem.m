@@ -26,6 +26,7 @@
     if (self){
         self.itemName = dictionary[@"ItemName"];
         self.quantity = [dictionary[@"Quantity"] integerValue];
+        self.ID = dictionary[@"_id"];
     }
     return self;
 }
@@ -40,7 +41,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ %ld", self.itemName, (long)self.quantity];
+    return [NSString stringWithFormat:@"%@ %ld, %@", self.itemName, (long)self.quantity, self.ID];
 }
 
 @end
