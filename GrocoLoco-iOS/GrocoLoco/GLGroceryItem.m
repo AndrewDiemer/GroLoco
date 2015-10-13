@@ -14,8 +14,9 @@
 {
     self = [super init];
     if (self) {
-        self.itemName = name;
-        self.quantity = quantity;
+        _itemName = name;
+        _quantity = quantity;
+        _isCrossedOut = NO;
     }
     return self;
 }
@@ -24,9 +25,10 @@
 {
     self = [super init];
     if (self){
-        self.itemName = dictionary[@"ItemName"];
-        self.quantity = [dictionary[@"Quantity"] integerValue];
-        self.ID = dictionary[@"_id"];
+        _itemName = dictionary[@"ItemName"];
+        _quantity = [dictionary[@"Quantity"] integerValue];
+        _ID = dictionary[@"_id"];
+        _isCrossedOut = [dictionary[@"CrossedOut"] boolValue];
     }
     return self;
 }
@@ -34,14 +36,15 @@
 - (NSDictionary *)objectAsDictionary
 {
     return @{ @"ItemName" : self.itemName,
-              @"Quantity" : @(self.quantity)
+              @"Quantity" : @(self.quantity),
+              @"CrossedOut" : [NSNumber numberWithBool:self.isCrossedOut]
               };
 }
 
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ %ld, %@", self.itemName, (long)self.quantity, self.ID];
+    return [NSString stringWithFormat:@"%@ %ld, %@, %d", self.itemName, (long)self.quantity, self.ID, self.isCrossedOut];
 }
 
 @end

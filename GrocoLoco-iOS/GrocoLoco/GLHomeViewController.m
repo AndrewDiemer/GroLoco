@@ -39,9 +39,6 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(loadGroceryLists:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
-//    [GLNetworkingManager createNewGroceryList:@"No Frills" completion:^(NSDictionary *response, NSError *error) {
-//        NSLog(@"%@",response);
-//    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -70,6 +67,28 @@
     cell.itemNameField.delegate = self;
     cell.item = item;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary* groceryListDict = self.data[indexPath.section];
+    if (indexPath.row == [groceryListDict[@"List"] count]){
+        return;
+    }
+    GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
+    if (item.isCrossedOut){
+        [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    }
+}
+
+- (void)tableView:(UITableView* _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
+{
+    [self setItemCrossedOut:YES atIndexPath:indexPath];
+}
+
+- (void)tableView:(UITableView* _Nonnull)tableView didDeselectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
+{
+    [self setItemCrossedOut:NO atIndexPath:indexPath];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView* _Nonnull)tableView
@@ -132,11 +151,6 @@
 
 #pragma mark -
 #pragma mark UITextFieldDelegate
-
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return [self.tableView isEditing];
-}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -227,6 +241,44 @@
         self.data = response.mutableCopy;
         [self.tableView reloadData];
     }];
+}
+- (IBAction)addNewListPressed:(id)sender
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New List Name" message:@"Enter new list name:" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"List Name";
+    }];
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Submit" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *listName = [alert.textFields firstObject].text;
+        if (listName.length == 0){
+            return;
+        }
+        [GLNetworkingManager createNewGroceryList:listName completion:^(NSDictionary *response, NSError *error) {
+            if (error){
+                NSLog(@"%@",error.description);
+            }
+        }];
+    }];
+    
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)setItemCrossedOut:(BOOL)crossedOut atIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary* groceryListDict = self.data[indexPath.section];
+    GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
+    
+    [GLNetworkingManager crossOutGroceryItem:groceryListDict[@"GroceryListName"]
+                                isCrossedOut:crossedOut
+                                      itemID:item.ID
+                                  completion:^(NSDictionary* response, NSError* error) {
+                                      if (error) {
+                                          NSLog(@"%@", error.description);
+                                      }
+                                  }];
 }
 
 @end

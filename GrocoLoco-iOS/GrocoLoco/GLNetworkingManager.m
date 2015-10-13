@@ -127,9 +127,26 @@
     params[@"_id"] = ID;
     params[@"GroceryListName"] = groceryListName;
     
-    NSLog(@"%@", params);
     
     [manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitem" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+}
+
++ (void)crossOutGroceryItem:(NSString *)groceryListName isCrossedOut:(BOOL)isCrossedOut itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    NSMutableDictionary *params = @{}.mutableCopy;
+    params[@"_id"] = ID;
+    params[@"GroceryListName"] = groceryListName;
+    params[@"CrossedOut"] = @(isCrossedOut);
+
+    [manager POST:@"https://grocolocoapp.herokuapp.com/crossoutitem" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         completionBlock(responseObject, nil);
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
         completionBlock(nil, error);

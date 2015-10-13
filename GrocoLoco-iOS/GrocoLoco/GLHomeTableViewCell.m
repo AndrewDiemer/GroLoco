@@ -45,7 +45,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
-
+    self.itemNameField.userInteractionEnabled = editing;
     if (editing){
         self.itemQuantityStepper.hidden = NO;
         [self.itemNameField setBorderStyle: UITextBorderStyleRoundedRect];
