@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GLMainViewController : UIViewController
+@interface GLMainViewController : GLBaseViewController
 
 
 @end

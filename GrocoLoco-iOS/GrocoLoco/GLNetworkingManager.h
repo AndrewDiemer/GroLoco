@@ -11,6 +11,16 @@
 @interface GLNetworkingManager : NSObject
 
 + (void)createNewUserWithName:(NSString*)name Password:(NSString*)password Email:(NSString*)email completion:(void (^)(NSDictionary *response, NSError *error))completionBlock;
+
 + (void)loginUserWithEmail:(NSString*)email Password:(NSString*)password completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
 
++ (void)getGroceryListsForCurrentUserCompletion:(void (^)(NSArray *response, NSError *error))completionBlock;
+
++ (void)createNewGroceryList:(NSString*)groceryListName completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
++ (void)addToGroceryList:(NSString*)groceryListName items:(NSArray*)items completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
++ (void)editGroceryItem:(NSString *)groceryListName item:(NSDictionary *)item itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
++ (void)crossOutGroceryItem:(NSString *)groceryListName isCrossedOut:(BOOL)isCrossedOut itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
 @end

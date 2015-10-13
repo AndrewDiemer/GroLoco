@@ -9,38 +9,34 @@
 #import "GLLoginViewController.h"
 
 @interface GLLoginViewController () <UIAlertViewDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *emailField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+
+@property (weak, nonatomic) IBOutlet UITextField* emailField;
+@property (weak, nonatomic) IBOutlet UITextField* passwordField;
 
 @end
 
 @implementation GLLoginViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 - (IBAction)loginPressed:(id)sender
 {
-    [GLNetworkingManager loginUserWithEmail:self.emailField.text Password:self.passwordField.text completion:^(NSDictionary *response, NSError *error) {
-        if (!error){
-            [self performSegueWithIdentifier:GL_LOGIN_SEGUE sender:self];
-        }
-        else{
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:error.description preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *ok= [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                [alert dismissViewControllerAnimated:YES completion:nil];
-            }];
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
-            
-        }
-    }];
+    [self showFullScreenHUD];
+    [GLNetworkingManager loginUserWithEmail:self.emailField.text
+                                   Password:self.passwordField.text
+                                 completion:^(NSDictionary* response, NSError* error) {
+                                     [self hideFullScreenHUD];
+                                     if (!error) {
+                                         [self performSegueWithIdentifier:GL_LOGIN_SEGUE sender:self];
+                                     }
+                                     else {
+                                         [self showError:error.description];
+                                     }
+                                 }];
 }
 
 /*

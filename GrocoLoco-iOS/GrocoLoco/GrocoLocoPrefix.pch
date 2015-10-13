@@ -15,5 +15,7 @@
 #import "AFNetworking.h"
 #import "GLNetworkingManager.h"
 #import "GLConstants.h"
+#import "GLBaseViewController.h"
+#import "MBProgressHUD.h"
 
 #endif /* GrocoLocoPrefix_pch */

@@ -3,5 +3,16 @@
 
 target 'GrocoLoco' do
 pod "AFNetworking", "~> 2.0"
+pod 'MBProgressHUD', '~> 0.9.1'
+pod 'IQKeyboardManager'
+
+
+
+
+
+
+
+
+
 end
 
