@@ -3,6 +3,7 @@ groceryListSchema = new db.Schema({
 	GroceryListName	: String,
     Date			: { type: Date, default: Date.now },
     List 			: [{
+    	CrossedOut	: { type: Boolean, default: false },
     	ItemName    : String,
 		Quantity	: Number
     }]

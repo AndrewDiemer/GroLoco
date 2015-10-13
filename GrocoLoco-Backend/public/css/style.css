@@ -4,3 +4,22 @@
   font-weight: 100;
   src: url('https://themes.googleusercontent.com/font?kit=DPu3R_w4R5pjnst7X4FGRhsxEYwM7FgeyaSgU71cLG0') format('woff');
 }
+
+html, body{
+padding:0;
+margin:0;
+
+  background-image: url("http://image.noelshack.com/fichiers/2015/12/1427051641-geometry.png");
+  width: 100%;
+  height: 100%;
+  cursor: default;   text-align: center;
+
+  font-family: 'PT Sans', sans-serif;
+}
+canvas{
+position:absolute;
+	left:0;
+	top:0;
+	z-index:0;
+	border:0px solid #000;
+}
