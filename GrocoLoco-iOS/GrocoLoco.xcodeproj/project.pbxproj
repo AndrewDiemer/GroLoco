@@ -10,18 +10,21 @@
 		61E183F8168BBF157E6F8D29 /* libPods-GrocoLoco.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C611234D44B71BD4FBB269 /* libPods-GrocoLoco.a */; };
 		A702E9221BBC01C9001F24DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9211BBC01C9001F24DC /* main.m */; };
 		A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9241BBC01C9001F24DC /* GLAppDelegate.m */; };
-		A702E9281BBC01C9001F24DC /* GLMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9271BBC01C9001F24DC /* GLMainViewController.m */; };
 		A702E92B1BBC01C9001F24DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A702E9291BBC01C9001F24DC /* Main.storyboard */; };
 		A702E92D1BBC01C9001F24DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A702E92C1BBC01C9001F24DC /* Assets.xcassets */; };
 		A702E9301BBC01C9001F24DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */; };
 		A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */; settings = {ASSET_TAGS = (); }; };
 		A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E93C1BBC5992001F24DC /* GLLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9401BBC5B81001F24DC /* GLHomeViewController.m */; settings = {ASSET_TAGS = (); }; };
-		A702E9441BBC5BF7001F24DC /* GLSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9461BBC80BC001F24DC /* GLBaseViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		A7ADCB311BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7ADCB301BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A7FFFB391BD53EB3005B5A08 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */; };
+		A7FFFB3B1BD542C1005B5A08 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFFB3A1BD542C1005B5A08 /* MapKit.framework */; };
+		A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB3D1BD5758C005B5A08 /* GLMapAnnotation.m */; settings = {ASSET_TAGS = (); }; };
+		A7FFFB431BD825E4005B5A08 /* GLGroceryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB421BD825E4005B5A08 /* GLGroceryStore.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +35,6 @@
 		A702E9211BBC01C9001F24DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A702E9231BBC01C9001F24DC /* GLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLAppDelegate.h; sourceTree = "<group>"; };
 		A702E9241BBC01C9001F24DC /* GLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLAppDelegate.m; sourceTree = "<group>"; };
-		A702E9261BBC01C9001F24DC /* GLMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLMainViewController.h; sourceTree = "<group>"; };
-		A702E9271BBC01C9001F24DC /* GLMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLMainViewController.m; sourceTree = "<group>"; };
 		A702E92A1BBC01C9001F24DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A702E92C1BBC01C9001F24DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A702E92F1BBC01C9001F24DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -46,8 +47,6 @@
 		A702E93E1BBC5A3A001F24DC /* GLConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLConstants.h; sourceTree = "<group>"; };
 		A702E93F1BBC5B81001F24DC /* GLHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeViewController.h; sourceTree = "<group>"; };
 		A702E9401BBC5B81001F24DC /* GLHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeViewController.m; sourceTree = "<group>"; };
-		A702E9421BBC5BF7001F24DC /* GLSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSignUpViewController.h; sourceTree = "<group>"; };
-		A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSignUpViewController.m; sourceTree = "<group>"; };
 		A702E9451BBC80BC001F24DC /* GLBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLBaseViewController.h; sourceTree = "<group>"; };
 		A702E9461BBC80BC001F24DC /* GLBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLBaseViewController.m; sourceTree = "<group>"; };
 		A702E94E1BBDAE32001F24DC /* GLGroceryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLGroceryItem.h; sourceTree = "<group>"; };
@@ -56,6 +55,14 @@
 		A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeTableViewCell.m; sourceTree = "<group>"; };
 		A7ADCB2F1BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeAddNewTableViewCell.h; sourceTree = "<group>"; };
 		A7ADCB301BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeAddNewTableViewCell.m; sourceTree = "<group>"; };
+		A7FFFB351BD53C9F005B5A08 /* GLMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLMapViewController.h; sourceTree = "<group>"; };
+		A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLMapViewController.m; sourceTree = "<group>"; };
+		A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A7FFFB3A1BD542C1005B5A08 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A7FFFB3C1BD5758C005B5A08 /* GLMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLMapAnnotation.h; sourceTree = "<group>"; };
+		A7FFFB3D1BD5758C005B5A08 /* GLMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLMapAnnotation.m; sourceTree = "<group>"; };
+		A7FFFB411BD825E4005B5A08 /* GLGroceryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLGroceryStore.h; sourceTree = "<group>"; };
+		A7FFFB421BD825E4005B5A08 /* GLGroceryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGroceryStore.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7FFFB3B1BD542C1005B5A08 /* MapKit.framework in Frameworks */,
+				A7FFFB391BD53EB3005B5A08 /* CoreLocation.framework in Frameworks */,
 				61E183F8168BBF157E6F8D29 /* libPods-GrocoLoco.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,12 +138,10 @@
 		A702E94B1BBDA23B001F24DC /* Login/Sign up */ = {
 			isa = PBXGroup;
 			children = (
-				A702E9261BBC01C9001F24DC /* GLMainViewController.h */,
-				A702E9271BBC01C9001F24DC /* GLMainViewController.m */,
 				A702E93B1BBC5992001F24DC /* GLLoginViewController.h */,
 				A702E93C1BBC5992001F24DC /* GLLoginViewController.m */,
-				A702E9421BBC5BF7001F24DC /* GLSignUpViewController.h */,
-				A702E9431BBC5BF7001F24DC /* GLSignUpViewController.m */,
+				A7FFFB351BD53C9F005B5A08 /* GLMapViewController.h */,
+				A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */,
 			);
 			name = "Login/Sign up";
 			sourceTree = "<group>";
@@ -159,6 +166,10 @@
 				A702E9461BBC80BC001F24DC /* GLBaseViewController.m */,
 				A702E94E1BBDAE32001F24DC /* GLGroceryItem.h */,
 				A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */,
+				A7FFFB3C1BD5758C005B5A08 /* GLMapAnnotation.h */,
+				A7FFFB3D1BD5758C005B5A08 /* GLMapAnnotation.m */,
+				A7FFFB411BD825E4005B5A08 /* GLGroceryStore.h */,
+				A7FFFB421BD825E4005B5A08 /* GLGroceryStore.m */,
 			);
 			name = "Model Objects";
 			sourceTree = "<group>";
@@ -166,6 +177,8 @@
 		C9ED506970679FECF02A91C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A7FFFB3A1BD542C1005B5A08 /* MapKit.framework */,
+				A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */,
 				01C611234D44B71BD4FBB269 /* libPods-GrocoLoco.a */,
 			);
 			name = Frameworks;
@@ -278,17 +291,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A702E9441BBC5BF7001F24DC /* GLSignUpViewController.m in Sources */,
+				A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */,
 				A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */,
-				A702E9281BBC01C9001F24DC /* GLMainViewController.m in Sources */,
 				A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */,
 				A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */,
 				A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */,
 				A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */,
+				A7FFFB431BD825E4005B5A08 /* GLGroceryStore.m in Sources */,
 				A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */,
 				A702E9221BBC01C9001F24DC /* main.m in Sources */,
 				A7ADCB311BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m in Sources */,
 				A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */,
+				A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

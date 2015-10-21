@@ -143,8 +143,16 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSDictionary* groceryListDict = self.data[indexPath.section];
-        [groceryListDict[@"List"] removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
+        GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
+        [GLNetworkingManager deleteGroceryItem:groceryListDict[@"GroceryListName"] itemID:item.ID completion:^(NSDictionary *response, NSError *error) {
+            if (error){
+                NSLog(@"%@",error.description);
+            }
+            else{
+                [groceryListDict[@"List"] removeObject:item];
+                [tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+        }];
     }
 }
 
@@ -205,7 +213,7 @@
     
     GLHomeAddNewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
-    GLGroceryItem *newItem= [[GLGroceryItem alloc] initWithName:sender.text andQuantity:[cell.itemQuantityLabel.text integerValue]];
+    GLGroceryItem *newItem= [[GLGroceryItem alloc] initWithName:sender.text quantity:[cell.itemQuantityLabel.text integerValue] andComment:@""];
     
     [self.tableView beginUpdates];
     NSIndexPath* addIndex;

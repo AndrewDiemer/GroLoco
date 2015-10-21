@@ -11,8 +11,8 @@
 //****************************************//
 
 static NSString *GL_LOGIN_SEGUE = @"GLShowMainFromLogin";
-static NSString *GL_SIGN_UP_SEGUE = @"GLShowMainFromSignUp";
-
+static NSString *GL_SHOW_MAP_LOGIN = @"GLShowMapFromLogin";
+static NSString *GL_SHOW_HOME = @"GLShowHome";
 
 
 

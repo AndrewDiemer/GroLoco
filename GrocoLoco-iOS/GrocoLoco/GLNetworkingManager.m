@@ -153,4 +153,59 @@
     }];
 }
 
++ (void)deleteGroceryItem:(NSString *)groceryListName itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    NSMutableDictionary *params = @{}.mutableCopy;
+    params[@"_id"] = ID;
+    params[@"GroceryListName"] = groceryListName;
+    
+    [manager DELETE:@"https://grocolocoapp.herokuapp.com/deletegroceryitem" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+}
+
++ (void)setUserLocation:(NSString *)storeName longitude:(NSNumber *)longitude latitude:(NSNumber *)latitude completion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    NSDictionary *params = @{
+                             @"StoreName" : storeName,
+                             @"Longitude" : longitude,
+                             @"Latitude" : latitude
+                             };
+    
+    [manager POST:@"https://grocolocoapp.herokuapp.com/setuserlocation" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+}
+
++ (void)editGroceryItemComment:(NSString *)groceryListName itemID:(NSString *)ID comment:(NSString *)comment completion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    NSDictionary *params = @{ @"GroceryListName" : groceryListName,
+                              @"_id" : ID,
+                              @"Comment" : comment
+                              };
+    
+    [manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitemcomment" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+}
+
 @end

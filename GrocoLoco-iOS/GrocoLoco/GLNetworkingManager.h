@@ -23,4 +23,10 @@
 + (void)editGroceryItem:(NSString *)groceryListName item:(NSDictionary *)item itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
 
 + (void)crossOutGroceryItem:(NSString *)groceryListName isCrossedOut:(BOOL)isCrossedOut itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
++ (void)deleteGroceryItem:(NSString *)groceryListName itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
++ (void)setUserLocation:(NSString *)storeName longitude:(NSNumber *)longitude latitude:(NSNumber *)latitude completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
++ (void)editGroceryItemComment:(NSString *)groceryListName itemID:(NSString *)ID comment:(NSString *)comment completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
 @end

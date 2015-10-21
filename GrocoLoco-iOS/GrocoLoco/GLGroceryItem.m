@@ -10,12 +10,13 @@
 
 @implementation GLGroceryItem
 
-- (instancetype)initWithName:(NSString *)name andQuantity:(NSInteger)quantity
+- (instancetype)initWithName:(NSString *)name quantity:(NSInteger)quantity andComment:(NSString *)comment
 {
     self = [super init];
     if (self) {
         _itemName = name;
         _quantity = quantity;
+        _comment = comment;
         _isCrossedOut = NO;
     }
     return self;
@@ -29,6 +30,7 @@
         _quantity = [dictionary[@"Quantity"] integerValue];
         _ID = dictionary[@"_id"];
         _isCrossedOut = [dictionary[@"CrossedOut"] boolValue];
+        _comment = dictionary[@"Comment"];
     }
     return self;
 }
@@ -37,14 +39,15 @@
 {
     return @{ @"ItemName" : self.itemName,
               @"Quantity" : @(self.quantity),
-              @"CrossedOut" : [NSNumber numberWithBool:self.isCrossedOut]
+              @"CrossedOut" : [NSNumber numberWithBool:self.isCrossedOut],
+              @"Comment" : self.comment
               };
 }
 
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ %ld, %@, %d", self.itemName, (long)self.quantity, self.ID, self.isCrossedOut];
+    return [NSString stringWithFormat:@"%@ %ld, %@, %d, %@", self.itemName, (long)self.quantity, self.ID, self.isCrossedOut, self.comment];
 }
 
 @end
