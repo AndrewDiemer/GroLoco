@@ -1,7 +1,5 @@
  
  var Mean = angular.module('Mean', ['ngRoute']);
- 
- url = "http://localhost:1330"
 
  // configure our routes
  Mean.config(function($routeProvider) {
@@ -10,6 +8,10 @@
      .when('/', {
          templateUrl: 'views/login.html',
          controller: 'addItemController'
+     })
+     .when('/admin', {
+         templateUrl: 'views/admin.html',
+         controller: 'adminController'
      })
     .otherwise({
         redirectTo: '/'

@@ -5,6 +5,25 @@ var clone = require('clone');
 
 module.exports = function (app){
 
+    app.get('/userlocation', isAuthenticated, function(req, res){
+        User.findOne({
+            'Email': req.user.Email
+        }, function(err, user){
+            if(err)
+                res.send(err)
+            if(user){
+                var location = {
+                    StoreName    : user.StoreName,
+                    Latitude    : user.Latitude,
+                    Longitude   : user.Longitude
+                }
+                res.send(location)
+            }else{
+                res.send(404)
+            }
+        })
+    })
+
     app.post('/setuserlocation', isAuthenticated, function(req,res){
         User.findOneAndUpdate({
             'Email': req.user.Email
