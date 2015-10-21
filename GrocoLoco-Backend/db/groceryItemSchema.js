@@ -1,5 +1,6 @@
 groceryItemSchema = new db.Schema({
 	ItemName    : String,
-	Quantity	: Number
+	Quantity	: Number,
+	Comment		: String
 })
 

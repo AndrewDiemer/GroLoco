@@ -4,6 +4,24 @@ var clone = require('clone');
 //ROUTES ===========================================================
 
 module.exports = function (app){
+
+    app.post('/setuserlocation', isAuthenticated, function(req,res){
+        User.findOneAndUpdate({
+            'Email': req.user.Email
+        },{
+            StoreName   : req.body.StoreName,
+            Latitude    : req.body.Latitude,
+            Longitude   : req.body.Longitude
+        }, function(err, user){
+            if(err)
+                res.send(err)
+            if(user)
+                res.send(user)
+            else
+                res.send(404)
+        })
+    })
+
     app.delete('/deletegroceryitem', isAuthenticated, function(req, res){
         GroceryList.findOne({
             'User': req.user,
@@ -72,6 +90,39 @@ module.exports = function (app){
         })
     })
 
+    app.post('/editgroceryitemcomment', isAuthenticated, function(req, res){
+        GroceryList.findOne({
+                'User': req.user,
+                'GroceryListName': req.body.GroceryListName
+            }, function(err, groceryList){
+                if(err)
+                    res.send(err)
+                if(groceryList){
+                    for(var i = 0; i < groceryList.List.length; i++){
+                        if(groceryList.List[i]._id == req.body._id){
+                            groceryList.List[i].Comment = req.body.Comment
+                             GroceryList.findOneAndUpdate({
+                                'User': req.user,
+                                'GroceryListName': req.body.GroceryListName
+                            },{
+                                'List': groceryList.List
+                            },{
+                                safe:true, upsert:true, new: true
+                            },
+                            function(err, groceryList){
+                                if(err)
+                                    res.send(err)
+                                if(groceryList)
+                                    res.send(200)
+                            })
+                        }
+                    }
+                }else{
+                    res.send(404);
+                }
+            })
+    })
+
     app.post('/editgroceryitem', isAuthenticated, function(req, res){
         GroceryList.findOne({
                 'User': req.user,
@@ -84,6 +135,7 @@ module.exports = function (app){
                         if(groceryList.List[i]._id == req.body._id){
                             groceryList.List[i].ItemName = req.body.ItemName
                             groceryList.List[i].Quantity = req.body.Quantity
+                            groceryList.List[i].Comment = req.body.Comment
                              GroceryList.findOneAndUpdate({
                                 'User': req.user,
                                 'GroceryListName': req.body.GroceryListName
