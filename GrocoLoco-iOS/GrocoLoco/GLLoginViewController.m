@@ -31,7 +31,7 @@
                                  completion:^(NSDictionary* response, NSError* error) {
                                      [self hideFullScreenHUD];
                                      if (!error) {
-                                         [self performSegueWithIdentifier:GL_LOGIN_SEGUE sender:self];
+                                         [self performSegueWithIdentifier:GL_SHOW_MAP_LOGIN sender:self];
                                      }
                                      else {
                                          [self showError:error.description];

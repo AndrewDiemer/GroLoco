@@ -13,9 +13,10 @@
 @property (nonatomic, strong) NSString *itemName;
 @property (nonatomic, assign) NSInteger quantity;
 @property (nonatomic, strong) NSString *ID;
+@property (nonatomic, strong) NSString *comment;
 @property (nonatomic, assign) BOOL isCrossedOut;
 
-- (instancetype)initWithName:(NSString *)name andQuantity:(NSInteger)quantity;
+- (instancetype)initWithName:(NSString *)name quantity:(NSInteger)quantity andComment:(NSString *)comment;
 - (instancetype)initWithDictionary: (NSDictionary *)dictionary;
 - (NSDictionary *)objectAsDictionary;
 
