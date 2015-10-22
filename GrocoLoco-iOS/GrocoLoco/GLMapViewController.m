@@ -51,6 +51,8 @@
     
     self.navigationController.navigationBarHidden = YES;
     
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -110,7 +112,6 @@
     pinView.canShowCallout=YES;
     
     //TODO: Check if annotation coordinates match user's store and set button to selected
-    NSLog(@"%@",annotation);
     
     UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(0, 0, 36, 36);
@@ -121,6 +122,11 @@
           forControlEvents:UIControlEventTouchUpInside];
     rightButton.tag = [self.mapView.annotations indexOfObject:annotation];;
     pinView.rightCalloutAccessoryView = rightButton;
+    
+    if ([self CLLocationCoordinateEqualC1:annotation.coordinate C2:[[GLUserManager sharedManager] storeCoordinate]]){
+        rightButton.selected = YES;
+    }
+    
     return pinView;
 }
 
@@ -134,7 +140,7 @@
             [self showError:error.localizedDescription];
         }
         else{
-            [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
+            [self performSegueWithIdentifier:GL_SHOW_HOME_MAP sender:self];
         }
     }];
 }
@@ -200,6 +206,15 @@
     
     [self.localSearch startWithCompletionHandler:completionHandler];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+
+#pragma mark -
+#pragma mark Helper Methods
+
+- (BOOL)CLLocationCoordinateEqualC1:(CLLocationCoordinate2D)coordinate1 C2:(CLLocationCoordinate2D) coordinate2
+{
+    return (coordinate1.latitude == coordinate2.latitude) && (coordinate1.longitude == coordinate2.longitude);
 }
 
 @end

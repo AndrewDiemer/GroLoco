@@ -208,4 +208,16 @@
     }];
 }
 
++ (void)getUserLocationCompletion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager GET:@"https://grocolocoapp.herokuapp.com/userlocation" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+
+}
+
 @end

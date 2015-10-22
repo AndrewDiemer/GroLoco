@@ -19,12 +19,12 @@
 		A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9461BBC80BC001F24DC /* GLBaseViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */; settings = {ASSET_TAGS = (); }; };
 		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		A7ADCB311BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7ADCB301BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A7FFFB391BD53EB3005B5A08 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */; };
 		A7FFFB3B1BD542C1005B5A08 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFFB3A1BD542C1005B5A08 /* MapKit.framework */; };
 		A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB3D1BD5758C005B5A08 /* GLMapAnnotation.m */; settings = {ASSET_TAGS = (); }; };
 		A7FFFB431BD825E4005B5A08 /* GLGroceryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB421BD825E4005B5A08 /* GLGroceryStore.m */; settings = {ASSET_TAGS = (); }; };
+		A7FFFB461BD83312005B5A08 /* GLUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB451BD83312005B5A08 /* GLUserManager.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,8 +53,6 @@
 		A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGroceryItem.m; sourceTree = "<group>"; };
 		A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeTableViewCell.h; sourceTree = "<group>"; };
 		A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeTableViewCell.m; sourceTree = "<group>"; };
-		A7ADCB2F1BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeAddNewTableViewCell.h; sourceTree = "<group>"; };
-		A7ADCB301BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeAddNewTableViewCell.m; sourceTree = "<group>"; };
 		A7FFFB351BD53C9F005B5A08 /* GLMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLMapViewController.h; sourceTree = "<group>"; };
 		A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLMapViewController.m; sourceTree = "<group>"; };
 		A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -63,6 +61,8 @@
 		A7FFFB3D1BD5758C005B5A08 /* GLMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLMapAnnotation.m; sourceTree = "<group>"; };
 		A7FFFB411BD825E4005B5A08 /* GLGroceryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLGroceryStore.h; sourceTree = "<group>"; };
 		A7FFFB421BD825E4005B5A08 /* GLGroceryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGroceryStore.m; sourceTree = "<group>"; };
+		A7FFFB441BD83312005B5A08 /* GLUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLUserManager.h; sourceTree = "<group>"; };
+		A7FFFB451BD83312005B5A08 /* GLUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLUserManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +117,8 @@
 				A702E94C1BBDA24C001F24DC /* Home */,
 				A702E9381BBC4FF6001F24DC /* GLNetworkingManager.h */,
 				A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */,
+				A7FFFB441BD83312005B5A08 /* GLUserManager.h */,
+				A7FFFB451BD83312005B5A08 /* GLUserManager.m */,
 				A702E92C1BBC01C9001F24DC /* Assets.xcassets */,
 				A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */,
 				A702E9311BBC01C9001F24DC /* Info.plist */,
@@ -153,8 +155,6 @@
 				A702E9401BBC5B81001F24DC /* GLHomeViewController.m */,
 				A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */,
 				A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */,
-				A7ADCB2F1BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.h */,
-				A7ADCB301BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -300,7 +300,7 @@
 				A7FFFB431BD825E4005B5A08 /* GLGroceryStore.m in Sources */,
 				A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */,
 				A702E9221BBC01C9001F24DC /* main.m in Sources */,
-				A7ADCB311BC326FF00E17EF0 /* GLHomeAddNewTableViewCell.m in Sources */,
+				A7FFFB461BD83312005B5A08 /* GLUserManager.m in Sources */,
 				A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */,
 				A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */,
 			);

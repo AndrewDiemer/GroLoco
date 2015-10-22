@@ -8,12 +8,14 @@
 
 #import "GLHomeViewController.h"
 #import "GLHomeTableViewCell.h"
-#import "GLHomeAddNewTableViewCell.h"
 #import "GLGroceryItem.h"
 
 @interface GLHomeViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet UIButton *addItemButton;
+
+
 @property (strong, nonatomic) UIBarButtonItem* editButton;
 @property (strong, nonatomic) UIBarButtonItem* doneButton;
 @property (strong, nonatomic) NSMutableArray *data;
@@ -39,6 +41,10 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(loadGroceryLists:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
+    
+    self.addItemButton.layer.cornerRadius = self.addItemButton.frame.size.width/2;
+    
+    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.addItemButton.frame.size.height, 0)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -52,15 +58,6 @@
 - (UITableViewCell* _Nonnull)tableView:(UITableView* _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
 {
     NSDictionary *groceryListDict = self.data[indexPath.section];
-    
-    if (indexPath.row == [groceryListDict[@"List"] count]) {
-        GLHomeAddNewTableViewCell* addCell = [tableView dequeueReusableCellWithIdentifier:GL_HOME_ADD_NEW_TABLEVIEW_CELL];
-        addCell.itemNameField.text = @"";
-        addCell.itemQuantityLabel.text = @"0";
-        addCell.itemQuantityStepper.value = 0;
-        [addCell.itemNameField addTarget:self action:@selector(doneEditing:) forControlEvents:UIControlEventEditingDidEnd];
-        return addCell;
-    }
     
     GLHomeTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:GL_HOME_TABLEVIEW_CELL forIndexPath:indexPath];
     GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
@@ -100,7 +97,7 @@
 {
     NSDictionary *groceryListDict = self.data[section];
     
-    return [groceryListDict[@"List"] count]+1;
+    return [groceryListDict[@"List"] count];
 }
 
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
@@ -196,48 +193,6 @@
     [self.tableView setEditing:NO animated:YES];
 }
 
-- (void)doneEditing:(UITextField *)sender
-{
-    if (sender.text.length == 0){
-        return;
-    }
-    
-    CGPoint pointInTable = [sender convertPoint:sender.bounds.origin toView:self.tableView];
-    
-    NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:pointInTable];
-    
-    NSDictionary* groceryListDict = self.data[indexPath.section];
-    if (indexPath.row != [groceryListDict[@"List"] count]) {
-        return;
-    }
-    
-    GLHomeAddNewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    
-    GLGroceryItem *newItem= [[GLGroceryItem alloc] initWithName:sender.text quantity:[cell.itemQuantityLabel.text integerValue] andComment:@""];
-    
-    [self.tableView beginUpdates];
-    NSIndexPath* addIndex;
-
-    [groceryListDict[@"List"] addObject:newItem];
-    addIndex = [NSIndexPath indexPathForRow:[groceryListDict[@"List"] count] inSection:indexPath.section];
-
-    [self.tableView insertRowsAtIndexPaths:@[ addIndex ] withRowAnimation:UITableViewRowAnimationTop];
-    [self.tableView endUpdates];
-
-    [self.tableView beginUpdates];
-    NSIndexPath *reloadPath = [NSIndexPath indexPathForRow:[groceryListDict[@"List"] count]-1 inSection:indexPath.section];
-    [self.tableView reloadRowsAtIndexPaths:@[ reloadPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView endUpdates];
-
-    [GLNetworkingManager addToGroceryList:groceryListDict[@"GroceryListName"]
-                                    items:@[ [newItem objectAsDictionary] ]
-                               completion:^(NSDictionary* response, NSError* error) {
-                                   if (error) {
-                                       NSLog(@"%@", error);
-                                   }
-                               }];
-}
-
 -(void)loadGroceryLists:(UIRefreshControl *)refreshControl
 {
     [self showFullScreenHUD];
@@ -252,26 +207,7 @@
 }
 - (IBAction)addNewListPressed:(id)sender
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New List Name" message:@"Enter new list name:" preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"List Name";
-    }];
-    
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Submit" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *listName = [alert.textFields firstObject].text;
-        if (listName.length == 0){
-            return;
-        }
-        [GLNetworkingManager createNewGroceryList:listName completion:^(NSDictionary *response, NSError *error) {
-            if (error){
-                NSLog(@"%@",error.description);
-            }
-        }];
-    }];
-    
-    [alert addAction:action];
-    [self presentViewController:alert animated:YES completion:nil];
+
 }
 
 - (void)setItemCrossedOut:(BOOL)crossedOut atIndexPath:(NSIndexPath *)indexPath

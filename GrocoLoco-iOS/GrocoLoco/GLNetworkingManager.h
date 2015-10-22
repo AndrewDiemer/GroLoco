@@ -29,4 +29,7 @@
 + (void)setUserLocation:(NSString *)storeName longitude:(NSNumber *)longitude latitude:(NSNumber *)latitude completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
 
 + (void)editGroceryItemComment:(NSString *)groceryListName itemID:(NSString *)ID comment:(NSString *)comment completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
++ (void)getUserLocationCompletion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
 @end

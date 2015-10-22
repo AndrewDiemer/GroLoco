@@ -17,5 +17,6 @@
 #import "GLConstants.h"
 #import "GLBaseViewController.h"
 #import "MBProgressHUD.h"
+#import "GLUserManager.h"
 
 #endif /* GrocoLocoPrefix_pch */
