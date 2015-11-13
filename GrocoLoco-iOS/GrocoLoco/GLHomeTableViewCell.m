@@ -27,15 +27,8 @@
 - (void)setItem:(GLGroceryItem*)item
 {
     _item = item;
-    self.itemNameField.text = item.itemName;
-    self.itemQuantityLabel.text = [NSString stringWithFormat:@"%ld", (long)item.quantity];
-    self.itemQuantityStepper.value = item.quantity;
-}
-
-- (IBAction)stepperPressed:(UIStepper *)sender
-{
-    self.itemQuantityLabel.text = [NSString stringWithFormat:@"%.f", sender.value];
-    self.item.quantity = sender.value;
+    self.itemNameLabel.text = item.itemName;
+    
 }
 
 - (IBAction)editingNameEnded:(UITextField *)sender
@@ -46,28 +39,7 @@
 -(void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    if (selected){
-        self.itemNameField.attributedText = [[NSAttributedString alloc] initWithString:self.item.itemName attributes:@{ NSStrikethroughStyleAttributeName : [NSNumber numberWithInteger:NSUnderlineStyleSingle] }];
-    }
-    else{
-        self.itemNameField.text = self.item.itemName;
-    }
-}
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-    [super setEditing:editing animated:animated];
-    self.itemNameField.userInteractionEnabled = editing;
-    if (editing){
-        self.itemQuantityStepper.hidden = NO;
-        [self.itemNameField setBorderStyle: UITextBorderStyleRoundedRect];
-        self.itemNameField.textColor = [UIColor blackColor];
-    }
-    else{
-        self.itemQuantityStepper.hidden = YES;
-        [self.itemNameField setBorderStyle: UITextBorderStyleNone];
-        self.itemNameField.textColor = [UIColor whiteColor];
-    }
 }
 
 @end

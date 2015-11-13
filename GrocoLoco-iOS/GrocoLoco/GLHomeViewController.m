@@ -18,11 +18,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *storeNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *startShoppingButton;
-
+@property (weak, nonatomic) IBOutlet UIButton *clearListButton;
 
 @property (strong, nonatomic) UIBarButtonItem* editButton;
 @property (strong, nonatomic) UIBarButtonItem* doneButton;
 @property (strong, nonatomic) NSMutableArray *data;
+@property (strong, nonatomic) NSMutableArray *expandedPaths;
 
 @end
 
@@ -52,8 +53,11 @@
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.addItemButton.frame.size.height, 0)];
     
     self.startShoppingButton.layer.cornerRadius = 5;
+    self.clearListButton.layer.cornerRadius = 5;
     self.usernameLabel.text = [[GLUserManager sharedManager] name];
     self.storeNameLabel.text = [[GLUserManager sharedManager] storeName];
+    
+    self.expandedPaths = @[].mutableCopy;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -70,7 +74,14 @@
     
     GLHomeTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:GL_HOME_TABLEVIEW_CELL forIndexPath:indexPath];
     GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
-    cell.itemNameField.delegate = self;
+    
+    NSInteger tag = (indexPath.row+1)+(indexPath.section*100);
+    
+    cell.expandButton.tag = tag;
+    [cell.expandButton addTarget:self action:@selector(expandCell:) forControlEvents:UIControlEventTouchUpInside];
+    cell.expandButton.selected = [self.expandedPaths containsObject:[self getIndexPathFromTag:tag]];
+
+    
     cell.item = item;
     return cell;
 }
@@ -186,8 +197,37 @@
                                   }
                               }];
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.expandedPaths containsObject:indexPath]){
+        return 130;
+    }
+    else{
+        return 91;
+    }
+}
+
+
+#pragma mark -
+#pragma mark Button Methods
+
 - (IBAction)startShoppingPressed:(id)sender
 {
+    
+}
+- (IBAction)clearListPressed:(id)sender
+{
+    NSLog(@"%@",self.data[0][@"List"][0]);
+    for (GLGroceryItem* item in self.data[0][@"List"]) {
+        [GLNetworkingManager deleteGroceryItem:[GLUserManager sharedManager].storeName
+                                        itemID:item.ID
+                                    completion:^(NSDictionary* response, NSError* error) {
+                                        if (error) {
+                                            [self showError:error.description];
+                                        }
+                                    }];
+    }
 }
 
 
@@ -236,6 +276,36 @@
                                           NSLog(@"%@", error.description);
                                       }
                                   }];
+}
+
+-(NSIndexPath*)getIndexPathFromTag:(NSInteger)tag{
+    /* To get indexPath from textfeidl tag,
+     TextField tag set = (indexPath.row +1) + (indexPath.section*100) */
+    NSInteger row =0;
+    NSInteger section =0;
+    for (NSInteger i =100; i<tag; i=i+100) {
+        section++;
+    }
+    row = tag - (section*100);
+    row-=1;
+    return  [NSIndexPath indexPathForRow:row inSection:section];
+    
+}
+
+- (void)expandCell:(UIButton *)sender
+{
+    NSIndexPath* expandedPath = [self getIndexPathFromTag:sender.tag];
+    if (!sender.selected) {
+        [self.expandedPaths addObject:expandedPath];
+    }
+    else {
+        [self.expandedPaths removeObject:expandedPath];
+    }
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:@[ expandedPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+    
+    sender.selected = !sender.selected;
 }
 
 @end

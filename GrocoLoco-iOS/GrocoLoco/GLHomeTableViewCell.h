@@ -12,10 +12,10 @@
 
 @interface GLHomeTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UITextField *itemNameField;
-@property (weak, nonatomic) IBOutlet UIStepper *itemQuantityStepper;
-@property (weak, nonatomic) IBOutlet UILabel *itemQuantityLabel;
-@property (weak, nonatomic) IBOutlet UILabel *itemNotesLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *itemImage;
+@property (weak, nonatomic) IBOutlet UILabel *itemNameLabel;
+@property (weak, nonatomic) IBOutlet UITextField *notesTextField;
+@property (weak, nonatomic) IBOutlet UIButton *expandButton;
 
 @property (strong, nonatomic) GLGroceryItem *item;
 
