@@ -79,7 +79,14 @@
     
     cell.expandButton.tag = tag;
     [cell.expandButton addTarget:self action:@selector(expandCell:) forControlEvents:UIControlEventTouchUpInside];
-    cell.expandButton.selected = [self.expandedPaths containsObject:[self getIndexPathFromTag:tag]];
+    if ([self.expandedPaths containsObject:[self getIndexPathFromTag:tag]]){
+        cell.expandButton.selected = YES;
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+    else{
+        cell.expandButton.selected = NO;
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 81, 0, 0)];
+    }
 
     
     cell.item = item;
