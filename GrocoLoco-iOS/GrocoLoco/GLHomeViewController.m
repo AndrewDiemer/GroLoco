@@ -14,6 +14,10 @@
 
 @property (weak, nonatomic) IBOutlet UITableView* tableView;
 @property (weak, nonatomic) IBOutlet UIButton *addItemButton;
+@property (weak, nonatomic) IBOutlet UIImageView *topImageView;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *storeNameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *startShoppingButton;
 
 
 @property (strong, nonatomic) UIBarButtonItem* editButton;
@@ -45,6 +49,11 @@
     self.addItemButton.layer.cornerRadius = self.addItemButton.frame.size.width/2;
     
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.addItemButton.frame.size.height, 0)];
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.addItemButton.frame.size.height, 0)];
+    
+    self.startShoppingButton.layer.cornerRadius = 5;
+    self.usernameLabel.text = [[GLUserManager sharedManager] name];
+    self.storeNameLabel.text = [[GLUserManager sharedManager] storeName];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -76,6 +85,7 @@
     if (item.isCrossedOut){
         [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     }
+    cell.backgroundColor = [UIColor clearColor];
 }
 
 - (void)tableView:(UITableView* _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
@@ -143,7 +153,7 @@
         GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
         [GLNetworkingManager deleteGroceryItem:groceryListDict[@"GroceryListName"] itemID:item.ID completion:^(NSDictionary *response, NSError *error) {
             if (error){
-                NSLog(@"%@",error.description);
+                [self showError:error.localizedDescription];
             }
             else{
                 [groceryListDict[@"List"] removeObject:item];
@@ -175,6 +185,9 @@
                                       [self showError:error.description];
                                   }
                               }];
+}
+- (IBAction)startShoppingPressed:(id)sender
+{
 }
 
 

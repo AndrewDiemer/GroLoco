@@ -158,6 +158,7 @@
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     NSMutableDictionary *params = @{}.mutableCopy;
     params[@"_id"] = ID;

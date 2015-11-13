@@ -13,18 +13,20 @@
 		A702E92B1BBC01C9001F24DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A702E9291BBC01C9001F24DC /* Main.storyboard */; };
 		A702E92D1BBC01C9001F24DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A702E92C1BBC01C9001F24DC /* Assets.xcassets */; };
 		A702E9301BBC01C9001F24DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */; };
-		A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */; settings = {ASSET_TAGS = (); }; };
-		A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E93C1BBC5992001F24DC /* GLLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
-		A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9401BBC5B81001F24DC /* GLHomeViewController.m */; settings = {ASSET_TAGS = (); }; };
-		A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9461BBC80BC001F24DC /* GLBaseViewController.m */; settings = {ASSET_TAGS = (); }; };
-		A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */; settings = {ASSET_TAGS = (); }; };
-		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */; };
+		A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E93C1BBC5992001F24DC /* GLLoginViewController.m */; };
+		A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9401BBC5B81001F24DC /* GLHomeViewController.m */; };
+		A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9461BBC80BC001F24DC /* GLBaseViewController.m */; };
+		A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */; };
+		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; };
+		A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */; };
+		A7FE71B41BF3BF98001A0EA2 /* GLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */; };
+		A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */; };
 		A7FFFB391BD53EB3005B5A08 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */; };
 		A7FFFB3B1BD542C1005B5A08 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFFB3A1BD542C1005B5A08 /* MapKit.framework */; };
-		A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB3D1BD5758C005B5A08 /* GLMapAnnotation.m */; settings = {ASSET_TAGS = (); }; };
-		A7FFFB431BD825E4005B5A08 /* GLGroceryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB421BD825E4005B5A08 /* GLGroceryStore.m */; settings = {ASSET_TAGS = (); }; };
-		A7FFFB461BD83312005B5A08 /* GLUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB451BD83312005B5A08 /* GLUserManager.m */; settings = {ASSET_TAGS = (); }; };
+		A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB3D1BD5758C005B5A08 /* GLMapAnnotation.m */; };
+		A7FFFB431BD825E4005B5A08 /* GLGroceryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB421BD825E4005B5A08 /* GLGroceryStore.m */; };
+		A7FFFB461BD83312005B5A08 /* GLUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB451BD83312005B5A08 /* GLUserManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,9 @@
 		A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGroceryItem.m; sourceTree = "<group>"; };
 		A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeTableViewCell.h; sourceTree = "<group>"; };
 		A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeTableViewCell.m; sourceTree = "<group>"; };
+		A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSearchViewController.h; sourceTree = "<group>"; };
+		A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSearchViewController.m; sourceTree = "<group>"; };
+		A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLConstants.m; sourceTree = "<group>"; };
 		A7FFFB351BD53C9F005B5A08 /* GLMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLMapViewController.h; sourceTree = "<group>"; };
 		A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLMapViewController.m; sourceTree = "<group>"; };
 		A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -122,6 +127,8 @@
 				A702E92C1BBC01C9001F24DC /* Assets.xcassets */,
 				A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */,
 				A702E9311BBC01C9001F24DC /* Info.plist */,
+				A702E93E1BBC5A3A001F24DC /* GLConstants.h */,
+				A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */,
 				A702E9201BBC01C9001F24DC /* Supporting Files */,
 			);
 			path = GrocoLoco;
@@ -132,7 +139,6 @@
 			children = (
 				A702E9371BBC4DB0001F24DC /* GrocoLocoPrefix.pch */,
 				A702E9211BBC01C9001F24DC /* main.m */,
-				A702E93E1BBC5A3A001F24DC /* GLConstants.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -155,6 +161,8 @@
 				A702E9401BBC5B81001F24DC /* GLHomeViewController.m */,
 				A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */,
 				A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */,
+				A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */,
+				A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -303,6 +311,8 @@
 				A7FFFB461BD83312005B5A08 /* GLUserManager.m in Sources */,
 				A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */,
 				A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */,
+				A7FE71B41BF3BF98001A0EA2 /* GLConstants.m in Sources */,
+				A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

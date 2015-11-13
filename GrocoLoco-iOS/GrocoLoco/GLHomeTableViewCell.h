@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *itemNameField;
 @property (weak, nonatomic) IBOutlet UIStepper *itemQuantityStepper;
 @property (weak, nonatomic) IBOutlet UILabel *itemQuantityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *itemNotesLabel;
 
 @property (strong, nonatomic) GLGroceryItem *item;
 

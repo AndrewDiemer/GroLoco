@@ -15,14 +15,34 @@
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 @property (weak, nonatomic) IBOutlet UIStackView *fieldStackView;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
+@property (weak, nonatomic) IBOutlet UIView *loginView;
+@property (weak, nonatomic) IBOutlet UIButton *switchLoginButton;
+@property (weak, nonatomic) IBOutlet UIButton *switchSignUpButton;
 
 @end
 
 @implementation GLLoginViewController
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+//    self.navigationController.navigationBarHidden = NO;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.fieldStackView removeArrangedSubview:self.nameField];
+    [self.submitButton setTitle:@"Login" forState:UIControlStateNormal];
+    
+    self.loginView.layer.cornerRadius = 5;
+    self.loginView.layer.masksToBounds = YES;
+    
+    self.submitButton.layer.cornerRadius = 5;
     // Do any additional setup after loading the view.
 }
 - (IBAction)switchToLogin:(id)sender
@@ -30,6 +50,10 @@
     if ([self.submitButton.titleLabel.text isEqualToString:@"Login"]){
         return;
     }
+    self.switchLoginButton.backgroundColor = [UIColor GLdarkGreen];
+    [self.switchLoginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.switchSignUpButton.backgroundColor = UIColorFromRGB(0x3C5A17);
+    [self.switchSignUpButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [self.fieldStackView removeArrangedSubview:self.nameField];
     [self.submitButton setTitle:@"Login" forState:UIControlStateNormal];
 }
@@ -38,6 +62,10 @@
     if ([self.submitButton.titleLabel.text isEqualToString:@"Sign Up"]){
         return;
     }
+    self.switchSignUpButton.backgroundColor = [UIColor GLdarkGreen];
+    [self.switchSignUpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.switchLoginButton.backgroundColor = UIColorFromRGB(0x3C5A17);
+    [self.switchLoginButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [self.fieldStackView insertArrangedSubview:self.nameField atIndex:0];
     [self.submitButton setTitle:@"Sign Up" forState:UIControlStateNormal];
 }

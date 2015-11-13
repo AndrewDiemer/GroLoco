@@ -11,7 +11,7 @@
 
 @interface GLUserManager : NSObject
 
-+ (id)sharedManager;
++ (GLUserManager *)sharedManager;
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *email;

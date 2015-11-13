@@ -12,6 +12,18 @@
 
 @implementation GLHomeTableViewCell
 
+-(id)initWithCoder:(NSCoder*)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if(self)
+    {
+        self.backgroundColor = [UIColor GLlightGreen];
+    }
+    
+    return self;
+}
+
 - (void)setItem:(GLGroceryItem*)item
 {
     _item = item;
@@ -49,11 +61,12 @@
     if (editing){
         self.itemQuantityStepper.hidden = NO;
         [self.itemNameField setBorderStyle: UITextBorderStyleRoundedRect];
+        self.itemNameField.textColor = [UIColor blackColor];
     }
     else{
         self.itemQuantityStepper.hidden = YES;
         [self.itemNameField setBorderStyle: UITextBorderStyleNone];
-
+        self.itemNameField.textColor = [UIColor whiteColor];
     }
 }
 
