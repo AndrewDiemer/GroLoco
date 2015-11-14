@@ -3,6 +3,7 @@ require('../db/BlockCoordinates');
 require('../db/ItemCoordinates');   
 var passport = require('passport');
 var clone = require('clone');
+
 //ROUTES ===========================================================
 
 module.exports = function (app){
@@ -32,18 +33,16 @@ module.exports = function (app){
     })
 
     app.get('/userlocation', isAuthenticated, function(req, res){
-        User.findOne({
-            'Email': req.user.Email
-        }, function(err, user){
+        GroceryItem.findOne({
+            'Sku': req.body.sku
+        }, function(err, item){
             if(err)
                 res.send(err)
-            if(user){
-                var location = {
-                    StoreName    : user.StoreName,
-                    Latitude    : user.Latitude,
-                    Longitude   : user.Longitude
-                }
-                res.send(location)
+            if(item){
+
+                item.x
+
+                res.send(item.coordinates)
             }else{
                 res.send(404)
             }
@@ -66,8 +65,26 @@ module.exports = function (app){
                 res.send(404)
         })
     })
+    app.post('/deletegroceryitems', isAuthenticated, function(req, res){
+        
+        GroceryList.findOneAndUpdate({
+            'User': req.user,
+            'GroceryListName': req.body.GroceryListName
+        },{
+            'List': []
+        },{
+            safe:true, upsert:true, new: true
+        },
+        function(err, groceryList){
+            if(err)
+                res.send(err)
+            if(groceryList)
+                res.send(groceryList)
+        })
 
-    app.delete('/deletegroceryitem', isAuthenticated, function(req, res){
+    })
+
+    app.post('/deletegroceryitem', isAuthenticated, function(req, res){
         GroceryList.findOne({
             'User': req.user,
             'GroceryListName': req.body.GroceryListName
@@ -77,9 +94,9 @@ module.exports = function (app){
             if(groceryList){
                 for(var i = 0; i < groceryList.List.length; i++){
                     if(groceryList.List[i]._id == req.body._id){
-                        var index = req.user.GroceryList.indexOf(groceryList.List[i])
-                        req.user.GroceryList.splice(index, 1);
-                        console.log(index)
+
+                        groceryList.List.splice(i, 1);
+
                          GroceryList.findOneAndUpdate({
                             'User': req.user,
                             'GroceryListName': req.body.GroceryListName
@@ -145,7 +162,9 @@ module.exports = function (app){
                 if(groceryList){
                     for(var i = 0; i < groceryList.List.length; i++){
                         if(groceryList.List[i]._id == req.body._id){
-                            groceryList.List[i].Comment = req.body.Comment
+                            console.log(req.body.Comment)
+                            groceryList.List[i]["Comment"] = req.body.Comment
+                            console.log(groceryList.List[i])
                              GroceryList.findOneAndUpdate({
                                 'User': req.user,
                                 'GroceryListName': req.body.GroceryListName
@@ -312,7 +331,7 @@ module.exports = function (app){
     app.post('/createuser', passport.authenticate('signup', {
         successRedirect : '/createuser', // redirect to the secure profile section
         failureRedirect : '/createuser/fail', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
+        // failureFlash : true // allow flash messages
     }));
 
     app.get('/createuser', isAuthenticated, function(req,res){

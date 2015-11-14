@@ -5,7 +5,8 @@ groceryListSchema = new db.Schema({
     List 			: [{
     	CrossedOut	: { type: Boolean, default: false },
     	ItemName    : String,
-		Quantity	: Number
+		Quantity	: Number,
+		Comment		: String
     }]
 })
 

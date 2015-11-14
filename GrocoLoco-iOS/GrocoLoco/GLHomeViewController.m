@@ -24,6 +24,7 @@
 @property (strong, nonatomic) UIBarButtonItem* doneButton;
 @property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) NSMutableArray *expandedPaths;
+@property (strong, nonatomic) NSIndexPath *oldIndex;
 
 @end
 
@@ -78,18 +79,30 @@
     NSInteger tag = (indexPath.row+1)+(indexPath.section*100);
     
     cell.expandButton.tag = tag;
+    cell.notesTextField.tag = tag;
+    
     [cell.expandButton addTarget:self action:@selector(expandCell:) forControlEvents:UIControlEventTouchUpInside];
     if ([self.expandedPaths containsObject:[self getIndexPathFromTag:tag]]){
+        [UIView animateWithDuration:0.5 animations:^{
+            cell.expandButton.transform = CGAffineTransformMakeRotation(M_PI);
+        }];
         cell.expandButton.selected = YES;
+        cell.notesLabel.hidden = YES;
         [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     }
     else{
+        [UIView animateWithDuration:0.5 animations:^{
+            cell.expandButton.transform = CGAffineTransformIdentity;
+        }];
         cell.expandButton.selected = NO;
+        cell.notesLabel.hidden = NO;
         [cell setSeparatorInset:UIEdgeInsetsMake(0, 81, 0, 0)];
     }
 
-    
     cell.item = item;
+
+    cell.notesTextField.delegate = self;
+    
     return cell;
 }
 
@@ -106,15 +119,15 @@
     cell.backgroundColor = [UIColor clearColor];
 }
 
-- (void)tableView:(UITableView* _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
-{
-    [self setItemCrossedOut:YES atIndexPath:indexPath];
-}
-
-- (void)tableView:(UITableView* _Nonnull)tableView didDeselectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
-{
-    [self setItemCrossedOut:NO atIndexPath:indexPath];
-}
+//- (void)tableView:(UITableView* _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
+//{
+//    [self setItemCrossedOut:YES atIndexPath:indexPath];
+//}
+//
+//- (void)tableView:(UITableView* _Nonnull)tableView didDeselectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
+//{
+//    [self setItemCrossedOut:NO atIndexPath:indexPath];
+//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView* _Nonnull)tableView
 {
@@ -126,11 +139,6 @@
     NSDictionary *groceryListDict = self.data[section];
     
     return [groceryListDict[@"List"] count];
-}
-
-- (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return self.data[section][@"GroceryListName"];
 }
 
 - (BOOL)tableView:(UITableView* _Nonnull)tableView canMoveRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
@@ -187,22 +195,35 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    CGPoint pointInTable = [textField convertPoint:textField.bounds.origin toView:self.tableView];
-    
-    NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:pointInTable];
-    
+//    CGPoint pointInTable = [textField convertPoint:textField.bounds.origin toView:self.tableView];
+//    
+//    NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:pointInTable];
+//    
+//    NSDictionary* groceryListDict = self.data[indexPath.section];
+//    
+//    GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
+//
+//    [GLNetworkingManager editGroceryItem:groceryListDict[@"GroceryListName"]
+//                                    item:[item objectAsDictionary]
+//                                  itemID:item.ID
+//                              completion:^(NSDictionary* response, NSError* error) {
+//                                  if (error) {
+//                                      [self showError:error.description];
+//                                  }
+//                              }];
+    if (textField.text.length == 0){
+        return;
+    }
+    NSIndexPath *indexPath = [self getIndexPathFromTag:textField.tag];
     NSDictionary* groceryListDict = self.data[indexPath.section];
-    
     GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
+    
+    [GLNetworkingManager editGroceryItemComment:[GLUserManager sharedManager].storeName itemID:item.ID comment:textField.text completion:^(NSDictionary *response, NSError *error) {
+        if (error){
+            [self showError:error.description];
+        }
+    }];
 
-    [GLNetworkingManager editGroceryItem:groceryListDict[@"GroceryListName"]
-                                    item:[item objectAsDictionary]
-                                  itemID:item.ID
-                              completion:^(NSDictionary* response, NSError* error) {
-                                  if (error) {
-                                      [self showError:error.description];
-                                  }
-                              }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -224,34 +245,17 @@
     
 }
 - (IBAction)clearListPressed:(id)sender
-{
-    NSLog(@"%@",self.data[0][@"List"][0]);
-    for (GLGroceryItem* item in self.data[0][@"List"]) {
-        [GLNetworkingManager deleteGroceryItem:[GLUserManager sharedManager].storeName
-                                        itemID:item.ID
-                                    completion:^(NSDictionary* response, NSError* error) {
-                                        if (error) {
-                                            [self showError:error.description];
-                                        }
-                                    }];
-    }
+{    
+    [GLNetworkingManager deleteGroceryItems:[GLUserManager sharedManager].storeName completion:^(NSDictionary *response, NSError *error) {
+        if (error){
+            [self showError:error.description];
+        }
+    }];
 }
 
 
 #pragma mark -
 #pragma mark Helper Methods
-
-- (void)editAction
-{
-    self.navigationItem.leftBarButtonItem = self.doneButton;
-    [self.tableView setEditing:YES animated:YES];
-}
-
-- (void)doneAction
-{
-    self.navigationItem.leftBarButtonItem = self.editButton;
-    [self.tableView setEditing:NO animated:YES];
-}
 
 -(void)loadGroceryLists:(UIRefreshControl *)refreshControl
 {
@@ -301,15 +305,23 @@
 
 - (void)expandCell:(UIButton *)sender
 {
+    self.oldIndex = [self.expandedPaths firstObject];
+    
     NSIndexPath* expandedPath = [self getIndexPathFromTag:sender.tag];
+
     if (!sender.selected) {
+        [self.expandedPaths removeAllObjects];
         [self.expandedPaths addObject:expandedPath];
     }
     else {
         [self.expandedPaths removeObject:expandedPath];
     }
+    NSMutableArray *reload = @[expandedPath].mutableCopy;
+    if (self.oldIndex){
+        [reload addObject:self.oldIndex];
+    }
     [self.tableView beginUpdates];
-    [self.tableView reloadRowsAtIndexPaths:@[ expandedPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadRowsAtIndexPaths:reload withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
     
     sender.selected = !sender.selected;

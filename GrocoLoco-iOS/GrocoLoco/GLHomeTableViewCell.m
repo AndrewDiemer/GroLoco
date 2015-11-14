@@ -23,12 +23,20 @@
     
     return self;
 }
+- (IBAction)expandButtonPressed:(UIButton *)sender
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        sender.transform = CGAffineTransformMakeRotation(M_PI);
+    }];
+    sender.selected = !sender.selected;
+}
 
 - (void)setItem:(GLGroceryItem*)item
 {
     _item = item;
     self.itemNameLabel.text = item.itemName;
-    
+    self.notesLabel.text = item.notes;
+    self.notesTextField.text = item.notes;
 }
 
 - (IBAction)editingNameEnded:(UITextField *)sender

@@ -106,6 +106,8 @@
     NSDictionary* params = @{ @"GroceryListName" : groceryListName,
                               @"List" : items
                               };
+    NSLog(@"%@",params);
+    
     [manager POST:@"https://grocolocoapp.herokuapp.com/addtolist"
         parameters:params
         success:^(AFHTTPRequestOperation* _Nonnull operation, id _Nonnull responseObject) {
@@ -158,19 +160,36 @@
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSMutableDictionary *params = @{}.mutableCopy;
     params[@"_id"] = ID;
     params[@"GroceryListName"] = groceryListName;
+
     
-    NSLog(@"%@",params);
-    
-    [manager DELETE:@"https://grocolocoapp.herokuapp.com/deletegroceryitem" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    [manager POST:@"https://grocolocoapp.herokuapp.com/deletegroceryitem" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         completionBlock(responseObject, nil);
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
         completionBlock(nil, error);
     }];
+}
+
++ (void)deleteGroceryItems:(NSString *)groceryListName completion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSMutableDictionary *params = @{}.mutableCopy;
+    params[@"GroceryListName"] = groceryListName;
+    
+    [manager POST:@"https://grocolocoapp.herokuapp.com/deletegroceryitems" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+    
 }
 
 + (void)setUserLocation:(NSString *)storeName longitude:(NSNumber *)longitude latitude:(NSNumber *)latitude completion:(void (^)(NSDictionary* response, NSError* error))completionBlock
@@ -198,11 +217,14 @@
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSDictionary *params = @{ @"GroceryListName" : groceryListName,
                               @"_id" : ID,
                               @"Comment" : comment
                               };
+    
+    NSLog(@"%@",params);
     
     [manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitemcomment" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         completionBlock(responseObject, nil);

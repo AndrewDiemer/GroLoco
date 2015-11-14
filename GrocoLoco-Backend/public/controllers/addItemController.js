@@ -194,21 +194,47 @@ function randomInt(min, max){
     $scope.submit = function() {
             
         
-        var object = {
-            GroceryListName: 'My List 2.0',
+        // var object = {
+        //     GroceryListName: 'My List',
+        //     List: [{
+        //         ItemName:'avo',
+        //         Quantity: 1,
+        //         Comment: 'my comment'
+        //     }]
+        // }
+
+        // var user = {
+        //     Email: 'morgan.moskalyk@gmail.com',
+        //     Password: 'password'
+        // }
+
+        // $http.post('/login', user).success(function(data, status){
+        //      $http.post('/addtolist',object)
+        //         .success(function(data, status) {
+        //             console.log(data)
+        //             console.log(status)
+
+        //             console.log('successful post');
+        //         }).error(function(status){
+        //             console.log('failed post');
+        //         });
+        // })
+
+         var object = {
+            GroceryListName: 'My List',
             List: [{
-                ItemName:'avo',
-                Quantity: 1
+                _id: '5646be87121318fe3374cb5c',
+                _id: '5646be87121318fe3374cb5d'
             }]
         }
 
-        var user = {
-            Email: 'morgan.moskalyk@gmail.com',
-            Password: 'password'
-        }
+        // var user = {
+        //     Email: 'morgan.moskalyk@gmail.com',
+        //     Password: 'password'
+        // }
 
         $http.post('/login', user).success(function(data, status){
-             $http.post('/addtolist',object)
+             $http.post('/deletegroceryitems',object)
                 .success(function(data, status) {
                     console.log(data)
                     console.log(status)
@@ -218,8 +244,6 @@ function randomInt(min, max){
                     console.log('failed post');
                 });
         })
-
-    
 
     };
 });

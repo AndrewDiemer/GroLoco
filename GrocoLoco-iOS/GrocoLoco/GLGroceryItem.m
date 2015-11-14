@@ -16,7 +16,7 @@
     if (self) {
         _itemName = name;
         _quantity = quantity;
-        _comment = comment;
+        _notes = comment;
         _isCrossedOut = NO;
     }
     return self;
@@ -30,7 +30,7 @@
         _quantity = [dictionary[@"Quantity"] integerValue];
         _ID = dictionary[@"_id"];
         _isCrossedOut = [dictionary[@"CrossedOut"] boolValue];
-        _comment = dictionary[@"Comment"];
+        _notes = dictionary[@"Comment"];
     }
     return self;
 }
@@ -40,14 +40,14 @@
     return @{ @"ItemName" : self.itemName,
               @"Quantity" : @(self.quantity),
               @"CrossedOut" : [NSNumber numberWithBool:self.isCrossedOut],
-              @"Comment" : self.comment
+              @"Comment" : self.notes
               };
 }
 
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ %ld, %@, %d, %@", self.itemName, (long)self.quantity, self.ID, self.isCrossedOut, self.comment];
+    return [NSString stringWithFormat:@"%@ %ld, %@, %d, %@", self.itemName, (long)self.quantity, self.ID, self.isCrossedOut, self.notes];
 }
 
 @end
