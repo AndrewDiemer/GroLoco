@@ -1,9 +1,35 @@
 
+// require('../Classes/Coordinates');
+require('../db/Coordinates');   
 var passport = require('passport');
 var clone = require('clone');
 //ROUTES ===========================================================
 
 module.exports = function (app){
+
+    // parameters: UPCode
+    app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
+        GroceryItem.findOne({
+            'UPC': req.query.UPC
+        }, function(err, item){
+            if(err)
+                res.send(err);
+            if(item) {
+                // found item, now need to get and set its coordinates
+                item.setcoordinates(function(err, item) {                    
+                    if(err) {
+                        console.log('error finding coordinates for item');
+                        res.send(err);
+                    } else {
+                        console.log('successfully found and set coordinates');
+                        res.send(item);
+                    }
+                })
+            } else{
+                res.send(404)
+            }
+        })
+    })
 
     app.get('/userlocation', isAuthenticated, function(req, res){
         User.findOne({
