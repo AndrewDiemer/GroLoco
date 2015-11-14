@@ -8,6 +8,27 @@ var clone = require('clone');
 
 module.exports = function (app){
 
+    //Auto lookup
+    app.get('/findItems', isAuthenticated, function(req, res){
+    
+        GroceryItem.find({}, function(err, groceryitems){
+        if(err)
+            res.send(err)
+        if(groceryitems){
+           // res.send(groceryitems)
+           for(i =0; i<groceryitems.length; i++)
+           {
+            res.send(groceryitems.length)
+            if(groceryitems[i].description == "Lucerne Ice Cream Vanilla")
+                res.send(groceryitems[i])
+           }
+        }
+        else
+            res.send(404)
+       })
+
+    });  
+
     // parameters: UPCode
     app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
         GroceryItem.findOne({
