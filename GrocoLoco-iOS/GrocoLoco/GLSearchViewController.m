@@ -42,7 +42,7 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.doneButton.frame.size.height, 0)];
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.doneButton.frame.size.height, 0)];
     
-        [self.searchBar becomeFirstResponder];
+    [self.searchBar becomeFirstResponder];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -60,7 +60,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    GLHomeTableViewCell *cell= [tableView dequeueReusableCellWithIdentifier: GL_HOME_TABLEVIEW_CELL forIndexPath:indexPath];
+    GLHomeTableViewCell *cell= [tableView dequeueReusableCellWithIdentifier:GL_SEARCH_TABLEVIEW_CELL forIndexPath:indexPath];
     
     cell.item = self.filertedItems[indexPath.row];
     
@@ -79,7 +79,6 @@
 - (IBAction)donePressed:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
 #pragma mark -

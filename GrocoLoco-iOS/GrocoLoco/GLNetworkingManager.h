@@ -26,6 +26,8 @@
 
 + (void)deleteGroceryItem:(NSString *)groceryListName itemID:(NSString *)ID completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
 
++ (void)deleteGroceryItems:(NSString *)groceryListName completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
 + (void)setUserLocation:(NSString *)storeName longitude:(NSNumber *)longitude latitude:(NSNumber *)latitude completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
 
 + (void)editGroceryItemComment:(NSString *)groceryListName itemID:(NSString *)ID comment:(NSString *)comment completion:(void (^)(NSDictionary* response, NSError* error))completionBlock;

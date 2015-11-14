@@ -21,6 +21,7 @@
 		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; };
 		A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */; };
 		A7FE71B41BF3BF98001A0EA2 /* GLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */; };
+		A7FE71B71BF6C4DC001A0EA2 /* GLSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FE71B61BF6C4DB001A0EA2 /* GLSearchTableViewCell.m */; };
 		A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */; };
 		A7FFFB391BD53EB3005B5A08 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */; };
 		A7FFFB3B1BD542C1005B5A08 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFFB3A1BD542C1005B5A08 /* MapKit.framework */; };
@@ -58,6 +59,8 @@
 		A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSearchViewController.h; sourceTree = "<group>"; };
 		A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSearchViewController.m; sourceTree = "<group>"; };
 		A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLConstants.m; sourceTree = "<group>"; };
+		A7FE71B51BF6C4DB001A0EA2 /* GLSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSearchTableViewCell.h; sourceTree = "<group>"; };
+		A7FE71B61BF6C4DB001A0EA2 /* GLSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSearchTableViewCell.m; sourceTree = "<group>"; };
 		A7FFFB351BD53C9F005B5A08 /* GLMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLMapViewController.h; sourceTree = "<group>"; };
 		A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLMapViewController.m; sourceTree = "<group>"; };
 		A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -115,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				A702E9291BBC01C9001F24DC /* Main.storyboard */,
+				A7FE71B51BF6C4DB001A0EA2 /* GLSearchTableViewCell.h */,
+				A7FE71B61BF6C4DB001A0EA2 /* GLSearchTableViewCell.m */,
 				A702E9231BBC01C9001F24DC /* GLAppDelegate.h */,
 				A702E9241BBC01C9001F24DC /* GLAppDelegate.m */,
 				A702E94D1BBDAE12001F24DC /* Model Objects */,
@@ -299,6 +304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7FE71B71BF6C4DC001A0EA2 /* GLSearchTableViewCell.m in Sources */,
 				A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */,
 				A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */,
 				A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */,
