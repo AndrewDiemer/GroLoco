@@ -119,15 +119,15 @@
     cell.backgroundColor = [UIColor clearColor];
 }
 
-- (void)tableView:(UITableView* _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
-{
-    [self setItemCrossedOut:YES atIndexPath:indexPath];
-}
-
-- (void)tableView:(UITableView* _Nonnull)tableView didDeselectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
-{
-    [self setItemCrossedOut:NO atIndexPath:indexPath];
-}
+//- (void)tableView:(UITableView* _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
+//{
+//    [self setItemCrossedOut:YES atIndexPath:indexPath];
+//}
+//
+//- (void)tableView:(UITableView* _Nonnull)tableView didDeselectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
+//{
+//    [self setItemCrossedOut:NO atIndexPath:indexPath];
+//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView* _Nonnull)tableView
 {
@@ -139,11 +139,6 @@
     NSDictionary *groceryListDict = self.data[section];
     
     return [groceryListDict[@"List"] count];
-}
-
-- (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return self.data[section][@"GroceryListName"];
 }
 
 - (BOOL)tableView:(UITableView* _Nonnull)tableView canMoveRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
@@ -216,7 +211,9 @@
 //                                      [self showError:error.description];
 //                                  }
 //                              }];
-    
+    if (textField.text.length == 0){
+        return;
+    }
     NSIndexPath *indexPath = [self getIndexPathFromTag:textField.tag];
     NSDictionary* groceryListDict = self.data[indexPath.section];
     GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
@@ -248,34 +245,17 @@
     
 }
 - (IBAction)clearListPressed:(id)sender
-{
-    NSLog(@"%@",self.data[0][@"List"][0]);
-    for (GLGroceryItem* item in self.data[0][@"List"]) {
-        [GLNetworkingManager deleteGroceryItem:[GLUserManager sharedManager].storeName
-                                        itemID:item.ID
-                                    completion:^(NSDictionary* response, NSError* error) {
-                                        if (error) {
-                                            [self showError:error.description];
-                                        }
-                                    }];
-    }
+{    
+    [GLNetworkingManager deleteGroceryItems:[GLUserManager sharedManager].storeName completion:^(NSDictionary *response, NSError *error) {
+        if (error){
+            [self showError:error.description];
+        }
+    }];
 }
 
 
 #pragma mark -
 #pragma mark Helper Methods
-
-- (void)editAction
-{
-    self.navigationItem.leftBarButtonItem = self.doneButton;
-    [self.tableView setEditing:YES animated:YES];
-}
-
-- (void)doneAction
-{
-    self.navigationItem.leftBarButtonItem = self.editButton;
-    [self.tableView setEditing:NO animated:YES];
-}
 
 -(void)loadGroceryLists:(UIRefreshControl *)refreshControl
 {
