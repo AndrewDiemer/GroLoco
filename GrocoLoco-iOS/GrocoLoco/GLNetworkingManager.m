@@ -198,11 +198,14 @@
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSDictionary *params = @{ @"GroceryListName" : groceryListName,
                               @"_id" : ID,
                               @"Comment" : comment
                               };
+    
+    NSLog(@"%@",params);
     
     [manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitemcomment" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         completionBlock(responseObject, nil);

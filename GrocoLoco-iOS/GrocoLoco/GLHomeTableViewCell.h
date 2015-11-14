@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *itemNameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *notesTextField;
 @property (weak, nonatomic) IBOutlet UIButton *expandButton;
+@property (weak, nonatomic) IBOutlet UILabel *notesLabel;
 
 @property (strong, nonatomic) GLGroceryItem *item;
 
