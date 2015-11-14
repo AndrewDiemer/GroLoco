@@ -1,6 +1,6 @@
 
-// require('../Classes/Coordinates');
-require('../db/Coordinates');   
+require('../db/BlockCoordinates');   
+require('../db/ItemCoordinates');   
 var passport = require('passport');
 var clone = require('clone');
 //ROUTES ===========================================================

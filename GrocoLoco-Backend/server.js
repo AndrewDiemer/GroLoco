@@ -72,6 +72,12 @@ GroceryList = db.model('GroceryList', groceryListSchema)
 //ROUTES ==============================================
 require('./routes/routes.js')(app, passport); 
 
+//CREATE MOCK DATA ====================================
+var createData = require('./CreateData');
+createData();
+
+
 //LISTEN ==============================================
 app.listen(port);
 console.log('The magic happens on port ' + port);
+
