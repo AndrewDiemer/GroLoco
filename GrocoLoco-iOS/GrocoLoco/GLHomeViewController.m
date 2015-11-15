@@ -1,3 +1,5 @@
+
+
 //
 //  GLHomeViewController.m
 //  GrocoLoco
@@ -53,6 +55,8 @@
     self.storeNameLabel.text = [[GLUserManager sharedManager] storeName];
     
     self.expandedPaths = @[].mutableCopy;
+    
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -160,7 +164,8 @@
         }
     }
 
-    return UITableViewCellEditingStyleNone;
+    return UITableViewCellEditingStyleDelete;
+    //return UITableViewCellEditingStyleNone;
 }
 
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
@@ -179,7 +184,6 @@
         }];
     }
 }
-
 
 #pragma mark -
 #pragma mark UITextFieldDelegate
