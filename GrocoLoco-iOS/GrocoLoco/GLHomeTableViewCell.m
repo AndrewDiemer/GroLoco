@@ -34,17 +34,12 @@
 - (void)setItem:(GLGroceryItem*)item
 {
     _item = item;
-    self.itemNameLabel.text = item.itemName;
-    self.notesLabel.text = item.notes;
-    self.notesTextField.text = item.notes;
+    self.itemNameLabel.text = item.itemDescription;
+    self.notesLabel.text = item.comments;
+    self.notesTextField.text = item.comments;
 }
 
-- (IBAction)editingNameEnded:(UITextField *)sender
-{
-    self.item.itemName = sender.text;
-}
-
--(void)setSelected:(BOOL)selected animated:(BOOL)animated
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
 

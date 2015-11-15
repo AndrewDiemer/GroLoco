@@ -24,25 +24,35 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>YLProgressBar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>04B166B96E93A7DDCB42797E0B45DF2B</key>
+		<key>410B25DF16EA5C5B3E2698F74F9625FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>61E591ED38334B121233841FB1CE0D1B</key>
+		<key>55DBDD8B7D446F1D618F303A9FB53209</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>899621BF64656268CE90AEDC07387D3C</key>
+		<key>74D9EE97B561B4E4DBC353D6282CAFFE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A73116EADFD4EE5CAB1D9899D249ED2C</key>
+		<key>DC8FB56F57C395D373CBEAC1EA125C6B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

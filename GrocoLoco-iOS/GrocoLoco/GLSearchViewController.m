@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
-@property (strong, nonatomic) NSMutableArray *items;
 @property (strong, nonatomic) NSMutableArray *filertedItems;
 
 @end
@@ -25,16 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.items = @[ [[GLGroceryItem alloc] initWithName:@"Apple" quantity:2 andComment:@""],
-                    [[GLGroceryItem alloc] initWithName:@"Grapes" quantity:2 andComment:@""],
-                    [[GLGroceryItem alloc] initWithName:@"Pear" quantity:2 andComment:@""],
-                    [[GLGroceryItem alloc] initWithName:@"Banana" quantity:2 andComment:@""],
-                    [[GLGroceryItem alloc] initWithName:@"Peach" quantity:2 andComment:@""],
-                    [[GLGroceryItem alloc] initWithName:@"Tomato" quantity:2 andComment:@""],
-                    [[GLGroceryItem alloc] initWithName:@"Pineaple" quantity:2 andComment:@""],
-                    [[GLGroceryItem alloc] initWithName:@"Watermelon" quantity:2 andComment:@""],
-                    [[GLGroceryItem alloc] initWithName:@"Canteloupe" quantity:2 andComment:@""] ].mutableCopy;
+    
     self.filertedItems = @[].mutableCopy;
     
     self.doneButton.layer.cornerRadius = 5;
@@ -91,13 +81,26 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    self.filertedItems = @[].mutableCopy;
-    for (GLGroceryItem *item in self.items){
-        if ([item.itemName hasPrefix:searchText]){
-            [self.filertedItems addObject:item];
-        }
+    if (searchText.length == 0){
+        return;
     }
-    [self.tableView reloadData];
+    self.filertedItems = @[].mutableCopy;
+    
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [GLNetworkingManager getListOfGroceriesForString:searchText
+                                              completion:^(NSArray* response, NSError* error) {
+                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                      if (!error) {
+                                                          self.filertedItems = response.mutableCopy;
+                                                          [self.tableView reloadData];
+                                                      }
+                                                      else {
+                                                          [self showError:error.description];
+                                                      }
+                                                  });
+                                              }];
+    });
 }
 
 @end
