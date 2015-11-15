@@ -23,16 +23,33 @@
 
 @implementation GLLoginViewController
 
+
+#pragma mark -
+#pragma mark View Lifecycle
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = NO;
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [GLNetworkingManager isUserLoggedInCompletion:^(NSDictionary *response, NSError *error) {
+        if (!error){
+            if (response[@"status"] == nil){
+                [[GLUserManager sharedManager] setPropertiesWithDict:response];
+                [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
+            }
+            else{
+                [self showError:@"User not logged in"];
+            }
+        }
+        else{
+            [self showError:error.description];
+        }
+    }];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -45,6 +62,11 @@
     self.submitButton.layer.cornerRadius = 5;
     // Do any additional setup after loading the view.
 }
+
+
+#pragma mark -
+#pragma mark Button Methods
+
 - (IBAction)switchToLogin:(id)sender
 {
     if ([self.submitButton.titleLabel.text isEqualToString:@"Login"]){

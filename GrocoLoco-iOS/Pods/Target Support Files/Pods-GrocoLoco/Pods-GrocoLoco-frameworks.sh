@@ -82,3 +82,14 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-GrocoLoco/AFNetworking.framework"
+  install_framework "Pods-GrocoLoco/IQKeyboardManager.framework"
+  install_framework "Pods-GrocoLoco/MBProgressHUD.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-GrocoLoco/AFNetworking.framework"
+  install_framework "Pods-GrocoLoco/IQKeyboardManager.framework"
+  install_framework "Pods-GrocoLoco/MBProgressHUD.framework"
+fi

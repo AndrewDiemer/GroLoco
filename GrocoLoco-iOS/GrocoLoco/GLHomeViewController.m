@@ -69,7 +69,6 @@
     
     GLHomeTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:GL_HOME_TABLEVIEW_CELL forIndexPath:indexPath];
     GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
-    NSLog(@"%@",item);
     NSInteger tag = (indexPath.row+1)+(indexPath.section*100);
     
     cell.expandButton.tag = tag;
