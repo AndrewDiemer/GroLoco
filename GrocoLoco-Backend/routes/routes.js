@@ -7,52 +7,9 @@ var clone = require('clone');
 //ROUTES ===========================================================
 
 module.exports = function (app){
-    // app.get('/kyc', isAuthenticated, function(req,res){
-    //     var time_1 = Date.now()
-    //     var time_2 = 0
-    //     var total_time = 0
-    //     console.log('user is below me')
-    //     console.log(req.user)
-    //     var emailPass = req.user.Email
-    //     var redisQuery = 'kyc/' + emailPass
-    //     console.log(redisQuery)
-    //     client.get(redisQuery, function(err, data){
-    //         if(err)
-    //             console.log(err)
 
-    //         if(data){
-    //             time_2 = Date.now()
-    //             total_time = time_2-time_1
-    //             console.log('Time to retrieve using Redis: ' + total_time+'ms')
-    //             //do something with the 
-    //             res.send(JSON.parse(data))
-    //         }else{
-    //             KYC.findOne({
-    //                 "UserId": req.user
-    //             }, function(err, kyc){
-    //                 if(err){
-    //                     console.log(err)
-    //                     res.send(500)
-    //                 }
-    //                 if(kyc){
-    //                     time_2 = Date.now()
-    //                     total_time = time_2-time_1
-    //                     console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
-    //                     var kycObject = kyc.toObject()
-    //                     kycObject.Email = emailPass
-    //                     var kycText = JSON.stringify(kycObject)
-    //                     var kycParsed = JSON.parse(kycText)
-    //                     client.set(redisQuery, JSON.stringify(kycParsed))
-    //                     res.send(kycParsed)
-    //                 }else{
-    //                     res.send(500)
-    //                 }
-    //             })
-    //         }
-    //     });
-    // })
 
-    app.get('/redisfinditems/:subsearch', isAuthenticated, function(req, res){
+    app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
         var itemList = []
         var subSearch = req.params.subsearch
 
@@ -88,9 +45,6 @@ module.exports = function (app){
                         time_2 = Date.now()
                         total_time = time_2-time_1
                         console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
-                        // var kycObject = timeList.toObject()
-                        // var kycText = JSON.stringify(kycObject)
-                        // var kycParsed = JSON.parse(kycText)
                         client.set(redisQuery, JSON.stringify(itemList))
                         res.send(itemList)
                     }
@@ -103,30 +57,30 @@ module.exports = function (app){
 
     });  
 
-    //Auto lookup
-    app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
-        var itemList = []
-        var subSearch = req.params.subsearch
+    // //Auto lookup
+    // app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
+    //     var itemList = []
+    //     var subSearch = req.params.subsearch
 
-        GroceryItem.find({}, function(err, groceryitems){
-            if(err)
-                res.send(err)
-            if(groceryitems){
-                for(var i = 0; i < groceryitems.length; i++){
-                    if(groceryitems[i].Description){
-                        for (var j = 0; j < groceryitems[i].Description.length - subSearch.length + 1 ; j++) {                            
-                            if(groceryitems[i].Description.substring(j, j + subSearch.length).toLowerCase() == subSearch.toLowerCase()){
-                                itemList.push(groceryitems[i])
-                            }
-                        }
-                    }
-                }
-                res.send(itemList)
-            }
-            else
-                res.send(404)
-       })
-    });  
+    //     GroceryItem.find({}, function(err, groceryitems){
+    //         if(err)
+    //             res.send(err)
+    //         if(groceryitems){
+    //             for(var i = 0; i < groceryitems.length; i++){
+    //                 if(groceryitems[i].Description){
+    //                     for (var j = 0; j < groceryitems[i].Description.length - subSearch.length + 1 ; j++) {                            
+    //                         if(groceryitems[i].Description.substring(j, j + subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+    //                             itemList.push(groceryitems[i])
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             res.send(itemList)
+    //         }
+    //         else
+    //             res.send(404)
+    //    })
+    // });  
 
     // parameters: UPCode
     app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
