@@ -13,6 +13,22 @@ var express 		= require('express'),
 	flash    = require('connect-flash'),
 	methodOverride 	= require('method-override');
 	db 				= require('mongoose') //shhh this is global for our schemas
+    RedisStore = require('connect-redis')(expressSession)
+    redis = require('redis')
+
+//REDIS ===============================================
+var redisPort = 6379
+var redisHost = '127.0.0.1'
+
+client = redis.createClient('redis://h:paonqf6qoa86pv3gs30jg35a3s7@ec2-54-83-199-200.compute-1.amazonaws.com:21099')
+
+client.on('connect', function() {
+    console.log('Connected to Redis');
+});
+
+client.on("error", function (err) {
+        console.log("Error " + err);
+    });
 
 // DATBASE CONFIGS ===================================
 db.connect('mongodb://Larry:password@ds051523.mongolab.com:51523/grocery_items', function(err, db) {
@@ -37,7 +53,7 @@ var initPassport = require('./config/init');
 initPassport(passport);
 
 app.use(expressSession({
-    // store: new RedisStore({ host: redisHost, port: redisPort, client: client }),
+    store: new RedisStore({ host: redisHost, port: redisPort, client: client }),
     secret: 'keyboard cat',
     // resave: true,
     cookie: {

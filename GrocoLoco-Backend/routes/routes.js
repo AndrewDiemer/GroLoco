@@ -1,32 +1,131 @@
 
-require('../db/BlockCoordinates');   
-require('../db/ItemCoordinates');   
+// require('../db/BlockCoordinates');   
+// require('../db/ItemCoordinates');   
 var passport = require('passport');
 var clone = require('clone');
 
 //ROUTES ===========================================================
 
 module.exports = function (app){
+    // app.get('/kyc', isAuthenticated, function(req,res){
+    //     var time_1 = Date.now()
+    //     var time_2 = 0
+    //     var total_time = 0
+    //     console.log('user is below me')
+    //     console.log(req.user)
+    //     var emailPass = req.user.Email
+    //     var redisQuery = 'kyc/' + emailPass
+    //     console.log(redisQuery)
+    //     client.get(redisQuery, function(err, data){
+    //         if(err)
+    //             console.log(err)
+
+    //         if(data){
+    //             time_2 = Date.now()
+    //             total_time = time_2-time_1
+    //             console.log('Time to retrieve using Redis: ' + total_time+'ms')
+    //             //do something with the 
+    //             res.send(JSON.parse(data))
+    //         }else{
+    //             KYC.findOne({
+    //                 "UserId": req.user
+    //             }, function(err, kyc){
+    //                 if(err){
+    //                     console.log(err)
+    //                     res.send(500)
+    //                 }
+    //                 if(kyc){
+    //                     time_2 = Date.now()
+    //                     total_time = time_2-time_1
+    //                     console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
+    //                     var kycObject = kyc.toObject()
+    //                     kycObject.Email = emailPass
+    //                     var kycText = JSON.stringify(kycObject)
+    //                     var kycParsed = JSON.parse(kycText)
+    //                     client.set(redisQuery, JSON.stringify(kycParsed))
+    //                     res.send(kycParsed)
+    //                 }else{
+    //                     res.send(500)
+    //                 }
+    //             })
+    //         }
+    //     });
+    // })
+
+    app.get('/redisfinditems/:subsearch', isAuthenticated, function(req, res){
+        var itemList = []
+        var subSearch = req.params.subsearch
+
+        var time_1 = Date.now()
+        var time_2 = 0
+        var total_time = 0
+
+        var redisQuery = 'autocomplete/' + subSearch
+        console.log(redisQuery)
+
+        client.get(redisQuery, function(err, data){
+            if(err)
+                res.send(err)
+            if(data){
+                time_2 = Date.now()
+                total_time = time_2-time_1
+                console.log('Time to retrieve using Redis: ' + total_time+'ms')
+                res.send(JSON.parse(data))
+            }else{
+                GroceryItem.find({}, function(err, groceryitems){
+                    if(err)
+                        res.send(err)
+                    if(groceryitems){
+                        for(var i = 0; i < groceryitems.length; i++){
+                            if(groceryitems[i].Description){
+                                for (var j = 0; j < groceryitems[i].Description.length - subSearch.length + 1 ; j++) {                            
+                                    if(groceryitems[i].Description.substring(j, j + subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                        itemList.push(groceryitems[i])
+                                    }
+                                }
+                            }
+                        }
+                        time_2 = Date.now()
+                        total_time = time_2-time_1
+                        console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
+                        // var kycObject = timeList.toObject()
+                        // var kycText = JSON.stringify(kycObject)
+                        // var kycParsed = JSON.parse(kycText)
+                        client.set(redisQuery, JSON.stringify(itemList))
+                        res.send(itemList)
+                    }
+                    else
+                        res.send(404)
+               })
+            }
+        })
+
+
+    });  
 
     //Auto lookup
-    app.get('/findItems', isAuthenticated, function(req, res){
-    
-        GroceryItem.find({}, function(err, groceryitems){
-        if(err)
-            res.send(err)
-        if(groceryitems){
-           // res.send(groceryitems)
-           for(i =0; i<groceryitems.length; i++)
-           {
-            res.send(groceryitems.length)
-            if(groceryitems[i].description == "Lucerne Ice Cream Vanilla")
-                res.send(groceryitems[i])
-           }
-        }
-        else
-            res.send(404)
-       })
+    app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
+        var itemList = []
+        var subSearch = req.params.subsearch
 
+        GroceryItem.find({}, function(err, groceryitems){
+            if(err)
+                res.send(err)
+            if(groceryitems){
+                for(var i = 0; i < groceryitems.length; i++){
+                    if(groceryitems[i].Description){
+                        for (var j = 0; j < groceryitems[i].Description.length - subSearch.length + 1 ; j++) {                            
+                            if(groceryitems[i].Description.substring(j, j + subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                itemList.push(groceryitems[i])
+                            }
+                        }
+                    }
+                }
+                res.send(itemList)
+            }
+            else
+                res.send(404)
+       })
     });  
 
     // parameters: UPCode
@@ -54,19 +153,22 @@ module.exports = function (app){
     })
 
     app.get('/userlocation', isAuthenticated, function(req, res){
-        GroceryItem.findOne({
-            'Sku': req.body.sku
-        }, function(err, item){
+        User.findOneAndUpdate({
+            'Email': req.user.Email
+        }, function(err, user){
             if(err)
                 res.send(err)
-            if(item){
+            if(user){
+                var location = {
+                    StoreName   : user.StoreName,
+                    Latitude    : user.Latitude,
+                    Longitude   : user.Longitude
+                }
 
-                item.x
-
-                res.send(item.coordinates)
-            }else{
-                res.send(404)
+                res.send(location)
             }
+            else
+                res.send(404)
         })
     })
 
@@ -86,8 +188,8 @@ module.exports = function (app){
                 res.send(404)
         })
     })
+
     app.post('/deletegroceryitems', isAuthenticated, function(req, res){
-        
         GroceryList.findOneAndUpdate({
             'User': req.user,
             'GroceryListName': req.body.GroceryListName
@@ -102,7 +204,6 @@ module.exports = function (app){
             if(groceryList)
                 res.send(groceryList)
         })
-
     })
 
     app.post('/deletegroceryitem', isAuthenticated, function(req, res){
@@ -207,41 +308,42 @@ module.exports = function (app){
                 }
             })
     })
-
-    app.post('/editgroceryitem', isAuthenticated, function(req, res){
-        GroceryList.findOne({
-                'User': req.user,
-                'GroceryListName': req.body.GroceryListName
-            }, function(err, groceryList){
-                if(err)
-                    res.send(err)
-                if(groceryList){
-                    for(var i = 0; i < groceryList.List.length; i++){
-                        if(groceryList.List[i]._id == req.body._id){
-                            groceryList.List[i].ItemName = req.body.ItemName
-                            groceryList.List[i].Quantity = req.body.Quantity
-                            groceryList.List[i].Comment = req.body.Comment
-                             GroceryList.findOneAndUpdate({
-                                'User': req.user,
-                                'GroceryListName': req.body.GroceryListName
-                            },{
-                                'List': groceryList.List
-                            },{
-                                safe:true, upsert:true, new: true
-                            },
-                            function(err, groceryList){
-                                if(err)
-                                    res.send(err)
-                                if(groceryList)
-                                    res.send(200)
-                            })
-                        }
-                    }
-                }else{
-                    res.send(404);
-                }
-            })
-    })
+    
+    //Deprecated
+    // app.post('/editgroceryitem', isAuthenticated, function(req, res){
+    //     GroceryList.findOne({
+    //             'User': req.user,
+    //             'GroceryListName': req.body.GroceryListName
+    //         }, function(err, groceryList){
+    //             if(err)
+    //                 res.send(err)
+    //             if(groceryList){
+    //                 for(var i = 0; i < groceryList.List.length; i++){
+    //                     if(groceryList.List[i]._id == req.body._id){
+    //                         groceryList.List[i].ItemName = req.body.ItemName
+    //                         groceryList.List[i].Quantity = req.body.Quantity
+    //                         groceryList.List[i].Comment = req.body.Comment
+    //                          GroceryList.findOneAndUpdate({
+    //                             'User': req.user,
+    //                             'GroceryListName': req.body.GroceryListName
+    //                         },{
+    //                             'List': groceryList.List
+    //                         },{
+    //                             safe:true, upsert:true, new: true
+    //                         },
+    //                         function(err, groceryList){
+    //                             if(err)
+    //                                 res.send(err)
+    //                             if(groceryList)
+    //                                 res.send(200)
+    //                         })
+    //                     }
+    //                 }
+    //             }else{
+    //                 res.send(404);
+    //             }
+    //         })
+    // })
 
     app.delete('/deletegrocerylist', isAuthenticated, function(req,res){
         GroceryList.findOneAndRemove({
@@ -288,7 +390,9 @@ module.exports = function (app){
     })
 
     app.get('/grocerylists', isAuthenticated, function(req,res){
-        GroceryList.find({'User':req.user}, function(err, grocerylists){
+        GroceryList.find({
+            'User':req.user
+        }, function(err, grocerylists){
             if(err)
                 res.send(err)
             if(grocerylists)
@@ -299,13 +403,10 @@ module.exports = function (app){
     })
 
     app.post('/addtolist', isAuthenticated, function(req, res) {
-
-        var groceryListName = req.body.GroceryListName;
-
         for(var i = 0; i < req.body.List.length;i++){
              GroceryList.findOneAndUpdate({
                 'User': req.user,
-                'GroceryListName': groceryListName
+                'GroceryListName': req.body.GroceryListName
             },{
                 $push:{'List': req.body.List[i]}
             },{
