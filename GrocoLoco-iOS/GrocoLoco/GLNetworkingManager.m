@@ -224,8 +224,6 @@
                               @"Comment" : comment
                               };
     
-    NSLog(@"%@",params);
-    
     [manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitemcomment" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         completionBlock(responseObject, nil);
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
@@ -243,6 +241,27 @@
         completionBlock(nil, error);
     }];
 
+}
+
++ (void)getListOfGroceriesForString:(NSString *)itemString completion:(void (^)(NSArray* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    [manager GET:[NSString stringWithFormat:@"https://grocolocoapp.herokuapp.com/findItems/%@", itemString]
+      parameters:nil
+         success:^(AFHTTPRequestOperation* _Nonnull operation, id _Nonnull responseObject) {
+            NSMutableArray* response = @[].mutableCopy;
+            for (NSDictionary* item in responseObject) {
+                [response addObject:[[GLGroceryItem alloc] initWithDictionary:item]];
+            }
+            completionBlock(response, nil);
+        }
+        failure:^(AFHTTPRequestOperation* _Nonnull operation, NSError* _Nonnull error) {
+            completionBlock(nil, error);
+        }];
 }
 
 @end

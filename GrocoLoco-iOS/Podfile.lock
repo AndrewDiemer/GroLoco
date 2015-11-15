@@ -22,15 +22,18 @@ PODS:
     - AFNetworking/NSURLSession
   - IQKeyboardManager (3.3.2)
   - MBProgressHUD (0.9.1)
+  - YLProgressBar (3.8.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - IQKeyboardManager
   - MBProgressHUD (~> 0.9.1)
+  - YLProgressBar (~> 3.8.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   IQKeyboardManager: d863eb0bca424d1f6dad6bdd1f856af52664add8
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  YLProgressBar: b6ec76bea4a1b8d6bdfd2995d828055a7e5f3e9a
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
