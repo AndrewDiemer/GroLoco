@@ -39,10 +39,6 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.view.frame.size.height - self.segmentedControl.frame.origin.y, 0)];
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.view.frame.size.height - self.segmentedControl.frame.origin.y, 0)];
     
-    for (GLGroceryItem *item in self.items){
-        item.aisle = [NSString stringWithFormat:@"%ld",(long)(1 + (rand() % 6))];
-    }
-    
     self.itemsInSections = @{}.mutableCopy;
     for (GLGroceryItem *item in self.items){
         if (self.itemsInSections[item.aisle]){
