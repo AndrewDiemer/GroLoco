@@ -94,14 +94,12 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     CGRect frame = self.categoriesView.frame;
-    NSLog(@"%@",NSStringFromCGRect(frame));
     
     if (frame.origin.y != self.view.frame.size.height){
         frame.origin.y += frame.size.height;
         [UIView animateWithDuration:0.5 animations:^{
             self.categoriesView.frame = frame;
         }];
-        NSLog(@"%@",NSStringFromCGRect(frame));
     }
     
     if (searchText.length == 0){

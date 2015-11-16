@@ -1,0 +1,28 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+<<<<<<< HEAD
+=======
+      "filename" : "storeMap.png",
+>>>>>>> f0951078409c2fa320046a89783707b5febe6fb2
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+<<<<<<< HEAD
+      "filename" : "Screen Shot 2015-11-15 at 7.10.56 PM.png",
+=======
+>>>>>>> f0951078409c2fa320046a89783707b5febe6fb2
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
