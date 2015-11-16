@@ -83,7 +83,12 @@
     frame.origin.y = 0;
     [self.topScrollView scrollRectToVisible:frame animated:YES];
     
-    sender.selected = !sender.selected;
+    for (GLGroceryItem *item in self.items) {
+        [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
+    }
+    
+    GLGroceryItem *selectedButton = self.items[sender.tag];
+    [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
 }
 
 - (IBAction)nextPressed:(id)sender
@@ -95,13 +100,13 @@
     [self movePage:-1];
 }
 
-- (void)setCurrentPage:(CGFloat)currentPage
+- (void)setcurrentPage:(CGFloat)currentPage
 {
-    if (currentPage > ([self.items count]-1)){
+    if (currentPage > ([self.items count])){
         return;
     }
     _currentPage = currentPage;
-    self.progressBar.progress = self.currentPage / ([self.items count]-1);
+    self.progressBar.progress = self.currentPage / ([self.items count]);
 }
 
 #pragma mark -
@@ -159,6 +164,13 @@
         return;
     }
     [self.topScrollView setContentOffset:CGPointMake(self.view.frame.size.width * direction + currentOffset.x, 0) animated:YES];
+    
+    for (GLGroceryItem *item in self.items) {
+        [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
+    }
+    
+    //GLGroceryItem *selectedButton = self.items[self.currentPage];
+    //[selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
 }
 
 - (void)makeItemViews
@@ -181,7 +193,15 @@
     frame.origin.y = 0;
     [self.topScrollView scrollRectToVisible:frame animated:YES];
     
+    GLGroceryItem *selectedButton = self.items[sender.tag];
+    selectedButton.navPin.selected = YES;
+    
     self.currentPage += 1;
+    
+    if (sender.tag + 1 < [self.items count]) {
+        GLGroceryItem *nextButton = self.items[sender.tag + 1];
+        [nextButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark -
