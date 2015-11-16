@@ -1,6 +1,3 @@
-
-// require('../db/BlockCoordinates');   
-// require('../db/ItemCoordinates');   
 var passport = require('passport');
 var clone = require('clone');
 var raccoon = require('raccoon');
@@ -19,6 +16,28 @@ var testSet = require('../machinelearningdata/testSet.js')
 //ROUTES ===========================================================
 
 module.exports = function (app){
+
+    // parameters: UPCode
+    app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
+        GroceryItem.findOne({
+            'UPC': req.query.UPC
+        }, function(err, item){
+            if(err)
+                res.send(err);
+            if(item) {
+                // found item, now need to get and set its coordinates
+                if(item.Coordinates) {
+                    console.log('SUCCESS - found and returned coordinates');                    
+                    res.send(item.Coordinates);
+                } else {
+                    console.log('ERROR - no coordinates found for this item!');                    
+                    var coord = {x : 5, y : 10};
+                    res.send(coord);
+                }
+            }
+        })
+    });
+
     app.get('/testSet', isAuthenticated, function(req,res){
         for (var i = 0; i < testSet.length; i++) {
             console.log(testSet[i]._id.$oid)
@@ -145,134 +164,6 @@ module.exports = function (app){
     //             res.send(404)
     //    })
     // });  
-
-    // parameters: UPCode
-    app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
-        GroceryItem.findOne({
-            'UPC': req.query.UPC
-        }, function(err, item){
-            if(err)
-                res.send(err);
-            if(item) {
-                // found item, now need to get and set its coordinates
-                console.log('about to find coordinates');
-
-                var UPC            = item.UPC;
-                var Description    = item.Description;
-                var POSDescription = item.POSDescription;
-                var SubCategory    = item.SubCategory;
-                var Aisle          = item.Aisle;  // created by taking Aisle info from Sobeys and removing shelf id from the end 
-                var AisleShelf     = item.AisleShelf;  // created from full Aisle info from Sobeys
-                var Position       = item.Position;                
-
-                var shelf = item.AisleShelf;    
-                console.log('about to look for blockcoordinates of this upc: '+UPC);
-                
-                BlockCoordinates.findOne({ 'UPC' :  UPC }, function(err, blockCoordinates) {
-                    if (err){
-                        console.log("error trying to find blockcoords: " + err);                    
-                    } else if (blockCoordinates) {                                               
-
-                        GroceryItem.find({'AisleShelf' : shelf}).sort('Position').exec(function(err, groceryItems) {
-                                if(err) {
-                                    console.log(err);
-                                    res.send(err)
-                                } else if(groceryItems) {
-                                    console.log("found: " + groceryItems.length + " groceryItems on the same shelf!");                      
-
-                                    var dist = 0;
-                                    var itemDist;
-                                    var dbCallFinished = false; 
-
-                                    function asyncLoop( i, callback ) {
-                                        if( i < groceryItems.length ) {
-                                            if(groceryItems[i].UPC == UPC) {                                                        
-                                                console.log("yay found the item");
-                                                itemDist = dist;
-                                                asyncLoop( i+1, callback );                                                    
-                                            } else {                                                                                                
-                                                ItemWidth.findOne({
-                                                    'UPC': UPC
-                                                }, function(err, item){
-                                                    if(err)
-                                                        console.log('error occurred while trying to find width: ' + err);
-                                                        res.send(err);
-                                                    if(item){
-                                                        //console.log('found and adding width: ');
-                                                        //console.log(item.Width);
-                                                        dist += item.Width; // in inches --> width of whole aisle / number of positions in aisle 
-                                                        asyncLoop( i+1, callback );                                                    
-                                                    } else {
-                                                        console.log('couldnt find this upc codes width');
-                                                        res.send(404);
-                                                    }
-                                                })     
-                                            }                                            
-                                        } else {
-                                            callback();
-                                        }
-                                    }   
-
-                                    asyncLoop( 0, function() {
-                                        // put the code that should happen after the loop here
-                                        console.log('running code after async');                                                                                                                                                                    
-
-                                        console.log('item distance is: ' + itemDist);
-                                        console.log('width of aisle is: ' + dist);
-
-                                        var distPerc = itemDist/dist;
-                                        console.log('distance percentage to item is: ' + distPerc);
-                                        console.log("X2: " + blockCoordinates.x2 + ", X1: " + blockCoordinates.x1);
-                                        var blockDist = blockCoordinates.x2 - blockCoordinates.x1;
-                                        console.log('block length: '+blockDist);
-
-                                        var itemx =  distPerc * blockDist;                                                                        
-
-                                        var itemCoordinates = {x : itemx, y : blockCoordinates.y1};                                    
-                                        console.log("Item coordinates: ");
-                                        console.log(itemCoordinates);                                                                                                            
-
-                                        GroceryItem.findOneAndUpdate({ 'UPC': UPC }, {
-                                            UPC            : UPC,
-                                            Description    : Description,
-                                            POSDescription : POSDescription,
-                                            SubCategory    : SubCategory,
-                                            Aisle          : Aisle,  // created by taking Aisle info from Sobeys and removing shelf id from the end 
-                                            AisleShelf     : AisleShelf,  // created from full Aisle info from Sobeys
-                                            Position       : Position,
-                                            Coordinates    : itemCoordinates                               
-                                        }, function(err, item){
-                                            if(err) {
-                                                console.log("error trying to find groceryItem: " + err);    
-                                                res.send(err)                
-                                            } else if(item) {
-                                                console.log('successfully found and set coordinates');
-                                                console.log(item);                                                
-                                                //res.send(item);                                                
-                                            } else {
-                                                console.log('could not update coordinates of grocery item');  
-                                                res.send('could not update coordinates of grocery item');         
-                                            }
-                                        });
-                                    });
-
-                                } else {
-                                    console.log(404);
-                                    res.send(404);
-                                }
-                            });         
-
-                    } else {
-                        console.log("could not find block coordinates for this UPC code");
-                        res.send("could not find block coordinates for this UPC code");
-                    }
-                });
-            } else {
-                console.log('ahoy');
-                res.send(404)
-            }
-        })
-    })
 
     app.get('/userlocation', isAuthenticated, function(req, res){
         User.findOneAndUpdate({
