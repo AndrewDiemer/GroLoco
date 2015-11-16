@@ -45,8 +45,8 @@
     
     self.mapView.userInteractionEnabled = YES;
     
-    CGFloat yposition = self.topScrollView.frame.origin.y + self.topScrollView.frame.size.height - 20;
-    self.progressBar = [[MHProgressBar alloc] initWithFrame:CGRectMake(20, yposition - 24, self.view.frame.size.width - 40, 24) trackColor:[UIColor GLdarkGreen] barColor:[UIColor GLlightGreen]];
+    CGFloat yposition = self.topScrollView.frame.origin.y + self.topScrollView.frame.size.height - 5;
+    self.progressBar = [[MHProgressBar alloc] initWithFrame:CGRectMake(20, yposition - 20, self.view.frame.size.width - 40, 20) trackColor:[UIColor GLdarkGreen] barColor:[UIColor GLlightGreen]];
     self.currentPage = 0;
     [self.view addSubview:self.progressBar];
     
@@ -102,7 +102,7 @@
     [self movePage:-1];
 }
 
-- (void)setcurrentPage:(CGFloat)currentPage
+- (void)setCurrentPage:(CGFloat)currentPage
 {
     if (currentPage > ([self.items count])){
         return;
@@ -131,7 +131,6 @@
 
     NSArray *keys = [[self.itemsInSections allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSNumber *key = keys[indexPath.section];
-    NSLog(@"%@",self.itemsInSections[key][indexPath.row]);
     cell.item = self.itemsInSections[key][indexPath.row];
     
     return cell;
@@ -181,7 +180,7 @@
     for (NSInteger i=0; i< [self.items count]; i++){
         GLGroceryItem *item = self.items[i];
         GLShoppingItemView* itemView = [[[NSBundle mainBundle] loadNibNamed:@"GLShoppingItemView" owner:self options:nil] firstObject];
-        itemView.frame = CGRectMake(self.view.frame.size.width * i, 0, self.topScrollView.frame.size.width, self.topScrollView.frame.size.height);
+        itemView.frame = CGRectMake(self.view.frame.size.width * i, 0, self.topScrollView.frame.size.width, self.topScrollView.frame.size.height-25);
         itemView.item = item;
         itemView.gotItemButton.tag = i;
         [itemView.gotItemButton addTarget:self action:@selector(gotItem:) forControlEvents:UIControlEventTouchUpInside];
@@ -191,6 +190,8 @@
 
 - (void)gotItem:(UIButton *)sender
 {
+    sender.enabled = NO;
+    
     CGRect frame = self.topScrollView.frame;
     frame.origin.x = frame.size.width * (sender.tag+1);
     frame.origin.y = 0;
