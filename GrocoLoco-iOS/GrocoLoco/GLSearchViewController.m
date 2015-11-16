@@ -60,11 +60,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GLGroceryItem *item = self.filertedItems[indexPath.row];
-    [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName] items:@[[item objectAsDictionary]] completion:^(NSDictionary *response, NSError *error) {
-        if (error){
-            [self showError:error.description];
-        }
-    }];
+        
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName] items:@[[item objectAsDictionary]] completion:^(NSDictionary *response, NSError *error) {
+            if (error){
+                [self showError:error.description];
+            }
+        }];
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
+    });
+
 }
 - (IBAction)donePressed:(id)sender
 {
@@ -76,6 +83,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
+    self.searchBar.text = @"";
     [self.view endEditing:YES];
 }
 

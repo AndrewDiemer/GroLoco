@@ -1,3 +1,5 @@
+
+
 //
 //  GLHomeViewController.m
 //  GrocoLoco
@@ -53,6 +55,8 @@
     self.storeNameLabel.text = [[GLUserManager sharedManager] storeName];
     
     self.expandedPaths = @[].mutableCopy;
+    
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,7 +73,6 @@
     
     GLHomeTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:GL_HOME_TABLEVIEW_CELL forIndexPath:indexPath];
     GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
-    NSLog(@"%@",item);
     NSInteger tag = (indexPath.row+1)+(indexPath.section*100);
     
     cell.expandButton.tag = tag;
@@ -100,15 +103,15 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary* groceryListDict = self.data[indexPath.section];
-    if (indexPath.row == [groceryListDict[@"List"] count]){
-        return;
-    }
-    GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
-    cell.backgroundColor = [UIColor clearColor];
-}
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSDictionary* groceryListDict = self.data[indexPath.section];
+//    if (indexPath.row == [groceryListDict[@"List"] count]){
+//        return;
+//    }
+//    GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
+//    cell.backgroundColor = [UIColor clearColor];
+//}
 
 //- (void)tableView:(UITableView* _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
 //{
@@ -159,8 +162,8 @@
             return UITableViewCellEditingStyleDelete;
         }
     }
-
-    return UITableViewCellEditingStyleNone;
+    
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
@@ -180,28 +183,11 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark UITextFieldDelegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-//    CGPoint pointInTable = [textField convertPoint:textField.bounds.origin toView:self.tableView];
-//    
-//    NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:pointInTable];
-//    
-//    NSDictionary* groceryListDict = self.data[indexPath.section];
-//    
-//    GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
-//
-//    [GLNetworkingManager editGroceryItem:groceryListDict[@"GroceryListName"]
-//                                    item:[item objectAsDictionary]
-//                                  itemID:item.ID
-//                              completion:^(NSDictionary* response, NSError* error) {
-//                                  if (error) {
-//                                      [self showError:error.description];
-//                                  }
-//                              }];
     if (textField.text.length == 0){
         return;
     }

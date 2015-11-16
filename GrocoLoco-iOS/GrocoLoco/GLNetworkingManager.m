@@ -264,4 +264,32 @@
         }];
 }
 
++ (void)isUserLoggedInCompletion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager GET:@"https://grocolocoapp.herokuapp.com/loggedin" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSLog(@"%@",responseObject);
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+}
+
++ (void)logoutUserCompletion:(void (^)(NSDictionary* response, NSError* error))completionBlock
+{
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager POST:@"https://grocolocoapp.herokuapp.com/logout" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        completionBlock(nil, error);
+    }];
+}
 @end

@@ -3,11 +3,45 @@
 // require('../db/ItemCoordinates');   
 var passport = require('passport');
 var clone = require('clone');
+var raccoon = require('raccoon');
+var testSet = require('../machinelearningdata/testSet.js')
+
+//RACCOON ==========================================================
+// raccoon.config.nearestNeighbors = 5;  
+// raccoon.config.className = 'groceryitem';  // prefix for your items (used for redis) 
+// raccoon.config.numOfRecsStore = 30;  // number of recommendations to store per user 
+// raccoon.config.factorLeastSimilarLeastLiked = false; 
+
+// raccoon.connect('6379', '127.0.0.1') // auth is optional, but required for remote redis instances 
+// // remember to call them as environment variables with process.env.name_of_variable 
+// raccoon.flush() // flushes your redis instance 
 
 //ROUTES ===========================================================
 
 module.exports = function (app){
+    app.get('/testSet', isAuthenticated, function(req,res){
+        for (var i = 0; i < testSet.length; i++) {
+            console.log(testSet[i]._id.$oid)
+        }
+        res.send(testSet)
+    })
 
+    app.post('/likeitem', isAuthenticated, function(req, res){
+        //Mark ID
+            console.log('hey')
+
+        raccoon.liked('560c18022955001100873ddc', testSet[0]._id.$oid, function() {
+            console.log();
+        })
+        // raccoon.flush();
+        raccoon.liked('560c18022955001100873ddc', testSet[2]._id.$oid, function() {
+            console.log();
+        })
+        raccoon.liked('560c18022955001100873ddc', testSet[3]._id.$oid, function() {
+            console.log();
+        })
+
+<<<<<<< HEAD
     app.get('/getIcon', function(req,res){
 
         Icon.findOne({
@@ -22,6 +56,23 @@ module.exports = function (app){
             }
         })
     });
+=======
+        console.log(req.user._id)
+
+        //morgan
+        raccoon.liked('560a0c80fb729eab18ab31fb', testSet[0]._id.$oid,function() {
+            console.log();
+        })
+        res.send(200)
+    })
+
+    app.get('/getreccomendations', isAuthenticated, function(req, res){
+        raccoon.recommendFor('560a0c80fb729eab18ab31fb', 5, function(results){
+            raccoon.flush()
+            res.send(results)
+        })
+    })
+>>>>>>> 97681e6ad22f80933a70516857d0e68d4598db0b
 
     app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
         var itemList = []
@@ -198,8 +249,9 @@ module.exports = function (app){
                         function(err, groceryList){
                             if(err)
                                 res.send(err)
-                            if(groceryList)
+                            if(groceryList){
                                 res.send(groceryList)
+                            }
                         })
                     }
                 }
@@ -480,5 +532,5 @@ var isAuthenticated = function (req, res, next) {
     // if the user is not authenticated then redirect him to the login page
     var fail = 'Sorry a user is not logged in'
     console.log(fail)
-    res.status(500).send({message: fail});
+    res.send({'status': false});
 }

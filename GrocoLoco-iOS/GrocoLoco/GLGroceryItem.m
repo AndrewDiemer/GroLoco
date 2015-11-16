@@ -10,18 +10,6 @@
 
 @implementation GLGroceryItem
 
-//- (instancetype)initWithName:(NSString *)name quantity:(NSInteger)quantity andComment:(NSString *)comment
-//{
-//    self = [super init];
-//    if (self) {
-//        _itemName = name;
-//        _quantity = quantity;
-//        _notes = comment;
-//        _isCrossedOut = NO;
-//    }
-//    return self;
-//}
-
 - (instancetype)initWithDictionary: (NSDictionary *)dictionary
 {
     self = [super init];
@@ -70,8 +58,7 @@
 
 - (NSString *)description
 {
-    return @"";
-//    return [NSString stringWithFormat:@"%@ %@, %@, %ld, %@", self.itemDescription, self.coordinates, self.ID, (long)self.ID, self.comments];
+    return [NSString stringWithFormat:@"%@", [self objectAsDictionary]];
 }
 
 @end

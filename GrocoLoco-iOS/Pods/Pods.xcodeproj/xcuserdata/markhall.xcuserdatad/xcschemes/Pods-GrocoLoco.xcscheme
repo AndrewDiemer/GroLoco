@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '95434D36B3763F4C9FD4418B'
+               BlueprintIdentifier = 'E7345733C9C6C05F1D4DB9DE'
                BlueprintName = 'Pods-GrocoLoco'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-GrocoLoco.a'>
+               BuildableName = 'Pods_GrocoLoco.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -27,7 +27,6 @@ typedef struct {
 @property (nonatomic, strong) NSString *comments;
 
 
-//- (instancetype)initWithName:(NSString *)name quantity:(NSInteger)quantity andComment:(NSString *)comment;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSDictionary *)objectAsDictionary;
 
