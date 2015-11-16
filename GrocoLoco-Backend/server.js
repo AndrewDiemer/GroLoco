@@ -21,6 +21,7 @@ var redisPort = 6379
 var redisHost = '127.0.0.1'
 
 client = redis.createClient('redis://h:paonqf6qoa86pv3gs30jg35a3s7@ec2-54-83-199-200.compute-1.amazonaws.com:21099')
+// client = redis.createClient(redisPort, redisHost)
 
 client.on('connect', function() {
     console.log('Connected to Redis');
@@ -79,6 +80,7 @@ app.use(function(req, res, next) {
 require('./db/userSchema.js')
 require('./db/groceryItemSchema.js')
 require('./db/groceryListSchema.js')
+require('./db/iconImageSchema.js')
 
 // MODELS =============================================
 User = db.model('User', userSchema)
@@ -92,6 +94,9 @@ require('./routes/routes.js')(app, passport);
 var createData = require('./CreateData');
 createData();
 
+// STORE ICON IMAGES IN THE DB
+var saveImages = require('./SaveImages');
+saveImages();
 
 //LISTEN ==============================================
 app.listen(port);
