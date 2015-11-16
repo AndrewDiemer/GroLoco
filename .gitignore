@@ -43,3 +43,5 @@ xcuserdata
 # Carthage/Checkouts
 
 Carthage/Build
+
+GrocoLoco-Backend/node_modules

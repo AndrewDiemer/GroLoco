@@ -21,6 +21,9 @@
         coords.x = [dictionary[@"Coordinates"][@"x"] floatValue];
         coords.y = [dictionary[@"Coordinates"][@"y"] floatValue];
         _coordinates = coords;
+        
+        NSLog(@"%f, %f", _coordinates.x, _coordinates.y);
+        
         _UPC = dictionary[@"UPC"];
         _itemDescription = dictionary[@"Description"];
         _POSDescription = dictionary[@"POSDescription"];
@@ -28,6 +31,10 @@
         _subcategory = dictionary[@"SubCategory"];
         _ID = dictionary[@"_id"];
         _comments = dictionary[@"Comment"];
+        
+        _navPin = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
+        [_navPin setImage:[UIImage imageNamed:@"navPinComplete"] forState:UIControlStateSelected];
     }
     return self;
 }
