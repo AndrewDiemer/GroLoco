@@ -1,9 +1,9 @@
 target 'GrocoLoco' do
+use_frameworks!
+
 pod "AFNetworking", "~> 2.0"
 pod 'MBProgressHUD', '~> 0.9.1'
 pod 'IQKeyboardManager'
-pod 'YLProgressBar', '~> 3.8.0'
-
 
 
 

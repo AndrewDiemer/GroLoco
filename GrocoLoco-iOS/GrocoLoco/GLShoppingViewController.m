@@ -11,6 +11,7 @@
 #import "MHSegmentedControl.h"
 #import "GLGroceryItem.h"
 #import "GLSearchTableViewCell.h"
+#import "MHProgressBar.h"
 
 @interface GLShoppingViewController () <MHSegmentedControlDelegate>
 
@@ -20,7 +21,8 @@
 
 @property (strong, nonatomic) MHSegmentedControl *segmentedControl;
 @property (strong, nonatomic) NSMutableDictionary *itemsInSections;
-
+@property (strong, nonatomic) MHProgressBar *progressBar;
+@property (assign, nonatomic) CGFloat currentPage;
 
 @end
 
@@ -50,6 +52,10 @@
         }
     }
     
+    CGFloat yposition = self.topScrollView.frame.origin.y + self.topScrollView.frame.size.height - 20;
+    self.progressBar = [[MHProgressBar alloc] initWithFrame:CGRectMake(20, yposition - 24, self.view.frame.size.width - 40, 24) trackColor:[UIColor GLdarkGreen] barColor:[UIColor GLlightGreen]];
+    self.currentPage = 0;
+    [self.view addSubview:self.progressBar];
     
     [self makeItemViews];
 }
@@ -62,12 +68,17 @@
     [self movePage:-1];
 }
 
+- (void)setCurrentPage:(CGFloat)currentPage
+{
+    if (currentPage > ([self.items count]-1)){
+        return;
+    }
+    _currentPage = currentPage;
+    self.progressBar.progress = self.currentPage / ([self.items count]-1);
+}
 
 #pragma mark -
 #pragma mark UITableViewDelegate
-
-//- (UITableViewCell *)
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView* _Nonnull)tableView
 {
@@ -80,8 +91,7 @@
     return [self.itemsInSections[keys[section]] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GLSearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GL_SEARCH_TABLEVIEW_CELL forIndexPath:indexPath];
 
@@ -143,8 +153,18 @@
     frame.origin.x = frame.size.width * (sender.tag+1);
     frame.origin.y = 0;
     [self.topScrollView scrollRectToVisible:frame animated:YES];
+    
+    self.currentPage += 1;
 }
 
+#pragma mark -
+#pragma mark UIScrollViewDelegate
+
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+//{
+//    CGFloat page = ceil(scrollView.contentOffset.x / self.topScrollView.frame.size.width);
+//    self.currentPage = page;
+//}
 
 #pragma mark -
 #pragma mark MHSegmentedControlDelegate
