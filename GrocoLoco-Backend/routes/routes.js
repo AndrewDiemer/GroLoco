@@ -8,6 +8,20 @@ var clone = require('clone');
 
 module.exports = function (app){
 
+    app.get('/getIcon', function(req,res){
+
+        Icon.findOne({
+            'UPC': req.query.UPC
+        }, function(err, item){
+            if(err)
+                res.send(err);
+            if(item) {
+              
+            } else{
+                res.send(404)
+            }
+        })
+    });
 
     app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
         var itemList = []

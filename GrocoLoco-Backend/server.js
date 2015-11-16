@@ -79,6 +79,7 @@ app.use(function(req, res, next) {
 require('./db/userSchema.js')
 require('./db/groceryItemSchema.js')
 require('./db/groceryListSchema.js')
+require('./db/iconImageSchema.js')
 
 // MODELS =============================================
 User = db.model('User', userSchema)
@@ -92,6 +93,9 @@ require('./routes/routes.js')(app, passport);
 var createData = require('./CreateData');
 createData();
 
+// STORE ICON IMAGES IN THE DB
+var saveImages = require('./SaveImages');
+saveImages();
 
 //LISTEN ==============================================
 app.listen(port);
