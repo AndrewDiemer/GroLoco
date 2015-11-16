@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		61E183F8168BBF157E6F8D29 /* libPods-GrocoLoco.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C611234D44B71BD4FBB269 /* libPods-GrocoLoco.a */; };
+		69C365CDA95BFBB063953BDE /* Pods_GrocoLoco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E56798601A3537EA89129E5 /* Pods_GrocoLoco.framework */; };
 		A702E9221BBC01C9001F24DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9211BBC01C9001F24DC /* main.m */; };
 		A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9241BBC01C9001F24DC /* GLAppDelegate.m */; };
 		A702E92B1BBC01C9001F24DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A702E9291BBC01C9001F24DC /* Main.storyboard */; };
@@ -19,7 +19,13 @@
 		A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9461BBC80BC001F24DC /* GLBaseViewController.m */; };
 		A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */; };
 		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; };
+		A712AD7A1BF80F2E002DC2DD /* GLGrocerySearchedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A712AD791BF80F2E002DC2DD /* GLGrocerySearchedItem.m */; };
+		A712ADA31BF902B1002DC2DD /* MHProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A712ADA21BF902B1002DC2DD /* MHProgressBar.m */; };
 		A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */; };
+		A7F68BBF1BF7BB6A00FD7806 /* GLShoppingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */; };
+		A7F68BC21BF7BF8C00FD7806 /* GLShoppingItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */; };
+		A7F68BC51BF7BFBC00FD7806 /* GLShoppingItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BC41BF7BFBC00FD7806 /* GLShoppingItemView.m */; };
+		A7F68BC81BF7D17600FD7806 /* MHSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BC71BF7D17600FD7806 /* MHSegmentedControl.m */; };
 		A7FE71B41BF3BF98001A0EA2 /* GLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */; };
 		A7FE71B71BF6C4DC001A0EA2 /* GLSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FE71B61BF6C4DB001A0EA2 /* GLSearchTableViewCell.m */; };
 		A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFFB361BD53C9F005B5A08 /* GLMapViewController.m */; };
@@ -31,7 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		01C611234D44B71BD4FBB269 /* libPods-GrocoLoco.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GrocoLoco.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E56798601A3537EA89129E5 /* Pods_GrocoLoco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GrocoLoco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1F75F61033C4AF2DCA9A53 /* Pods-GrocoLoco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrocoLoco.release.xcconfig"; path = "Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco.release.xcconfig"; sourceTree = "<group>"; };
 		8C416E4FB11360EE7CBB402D /* Pods-GrocoLoco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrocoLoco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco.debug.xcconfig"; sourceTree = "<group>"; };
 		A702E91D1BBC01C9001F24DC /* GrocoLoco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrocoLoco.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,8 +62,19 @@
 		A702E94F1BBDAE32001F24DC /* GLGroceryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGroceryItem.m; sourceTree = "<group>"; };
 		A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLHomeTableViewCell.h; sourceTree = "<group>"; };
 		A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLHomeTableViewCell.m; sourceTree = "<group>"; };
+		A712AD781BF80F2E002DC2DD /* GLGrocerySearchedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLGrocerySearchedItem.h; sourceTree = "<group>"; };
+		A712AD791BF80F2E002DC2DD /* GLGrocerySearchedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGrocerySearchedItem.m; sourceTree = "<group>"; };
+		A712ADA11BF902B1002DC2DD /* MHProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHProgressBar.h; sourceTree = "<group>"; };
+		A712ADA21BF902B1002DC2DD /* MHProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHProgressBar.m; sourceTree = "<group>"; };
 		A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSearchViewController.h; sourceTree = "<group>"; };
 		A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSearchViewController.m; sourceTree = "<group>"; };
+		A7F68BBD1BF7BB6A00FD7806 /* GLShoppingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLShoppingViewController.h; sourceTree = "<group>"; };
+		A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLShoppingViewController.m; sourceTree = "<group>"; };
+		A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GLShoppingItemView.xib; sourceTree = "<group>"; };
+		A7F68BC31BF7BFBC00FD7806 /* GLShoppingItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLShoppingItemView.h; sourceTree = "<group>"; };
+		A7F68BC41BF7BFBC00FD7806 /* GLShoppingItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLShoppingItemView.m; sourceTree = "<group>"; };
+		A7F68BC61BF7D17500FD7806 /* MHSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSegmentedControl.h; sourceTree = "<group>"; };
+		A7F68BC71BF7D17600FD7806 /* MHSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSegmentedControl.m; sourceTree = "<group>"; };
 		A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLConstants.m; sourceTree = "<group>"; };
 		A7FE71B51BF6C4DB001A0EA2 /* GLSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSearchTableViewCell.h; sourceTree = "<group>"; };
 		A7FE71B61BF6C4DB001A0EA2 /* GLSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSearchTableViewCell.m; sourceTree = "<group>"; };
@@ -80,7 +97,7 @@
 			files = (
 				A7FFFB3B1BD542C1005B5A08 /* MapKit.framework in Frameworks */,
 				A7FFFB391BD53EB3005B5A08 /* CoreLocation.framework in Frameworks */,
-				61E183F8168BBF157E6F8D29 /* libPods-GrocoLoco.a in Frameworks */,
+				69C365CDA95BFBB063953BDE /* Pods_GrocoLoco.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,13 +135,13 @@
 			isa = PBXGroup;
 			children = (
 				A702E9291BBC01C9001F24DC /* Main.storyboard */,
-				A7FE71B51BF6C4DB001A0EA2 /* GLSearchTableViewCell.h */,
-				A7FE71B61BF6C4DB001A0EA2 /* GLSearchTableViewCell.m */,
 				A702E9231BBC01C9001F24DC /* GLAppDelegate.h */,
 				A702E9241BBC01C9001F24DC /* GLAppDelegate.m */,
 				A702E94D1BBDAE12001F24DC /* Model Objects */,
 				A702E94B1BBDA23B001F24DC /* Login/Sign up */,
+				A7F68BC01BF7BB8000FD7806 /* Shopping */,
 				A702E94C1BBDA24C001F24DC /* Home */,
+				A7A0CB971BF92BC900051FF1 /* Search */,
 				A702E9381BBC4FF6001F24DC /* GLNetworkingManager.h */,
 				A702E9391BBC4FF6001F24DC /* GLNetworkingManager.m */,
 				A7FFFB441BD83312005B5A08 /* GLUserManager.h */,
@@ -134,6 +151,10 @@
 				A702E9311BBC01C9001F24DC /* Info.plist */,
 				A702E93E1BBC5A3A001F24DC /* GLConstants.h */,
 				A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */,
+				A7F68BC61BF7D17500FD7806 /* MHSegmentedControl.h */,
+				A7F68BC71BF7D17600FD7806 /* MHSegmentedControl.m */,
+				A712ADA11BF902B1002DC2DD /* MHProgressBar.h */,
+				A712ADA21BF902B1002DC2DD /* MHProgressBar.m */,
 				A702E9201BBC01C9001F24DC /* Supporting Files */,
 			);
 			path = GrocoLoco;
@@ -166,8 +187,6 @@
 				A702E9401BBC5B81001F24DC /* GLHomeViewController.m */,
 				A702E9511BBDCB94001F24DC /* GLHomeTableViewCell.h */,
 				A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */,
-				A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */,
-				A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -183,8 +202,33 @@
 				A7FFFB3D1BD5758C005B5A08 /* GLMapAnnotation.m */,
 				A7FFFB411BD825E4005B5A08 /* GLGroceryStore.h */,
 				A7FFFB421BD825E4005B5A08 /* GLGroceryStore.m */,
+				A712AD781BF80F2E002DC2DD /* GLGrocerySearchedItem.h */,
+				A712AD791BF80F2E002DC2DD /* GLGrocerySearchedItem.m */,
 			);
 			name = "Model Objects";
+			sourceTree = "<group>";
+		};
+		A7A0CB971BF92BC900051FF1 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				A7FE71B51BF6C4DB001A0EA2 /* GLSearchTableViewCell.h */,
+				A7FE71B61BF6C4DB001A0EA2 /* GLSearchTableViewCell.m */,
+				A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */,
+				A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		A7F68BC01BF7BB8000FD7806 /* Shopping */ = {
+			isa = PBXGroup;
+			children = (
+				A7F68BBD1BF7BB6A00FD7806 /* GLShoppingViewController.h */,
+				A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */,
+				A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */,
+				A7F68BC31BF7BFBC00FD7806 /* GLShoppingItemView.h */,
+				A7F68BC41BF7BFBC00FD7806 /* GLShoppingItemView.m */,
+			);
+			name = Shopping;
 			sourceTree = "<group>";
 		};
 		C9ED506970679FECF02A91C5 /* Frameworks */ = {
@@ -192,7 +236,7 @@
 			children = (
 				A7FFFB3A1BD542C1005B5A08 /* MapKit.framework */,
 				A7FFFB381BD53EB3005B5A08 /* CoreLocation.framework */,
-				01C611234D44B71BD4FBB269 /* libPods-GrocoLoco.a */,
+				0E56798601A3537EA89129E5 /* Pods_GrocoLoco.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -209,6 +253,7 @@
 				A702E91A1BBC01C9001F24DC /* Frameworks */,
 				A702E91B1BBC01C9001F24DC /* Resources */,
 				F2B1443C6F9A27B62BE7734A /* Copy Pods Resources */,
+				7D2885A044E984A710D1766B /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -258,6 +303,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7F68BC21BF7BF8C00FD7806 /* GLShoppingItemView.xib in Resources */,
 				A702E9301BBC01C9001F24DC /* LaunchScreen.storyboard in Resources */,
 				A702E92D1BBC01C9001F24DC /* Assets.xcassets in Resources */,
 				A702E92B1BBC01C9001F24DC /* Main.storyboard in Resources */,
@@ -280,6 +326,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7D2885A044E984A710D1766B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F2B1443C6F9A27B62BE7734A /* Copy Pods Resources */ = {
@@ -306,11 +367,14 @@
 			files = (
 				A7FE71B71BF6C4DC001A0EA2 /* GLSearchTableViewCell.m in Sources */,
 				A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */,
+				A712AD7A1BF80F2E002DC2DD /* GLGrocerySearchedItem.m in Sources */,
 				A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */,
 				A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */,
 				A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */,
 				A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */,
 				A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */,
+				A7F68BC81BF7D17600FD7806 /* MHSegmentedControl.m in Sources */,
+				A712ADA31BF902B1002DC2DD /* MHProgressBar.m in Sources */,
 				A7FFFB431BD825E4005B5A08 /* GLGroceryStore.m in Sources */,
 				A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */,
 				A702E9221BBC01C9001F24DC /* main.m in Sources */,
@@ -319,6 +383,8 @@
 				A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */,
 				A7FE71B41BF3BF98001A0EA2 /* GLConstants.m in Sources */,
 				A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */,
+				A7F68BBF1BF7BB6A00FD7806 /* GLShoppingViewController.m in Sources */,
+				A7F68BC51BF7BFBC00FD7806 /* GLShoppingItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

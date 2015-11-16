@@ -34,4 +34,10 @@
 
 + (void)getUserLocationCompletion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
 
++ (void)getListOfGroceriesForString:(NSString *)itemString completion:(void (^)(NSArray* response, NSError* error))completionBlock;
+
++ (void)isUserLoggedInCompletion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
++ (void)logoutUserCompletion:(void (^)(NSDictionary* response, NSError* error))completionBlock;
+
 @end

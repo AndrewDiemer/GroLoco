@@ -1,12 +1,151 @@
-var responses = 0;
-//require('../db/ItemCoordinates');   
-//var ItemCoordinates = require('./ItemCoordinates');
+
+// require('../db/BlockCoordinates');   
+// require('../db/ItemCoordinates');   
 var passport = require('passport');
 var clone = require('clone');
+var raccoon = require('raccoon');
+var testSet = require('../machinelearningdata/testSet.js')
+
+//RACCOON ==========================================================
+// raccoon.config.nearestNeighbors = 5;  
+// raccoon.config.className = 'groceryitem';  // prefix for your items (used for redis) 
+// raccoon.config.numOfRecsStore = 30;  // number of recommendations to store per user 
+// raccoon.config.factorLeastSimilarLeastLiked = false; 
+
+// raccoon.connect('6379', '127.0.0.1') // auth is optional, but required for remote redis instances 
+// // remember to call them as environment variables with process.env.name_of_variable 
+// raccoon.flush() // flushes your redis instance 
 
 //ROUTES ===========================================================
 
 module.exports = function (app){
+    app.get('/testSet', isAuthenticated, function(req,res){
+        for (var i = 0; i < testSet.length; i++) {
+            console.log(testSet[i]._id.$oid)
+        }
+        res.send(testSet)
+    })
+
+    app.post('/likeitem', isAuthenticated, function(req, res){
+        //Mark ID
+            console.log('hey')
+
+        raccoon.liked('560c18022955001100873ddc', testSet[0]._id.$oid, function() {
+            console.log();
+        })
+        // raccoon.flush();
+        raccoon.liked('560c18022955001100873ddc', testSet[2]._id.$oid, function() {
+            console.log();
+        })
+        raccoon.liked('560c18022955001100873ddc', testSet[3]._id.$oid, function() {
+            console.log();
+        })
+
+<<<<<<< HEAD
+    app.get('/getIcon', function(req,res){
+
+        Icon.findOne({
+            'UPC': req.query.UPC
+        }, function(err, item){
+            if(err)
+                res.send(err);
+            if(item) {
+              
+            } else{
+                res.send(404)
+            }
+        })
+    });
+=======
+        console.log(req.user._id)
+
+        //morgan
+        raccoon.liked('560a0c80fb729eab18ab31fb', testSet[0]._id.$oid,function() {
+            console.log();
+        })
+        res.send(200)
+    })
+
+    app.get('/getreccomendations', isAuthenticated, function(req, res){
+        raccoon.recommendFor('560a0c80fb729eab18ab31fb', 5, function(results){
+            raccoon.flush()
+            res.send(results)
+        })
+    })
+>>>>>>> 97681e6ad22f80933a70516857d0e68d4598db0b
+
+    app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
+        var itemList = []
+        var subSearch = req.params.subsearch
+
+        var time_1 = Date.now()
+        var time_2 = 0
+        var total_time = 0
+
+        var redisQuery = 'autocomplete/' + subSearch
+        console.log(redisQuery)
+
+        client.get(redisQuery, function(err, data){
+            if(err)
+                res.send(err)
+            if(data){
+                time_2 = Date.now()
+                total_time = time_2-time_1
+                console.log('Time to retrieve using Redis: ' + total_time+'ms')
+                res.send(JSON.parse(data))
+            }else{
+                GroceryItem.find({}, function(err, groceryitems){
+                    if(err)
+                        res.send(err)
+                    if(groceryitems){
+                        for(var i = 0; i < groceryitems.length; i++){
+                            if(groceryitems[i].Description){
+                                for (var j = 0; j < groceryitems[i].Description.length - subSearch.length + 1 ; j++) {                            
+                                    if(groceryitems[i].Description.substring(j, j + subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                        itemList.push(groceryitems[i])
+                                    }
+                                }
+                            }
+                        }
+                        time_2 = Date.now()
+                        total_time = time_2-time_1
+                        console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
+                        client.set(redisQuery, JSON.stringify(itemList))
+                        res.send(itemList)
+                    }
+                    else
+                        res.send(404)
+               })
+            }
+        })
+
+
+    });  
+
+    // //Auto lookup
+    // app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
+    //     var itemList = []
+    //     var subSearch = req.params.subsearch
+
+    //     GroceryItem.find({}, function(err, groceryitems){
+    //         if(err)
+    //             res.send(err)
+    //         if(groceryitems){
+    //             for(var i = 0; i < groceryitems.length; i++){
+    //                 if(groceryitems[i].Description){
+    //                     for (var j = 0; j < groceryitems[i].Description.length - subSearch.length + 1 ; j++) {                            
+    //                         if(groceryitems[i].Description.substring(j, j + subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+    //                             itemList.push(groceryitems[i])
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             res.send(itemList)
+    //         }
+    //         else
+    //             res.send(404)
+    //    })
+    // });  
 
     // parameters: UPCode
     app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
@@ -137,19 +276,22 @@ module.exports = function (app){
     })
 
     app.get('/userlocation', isAuthenticated, function(req, res){
-        GroceryItem.findOne({
-            'Sku': req.body.sku
-        }, function(err, item){
+        User.findOneAndUpdate({
+            'Email': req.user.Email
+        }, function(err, user){
             if(err)
                 res.send(err)
-            if(item){
+            if(user){
+                var location = {
+                    StoreName   : user.StoreName,
+                    Latitude    : user.Latitude,
+                    Longitude   : user.Longitude
+                }
 
-                item.x
-
-                res.send(item.coordinates)
-            }else{
-                res.send(404)
+                res.send(location)
             }
+            else
+                res.send(404)
         })
     })
 
@@ -169,8 +311,8 @@ module.exports = function (app){
                 res.send(404)
         })
     })
+
     app.post('/deletegroceryitems', isAuthenticated, function(req, res){
-        
         GroceryList.findOneAndUpdate({
             'User': req.user,
             'GroceryListName': req.body.GroceryListName
@@ -185,7 +327,6 @@ module.exports = function (app){
             if(groceryList)
                 res.send(groceryList)
         })
-
     })
 
     app.post('/deletegroceryitem', isAuthenticated, function(req, res){
@@ -212,8 +353,9 @@ module.exports = function (app){
                         function(err, groceryList){
                             if(err)
                                 res.send(err)
-                            if(groceryList)
+                            if(groceryList){
                                 res.send(groceryList)
+                            }
                         })
                     }
                 }
@@ -290,41 +432,42 @@ module.exports = function (app){
                 }
             })
     })
-
-    app.post('/editgroceryitem', isAuthenticated, function(req, res){
-        GroceryList.findOne({
-                'User': req.user,
-                'GroceryListName': req.body.GroceryListName
-            }, function(err, groceryList){
-                if(err)
-                    res.send(err)
-                if(groceryList){
-                    for(var i = 0; i < groceryList.List.length; i++){
-                        if(groceryList.List[i]._id == req.body._id){
-                            groceryList.List[i].ItemName = req.body.ItemName
-                            groceryList.List[i].Quantity = req.body.Quantity
-                            groceryList.List[i].Comment = req.body.Comment
-                             GroceryList.findOneAndUpdate({
-                                'User': req.user,
-                                'GroceryListName': req.body.GroceryListName
-                            },{
-                                'List': groceryList.List
-                            },{
-                                safe:true, upsert:true, new: true
-                            },
-                            function(err, groceryList){
-                                if(err)
-                                    res.send(err)
-                                if(groceryList)
-                                    res.send(200)
-                            })
-                        }
-                    }
-                }else{
-                    res.send(404);
-                }
-            })
-    })
+    
+    //Deprecated
+    // app.post('/editgroceryitem', isAuthenticated, function(req, res){
+    //     GroceryList.findOne({
+    //             'User': req.user,
+    //             'GroceryListName': req.body.GroceryListName
+    //         }, function(err, groceryList){
+    //             if(err)
+    //                 res.send(err)
+    //             if(groceryList){
+    //                 for(var i = 0; i < groceryList.List.length; i++){
+    //                     if(groceryList.List[i]._id == req.body._id){
+    //                         groceryList.List[i].ItemName = req.body.ItemName
+    //                         groceryList.List[i].Quantity = req.body.Quantity
+    //                         groceryList.List[i].Comment = req.body.Comment
+    //                          GroceryList.findOneAndUpdate({
+    //                             'User': req.user,
+    //                             'GroceryListName': req.body.GroceryListName
+    //                         },{
+    //                             'List': groceryList.List
+    //                         },{
+    //                             safe:true, upsert:true, new: true
+    //                         },
+    //                         function(err, groceryList){
+    //                             if(err)
+    //                                 res.send(err)
+    //                             if(groceryList)
+    //                                 res.send(200)
+    //                         })
+    //                     }
+    //                 }
+    //             }else{
+    //                 res.send(404);
+    //             }
+    //         })
+    // })
 
     app.delete('/deletegrocerylist', isAuthenticated, function(req,res){
         GroceryList.findOneAndRemove({
@@ -371,7 +514,9 @@ module.exports = function (app){
     })
 
     app.get('/grocerylists', isAuthenticated, function(req,res){
-        GroceryList.find({'User':req.user}, function(err, grocerylists){
+        GroceryList.find({
+            'User':req.user
+        }, function(err, grocerylists){
             if(err)
                 res.send(err)
             if(grocerylists)
@@ -382,13 +527,10 @@ module.exports = function (app){
     })
 
     app.post('/addtolist', isAuthenticated, function(req, res) {
-
-        var groceryListName = req.body.GroceryListName;
-
         for(var i = 0; i < req.body.List.length;i++){
              GroceryList.findOneAndUpdate({
                 'User': req.user,
-                'GroceryListName': groceryListName
+                'GroceryListName': req.body.GroceryListName
             },{
                 $push:{'List': req.body.List[i]}
             },{
@@ -494,5 +636,5 @@ var isAuthenticated = function (req, res, next) {
     // if the user is not authenticated then redirect him to the login page
     var fail = 'Sorry a user is not logged in'
     console.log(fail)
-    res.status(500).send({message: fail});
+    res.send({'status': false});
 }

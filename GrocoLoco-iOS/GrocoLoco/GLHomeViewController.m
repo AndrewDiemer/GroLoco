@@ -1,3 +1,5 @@
+
+
 //
 //  GLHomeViewController.m
 //  GrocoLoco
@@ -9,6 +11,7 @@
 #import "GLHomeViewController.h"
 #import "GLHomeTableViewCell.h"
 #import "GLGroceryItem.h"
+#import "GLShoppingViewController.h"
 
 @interface GLHomeViewController () <UITextFieldDelegate>
 
@@ -20,8 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *startShoppingButton;
 @property (weak, nonatomic) IBOutlet UIButton *clearListButton;
 
-@property (strong, nonatomic) UIBarButtonItem* editButton;
-@property (strong, nonatomic) UIBarButtonItem* doneButton;
 @property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) NSMutableArray *expandedPaths;
 @property (strong, nonatomic) NSIndexPath *oldIndex;
@@ -38,11 +39,6 @@
     [super viewDidLoad];
 
     [self.navigationItem setHidesBackButton:YES];
-    self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editAction)];
-
-    self.doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneAction)];
-
-    self.navigationItem.leftBarButtonItem = self.editButton;
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(loadGroceryLists:) forControlEvents:UIControlEventValueChanged];
@@ -59,6 +55,8 @@
     self.storeNameLabel.text = [[GLUserManager sharedManager] storeName];
     
     self.expandedPaths = @[].mutableCopy;
+    
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -75,7 +73,6 @@
     
     GLHomeTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:GL_HOME_TABLEVIEW_CELL forIndexPath:indexPath];
     GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
-    
     NSInteger tag = (indexPath.row+1)+(indexPath.section*100);
     
     cell.expandButton.tag = tag;
@@ -106,18 +103,15 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary* groceryListDict = self.data[indexPath.section];
-    if (indexPath.row == [groceryListDict[@"List"] count]){
-        return;
-    }
-    GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
-    if (item.isCrossedOut){
-        [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    }
-    cell.backgroundColor = [UIColor clearColor];
-}
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSDictionary* groceryListDict = self.data[indexPath.section];
+//    if (indexPath.row == [groceryListDict[@"List"] count]){
+//        return;
+//    }
+//    GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
+//    cell.backgroundColor = [UIColor clearColor];
+//}
 
 //- (void)tableView:(UITableView* _Nonnull)tableView didSelectRowAtIndexPath:(NSIndexPath* _Nonnull)indexPath
 //{
@@ -168,8 +162,8 @@
             return UITableViewCellEditingStyleDelete;
         }
     }
-
-    return UITableViewCellEditingStyleNone;
+    
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
@@ -189,28 +183,11 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark UITextFieldDelegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-//    CGPoint pointInTable = [textField convertPoint:textField.bounds.origin toView:self.tableView];
-//    
-//    NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:pointInTable];
-//    
-//    NSDictionary* groceryListDict = self.data[indexPath.section];
-//    
-//    GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
-//
-//    [GLNetworkingManager editGroceryItem:groceryListDict[@"GroceryListName"]
-//                                    item:[item objectAsDictionary]
-//                                  itemID:item.ID
-//                              completion:^(NSDictionary* response, NSError* error) {
-//                                  if (error) {
-//                                      [self showError:error.description];
-//                                  }
-//                              }];
     if (textField.text.length == 0){
         return;
     }
@@ -251,6 +228,8 @@
             [self showError:error.description];
         }
     }];
+    
+    [self loadGroceryLists:nil];
 }
 
 
@@ -260,14 +239,19 @@
 -(void)loadGroceryLists:(UIRefreshControl *)refreshControl
 {
     [self showFullScreenHUD];
-    [GLNetworkingManager getGroceryListsForCurrentUserCompletion:^(NSArray *response, NSError *error) {
-        if (refreshControl){
-            [refreshControl endRefreshing];
-        }
-        [self hideFullScreenHUD];
-        self.data = response.mutableCopy;
-        [self.tableView reloadData];
-    }];
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [GLNetworkingManager getGroceryListsForCurrentUserCompletion:^(NSArray *response, NSError *error) {
+            if (refreshControl){
+                [refreshControl endRefreshing];
+            }
+            [self hideFullScreenHUD];
+            self.data = response.mutableCopy;
+            dispatch_async( dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+            
+        }];
+    });
 }
 - (IBAction)addNewListPressed:(id)sender
 {
@@ -325,6 +309,18 @@
     [self.tableView endUpdates];
     
     sender.selected = !sender.selected;
+}
+
+
+#pragma mark -
+#pragma mark Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:GL_START_SHOPPING_SEGUE]){
+        GLShoppingViewController *shoppingVC = segue.destinationViewController;
+        shoppingVC.items = [self.data firstObject][@"List"];
+    }
 }
 
 @end

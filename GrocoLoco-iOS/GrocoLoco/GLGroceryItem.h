@@ -8,16 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
+typedef struct {
+    CGFloat x;
+    CGFloat y;
+} Coordinates;
+
 @interface GLGroceryItem : NSObject
 
-@property (nonatomic, strong) NSString *itemName;
-@property (nonatomic, assign) NSInteger quantity;
+@property (nonatomic, strong) NSString *aisle;
+@property (nonatomic, strong) NSString *aisleShelf;
+@property (nonatomic, assign) Coordinates coordinates;
+@property (nonatomic, strong) NSString *itemDescription;
+@property (nonatomic, strong) NSString *POSDescription;
+@property (nonatomic, strong) NSString *position;
+@property (nonatomic, strong) NSString *subcategory;
+@property (nonatomic, strong) NSString *UPC;
 @property (nonatomic, strong) NSString *ID;
-@property (nonatomic, strong) NSString *notes;
-@property (nonatomic, assign) BOOL isCrossedOut;
+@property (nonatomic, strong) NSString *comments;
+@property (nonatomic, strong) UIButton *navPin;
 
-- (instancetype)initWithName:(NSString *)name quantity:(NSInteger)quantity andComment:(NSString *)comment;
-- (instancetype)initWithDictionary: (NSDictionary *)dictionary;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSDictionary *)objectAsDictionary;
 
 @end
