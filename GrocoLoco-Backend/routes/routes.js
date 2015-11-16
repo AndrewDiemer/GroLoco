@@ -1,6 +1,3 @@
-
-// require('../db/BlockCoordinates');   
-// require('../db/ItemCoordinates');   
 var passport = require('passport');
 var clone = require('clone');
 var raccoon = require('raccoon');
@@ -19,9 +16,66 @@ var testSet = require('../machinelearningdata/testSet.js')
 //ROUTES ===========================================================
 
 module.exports = function (app){
+
+    app.post('/getIcon', function(req,res){
+
+        Icon.find({}, function(err, icons){
+            if(err)
+                res.send(err);
+            if(icons) {
+                for(var i=0; i< icons.length; i++){
+                    if(icons[i].Name == req.body.Name){
+                        res.send(icons[i])
+                        break;
+                    }
+                }
+              
+            } else
+                res.send(404)
+            })
+    })
+
+
+    // parameters: UPCode
+    app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
+        GroceryItem.findOne({
+            'UPC': req.query.UPC
+        }, function(err, item){
+            if(err)
+                res.send(err);
+            if(item) {
+                // found item, now need to get and set its coordinates
+                if(item.Coordinates) {
+                    console.log('SUCCESS - found and returned coordinates');                    
+                    res.send(item.Coordinates);
+                } else {
+                    console.log('ERROR - no coordinates found for this item!');                    
+                    var coord = {x : 5, y : 5};
+                    res.send(coord);
+                }
+
+            }
+        })
+    });
+
+
     app.get('/testSet', isAuthenticated, function(req,res){
         for (var i = 0; i < testSet.length; i++) {
-            console.log(testSet[i]._id.$oid)
+
+            var UPCcode = Math.floor((Math.random() * 9999999999) + 1);
+
+            var newItem = new GroceryItem({
+                UPC            : UPCcode, //"5820008030",
+                Description    : testSet[i].Description,
+                POSDescription : testSet[i].POSDescription,
+                SubCategory    : testSet[i].SubCategory,
+                Aisle          : testSet[i].Aisle, // created by taking Aisle info from Sobeys and removing shelf id from the end 
+                AisleShelf     : testSet[i].AisleShelf,  // created from full Aisle info from Sobeys
+                Position       : testSet[i].Position
+            });
+            
+            console.error(testSet[i]);
+            newItem.save(function (err) { if (err) console.log(err); })
         }
         res.send(testSet)
     })
@@ -41,22 +95,8 @@ module.exports = function (app){
             console.log();
         })
 
-<<<<<<< HEAD
-    app.get('/getIcon', function(req,res){
 
-        Icon.findOne({
-            'UPC': req.query.UPC
-        }, function(err, item){
-            if(err)
-                res.send(err);
-            if(item) {
-              
-            } else{
-                res.send(404)
-            }
-        })
-    });
-=======
+
         console.log(req.user._id)
 
         //morgan
@@ -72,7 +112,6 @@ module.exports = function (app){
             res.send(results)
         })
     })
->>>>>>> 97681e6ad22f80933a70516857d0e68d4598db0b
 
     app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
         var itemList = []
@@ -146,30 +185,6 @@ module.exports = function (app){
     //             res.send(404)
     //    })
     // });  
-
-    // parameters: UPCode
-    app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
-        GroceryItem.findOne({
-            'UPC': req.query.UPC
-        }, function(err, item){
-            if(err)
-                res.send(err);
-            if(item) {
-                // found item, now need to get and set its coordinates
-                item.setcoordinates(function(err, item) {                    
-                    if(err) {
-                        console.log('error finding coordinates for item');
-                        res.send(err);
-                    } else {
-                        console.log('successfully found and set coordinates');
-                        res.send(item);
-                    }
-                })
-            } else{
-                res.send(404)
-            }
-        })
-    })
 
     app.get('/userlocation', isAuthenticated, function(req, res){
         User.findOneAndUpdate({

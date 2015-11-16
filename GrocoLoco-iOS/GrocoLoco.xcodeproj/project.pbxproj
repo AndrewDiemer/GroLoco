@@ -21,6 +21,7 @@
 		A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9521BBDCB94001F24DC /* GLHomeTableViewCell.m */; };
 		A712AD7A1BF80F2E002DC2DD /* GLGrocerySearchedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A712AD791BF80F2E002DC2DD /* GLGrocerySearchedItem.m */; };
 		A712ADA31BF902B1002DC2DD /* MHProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A712ADA21BF902B1002DC2DD /* MHProgressBar.m */; };
+		A7375D341BF97F7E00D05E3A /* UIButton+GLCenterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A7375D321BF97F7E00D05E3A /* UIButton+GLCenterButton.m */; };
 		A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */; };
 		A7F68BBF1BF7BB6A00FD7806 /* GLShoppingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */; };
 		A7F68BC21BF7BF8C00FD7806 /* GLShoppingItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */; };
@@ -66,6 +67,8 @@
 		A712AD791BF80F2E002DC2DD /* GLGrocerySearchedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLGrocerySearchedItem.m; sourceTree = "<group>"; };
 		A712ADA11BF902B1002DC2DD /* MHProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHProgressBar.h; sourceTree = "<group>"; };
 		A712ADA21BF902B1002DC2DD /* MHProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHProgressBar.m; sourceTree = "<group>"; };
+		A7375D311BF97F7E00D05E3A /* UIButton+GLCenterButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+GLCenterButton.h"; sourceTree = "<group>"; };
+		A7375D321BF97F7E00D05E3A /* UIButton+GLCenterButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+GLCenterButton.m"; sourceTree = "<group>"; };
 		A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSearchViewController.h; sourceTree = "<group>"; };
 		A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSearchViewController.m; sourceTree = "<group>"; };
 		A7F68BBD1BF7BB6A00FD7806 /* GLShoppingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLShoppingViewController.h; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 				A7F68BC71BF7D17600FD7806 /* MHSegmentedControl.m */,
 				A712ADA11BF902B1002DC2DD /* MHProgressBar.h */,
 				A712ADA21BF902B1002DC2DD /* MHProgressBar.m */,
+				A7375D311BF97F7E00D05E3A /* UIButton+GLCenterButton.h */,
+				A7375D321BF97F7E00D05E3A /* UIButton+GLCenterButton.m */,
 				A702E9201BBC01C9001F24DC /* Supporting Files */,
 			);
 			path = GrocoLoco;
@@ -379,6 +384,7 @@
 				A702E9471BBC80BC001F24DC /* GLBaseViewController.m in Sources */,
 				A702E9221BBC01C9001F24DC /* main.m in Sources */,
 				A7FFFB461BD83312005B5A08 /* GLUserManager.m in Sources */,
+				A7375D341BF97F7E00D05E3A /* UIButton+GLCenterButton.m in Sources */,
 				A702E9501BBDAE32001F24DC /* GLGroceryItem.m in Sources */,
 				A7FFFB3E1BD5758C005B5A08 /* GLMapAnnotation.m in Sources */,
 				A7FE71B41BF3BF98001A0EA2 /* GLConstants.m in Sources */,

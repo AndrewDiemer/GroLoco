@@ -80,18 +80,24 @@ app.use(function(req, res, next) {
 require('./db/userSchema.js')
 require('./db/groceryItemSchema.js')
 require('./db/groceryListSchema.js')
+require('./db/blockCoordinatesSchema.js')
+require('./db/itemWidthSchema.js')
 require('./db/iconImageSchema.js')
 
 // MODELS =============================================
 User = db.model('User', userSchema)
 GroceryItem = db.model('GroceryItem', groceryItemSchema)
 GroceryList = db.model('GroceryList', groceryListSchema)
+Icon = db.model("IconImage", iconImageSchema);
+BlockCoordinates = db.model('BlockCoordinates', blockCoordinatesSchema)
+ItemWidth = db.model('ItemWidth', itemWidthSchema)
+
 
 //ROUTES ==============================================
 require('./routes/routes.js')(app, passport); 
 
-//CREATE MOCK DATA ====================================
-var createData = require('./CreateData');
+//CREATE DATA ====================================
+var createData = require('./CreateData/CreateData');
 createData();
 
 // STORE ICON IMAGES IN THE DB

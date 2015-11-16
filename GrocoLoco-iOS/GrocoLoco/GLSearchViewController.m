@@ -9,12 +9,14 @@
 #import "GLSearchViewController.h"
 #import "GLGroceryItem.h"
 #import "GLHomeTableViewCell.h"
+#import "UIButton+GLCenterButton.h"
 
 @interface GLSearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *categoryButtons;
+@property (strong, nonatomic) IBOutlet UIView *categoriesView;
 
 @property (strong, nonatomic) NSMutableArray *filertedItems;
 
@@ -27,17 +29,22 @@
     
     self.filertedItems = @[].mutableCopy;
     
-    self.doneButton.layer.cornerRadius = 5;
-    
-    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.doneButton.frame.size.height, 0)];
-    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.doneButton.frame.size.height, 0)];
-    
     [self.searchBar becomeFirstResponder];
+    
+    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.categoriesView.frame.size.height, 0)];
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.categoriesView.frame.size.height, 0)];
+    
+    for (UIButton *button in self.categoryButtons){
+        [button centerImageAndTitle];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    [UIView animateWithDuration:0.5 animations:^{
+        self.categoriesView.frame = CGRectMake(0, self.view.frame.size.height-360, self.view.frame.size.height, 360);
+    }];
+    
 }
 
 #pragma mark -
@@ -73,10 +80,6 @@
     });
 
 }
-- (IBAction)donePressed:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 #pragma mark -
 #pragma mark UISearchBarDelegate
@@ -85,10 +88,22 @@
 {
     self.searchBar.text = @"";
     [self.view endEditing:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    CGRect frame = self.categoriesView.frame;
+    NSLog(@"%@",NSStringFromCGRect(frame));
+    
+    if (frame.origin.y != self.view.frame.size.height){
+        frame.origin.y += frame.size.height;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.categoriesView.frame = frame;
+        }];
+        NSLog(@"%@",NSStringFromCGRect(frame));
+    }
+    
     if (searchText.length == 0){
         return;
     }
