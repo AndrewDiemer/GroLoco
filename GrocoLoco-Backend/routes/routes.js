@@ -31,7 +31,7 @@ module.exports = function (app){
                     res.send(item.Coordinates);
                 } else {
                     console.log('ERROR - no coordinates found for this item!');                    
-                    var coord = {x : 5, y : 10};
+                    var coord = {x : 5, y : 5};
                     res.send(coord);
                 }
             }
