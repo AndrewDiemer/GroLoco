@@ -80,15 +80,17 @@ app.use(function(req, res, next) {
 require('./db/userSchema.js')
 require('./db/groceryItemSchema.js')
 require('./db/groceryListSchema.js')
+<<<<<<< HEAD
 require('./db/blockCoordinatesSchema.js')
 require('./db/itemWidthSchema.js')
+=======
 require('./db/iconImageSchema.js')
+>>>>>>> 4bedef009e70a10d8c8798117584131a0bcc5777
 
 // MODELS =============================================
 User = db.model('User', userSchema)
 GroceryItem = db.model('GroceryItem', groceryItemSchema)
 GroceryList = db.model('GroceryList', groceryListSchema)
-Icon = db.model("IconImage", iconImageSchema);
 BlockCoordinates = db.model('BlockCoordinates', blockCoordinatesSchema)
 ItemWidth = db.model('ItemWidth', itemWidthSchema)
 
@@ -100,10 +102,13 @@ require('./routes/routes.js')(app, passport);
 var createData = require('./CreateData/CreateData');
 createData();
 
+<<<<<<< HEAD
+=======
 // STORE ICON IMAGES IN THE DB
 var saveImages = require('./SaveImages');
 saveImages();
 
+>>>>>>> 4bedef009e70a10d8c8798117584131a0bcc5777
 //LISTEN ==============================================
 app.listen(port);
 console.log('The magic happens on port ' + port);

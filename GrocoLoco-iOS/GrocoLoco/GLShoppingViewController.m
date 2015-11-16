@@ -37,20 +37,13 @@
     
     self.segmentedControl.delegate = self;
     [self.view addSubview:self.segmentedControl];
-    
+
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.view.frame.size.height - self.segmentedControl.frame.origin.y, 0)];
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.view.frame.size.height - self.segmentedControl.frame.origin.y, 0)];
     
     self.itemsInSections = @{}.mutableCopy;
-    for (GLGroceryItem *item in self.items){
-        if (self.itemsInSections[item.aisle]){
-            NSMutableArray* items = self.itemsInSections[item.aisle];
-            [items addObject:item];
-        }
-        else{
-            self.itemsInSections[item.aisle] = @[item].mutableCopy;
-        }
-    }
+    
+    self.mapView.userInteractionEnabled = YES;
     
     CGFloat yposition = self.topScrollView.frame.origin.y + self.topScrollView.frame.size.height - 20;
     self.progressBar = [[MHProgressBar alloc] initWithFrame:CGRectMake(20, yposition - 24, self.view.frame.size.width - 40, 24) trackColor:[UIColor GLdarkGreen] barColor:[UIColor GLlightGreen]];
@@ -59,6 +52,40 @@
     
     [self makeItemViews];
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    for (GLGroceryItem *item in self.items){
+        
+        NSUInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 16;
+        NSUInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 32;
+        
+        item.navPin.frame = CGRectMake(coordx, coordy, 32, 32);
+        [self.mapView addSubview:item.navPin];
+        [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
+        item.navPin.tag = [self.items indexOfObject:item];
+        
+        if (self.itemsInSections[item.aisle]){
+            NSMutableArray* items = self.itemsInSections[item.aisle];
+            [items addObject:item];
+        }
+        else{
+            self.itemsInSections[item.aisle] = @[item].mutableCopy;
+        }
+    }
+}
+
+- (void)itemSelected:(UIButton *) sender {
+    
+    CGRect frame = self.topScrollView.frame;
+    frame.origin.x = frame.size.width * (sender.tag);
+    frame.origin.y = 0;
+    [self.topScrollView scrollRectToVisible:frame animated:YES];
+    
+    sender.selected = !sender.selected;
+}
+
 - (IBAction)nextPressed:(id)sender
 {
     [self movePage:1];
