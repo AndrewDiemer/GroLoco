@@ -88,6 +88,7 @@ require('./db/iconImageSchema.js')
 User = db.model('User', userSchema)
 GroceryItem = db.model('GroceryItem', groceryItemSchema)
 GroceryList = db.model('GroceryList', groceryListSchema)
+Icon = db.model("IconImage", iconImageSchema);
 BlockCoordinates = db.model('BlockCoordinates', blockCoordinatesSchema)
 ItemWidth = db.model('ItemWidth', itemWidthSchema)
 
