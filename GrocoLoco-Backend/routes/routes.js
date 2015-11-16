@@ -30,8 +30,11 @@ module.exports = function (app){
                     }
                 }
               
-            } else{
+            } else
                 res.send(404)
+            })
+    })
+
 
     // parameters: UPCode
     app.get('/itemcoordinates', function(req, res){ // app.get('/itemcoordinates', isAuthenticated, function(req, res){      
