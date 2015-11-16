@@ -41,7 +41,7 @@ module.exports = function (app){
             console.log();
         })
 
-<<<<<<< HEAD
+
     app.get('/getIcon', function(req,res){
 
         Icon.findOne({
@@ -56,7 +56,7 @@ module.exports = function (app){
             }
         })
     });
-=======
+
         console.log(req.user._id)
 
         //morgan
@@ -72,7 +72,6 @@ module.exports = function (app){
             res.send(results)
         })
     })
->>>>>>> 97681e6ad22f80933a70516857d0e68d4598db0b
 
     app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
         var itemList = []
