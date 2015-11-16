@@ -56,8 +56,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     for (GLGroceryItem *item in self.items){
-        
+        NSLog(@"here");
         NSUInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 16;
         NSUInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 32;
         
@@ -74,6 +75,7 @@
             self.itemsInSections[item.aisle] = @[item].mutableCopy;
         }
     }
+    [self.tableView reloadData];
 }
 
 - (void)itemSelected:(UIButton *) sender {
@@ -124,6 +126,7 @@
 
     NSArray *keys = [[self.itemsInSections allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSNumber *key = keys[indexPath.section];
+    NSLog(@"%@",self.itemsInSections[key][indexPath.row]);
     cell.item = self.itemsInSections[key][indexPath.row];
     
     return cell;

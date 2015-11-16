@@ -276,7 +276,6 @@
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="45"/>
                                 <state key="normal" title="+"/>
                                 <connections>
-                                    <action selector="addNewListPressed:" destination="9eX-0U-AmJ" eventType="touchUpInside" id="QPO-IQ-d3q"/>
                                     <segue destination="Nd1-sj-1cg" kind="presentation" id="zHE-2i-BBk"/>
                                 </connections>
                             </button>
@@ -477,8 +476,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="Xdt-6L-pH4" id="mIE-uX-e9t"/>
-                                    <outlet property="delegate" destination="Xdt-6L-pH4" id="sfV-3f-cRk"/>
+                                    <outlet property="dataSource" destination="Xdt-6L-pH4" id="IPZ-tl-l56"/>
+                                    <outlet property="delegate" destination="Xdt-6L-pH4" id="auw-2v-wxg"/>
                                 </connections>
                             </tableView>
                         </subviews>

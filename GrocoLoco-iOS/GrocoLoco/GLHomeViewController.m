@@ -253,25 +253,6 @@
         }];
     });
 }
-- (IBAction)addNewListPressed:(id)sender
-{
-
-}
-
-- (void)setItemCrossedOut:(BOOL)crossedOut atIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary* groceryListDict = self.data[indexPath.section];
-    GLGroceryItem* item = groceryListDict[@"List"][indexPath.row];
-    
-    [GLNetworkingManager crossOutGroceryItem:groceryListDict[@"GroceryListName"]
-                                isCrossedOut:crossedOut
-                                      itemID:item.ID
-                                  completion:^(NSDictionary* response, NSError* error) {
-                                      if (error) {
-                                          NSLog(@"%@", error.description);
-                                      }
-                                  }];
-}
 
 -(NSIndexPath*)getIndexPathFromTag:(NSInteger)tag{
     /* To get indexPath from textfeidl tag,
