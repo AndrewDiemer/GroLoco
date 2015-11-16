@@ -86,6 +86,7 @@ require('./db/iconImageSchema.js')
 User = db.model('User', userSchema)
 GroceryItem = db.model('GroceryItem', groceryItemSchema)
 GroceryList = db.model('GroceryList', groceryListSchema)
+Icon = db.model("IconImage", iconImageSchema);
 
 //ROUTES ==============================================
 require('./routes/routes.js')(app, passport); 
