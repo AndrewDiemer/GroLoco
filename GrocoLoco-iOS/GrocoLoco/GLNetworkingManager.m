@@ -106,7 +106,6 @@
     NSDictionary* params = @{ @"GroceryListName" : groceryListName,
                               @"List" : items
                               };
-    NSLog(@"%@",params);
     
     [manager POST:@"https://grocolocoapp.herokuapp.com/addtolist"
         parameters:params
@@ -272,7 +271,6 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [manager GET:@"https://grocolocoapp.herokuapp.com/loggedin" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        NSLog(@"%@",responseObject);
         completionBlock(responseObject, nil);
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         completionBlock(nil, error);

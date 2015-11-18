@@ -45,8 +45,8 @@
     
     self.mapView.userInteractionEnabled = YES;
     
-    CGFloat yposition = self.topScrollView.frame.origin.y + self.topScrollView.frame.size.height - 20;
-    self.progressBar = [[MHProgressBar alloc] initWithFrame:CGRectMake(20, yposition - 24, self.view.frame.size.width - 40, 24) trackColor:[UIColor GLdarkGreen] barColor:[UIColor GLlightGreen]];
+    CGFloat yposition = self.topScrollView.frame.origin.y + self.topScrollView.frame.size.height - 5;
+    self.progressBar = [[MHProgressBar alloc] initWithFrame:CGRectMake(20, yposition - 20, self.view.frame.size.width - 40, 20) trackColor:[UIColor GLdarkGreen] barColor:[UIColor GLlightGreen]];
     self.currentPage = 0;
     [self.view addSubview:self.progressBar];
     
@@ -56,8 +56,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     for (GLGroceryItem *item in self.items){
-        
+        NSLog(@"here");
         NSUInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 16;
         NSUInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 32;
         
@@ -74,6 +75,7 @@
             self.itemsInSections[item.aisle] = @[item].mutableCopy;
         }
     }
+    [self.tableView reloadData];
 }
 
 - (void)itemSelected:(UIButton *) sender {
@@ -83,7 +85,12 @@
     frame.origin.y = 0;
     [self.topScrollView scrollRectToVisible:frame animated:YES];
     
-    sender.selected = !sender.selected;
+    for (GLGroceryItem *item in self.items) {
+        [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
+    }
+    
+    GLGroceryItem *selectedButton = self.items[sender.tag];
+    [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
 }
 
 - (IBAction)nextPressed:(id)sender
@@ -97,11 +104,11 @@
 
 - (void)setCurrentPage:(CGFloat)currentPage
 {
-    if (currentPage > ([self.items count]-1)){
+    if (currentPage > ([self.items count])){
         return;
     }
     _currentPage = currentPage;
-    self.progressBar.progress = self.currentPage / ([self.items count]-1);
+    self.progressBar.progress = self.currentPage / ([self.items count]);
 }
 
 #pragma mark -
@@ -159,6 +166,13 @@
         return;
     }
     [self.topScrollView setContentOffset:CGPointMake(self.view.frame.size.width * direction + currentOffset.x, 0) animated:YES];
+    
+    for (GLGroceryItem *item in self.items) {
+        [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
+    }
+    
+    //GLGroceryItem *selectedButton = self.items[self.currentPage];
+    //[selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
 }
 
 - (void)makeItemViews
@@ -166,7 +180,7 @@
     for (NSInteger i=0; i< [self.items count]; i++){
         GLGroceryItem *item = self.items[i];
         GLShoppingItemView* itemView = [[[NSBundle mainBundle] loadNibNamed:@"GLShoppingItemView" owner:self options:nil] firstObject];
-        itemView.frame = CGRectMake(self.view.frame.size.width * i, 0, self.topScrollView.frame.size.width, self.topScrollView.frame.size.height);
+        itemView.frame = CGRectMake(self.view.frame.size.width * i, 0, self.topScrollView.frame.size.width, self.topScrollView.frame.size.height-25);
         itemView.item = item;
         itemView.gotItemButton.tag = i;
         [itemView.gotItemButton addTarget:self action:@selector(gotItem:) forControlEvents:UIControlEventTouchUpInside];
@@ -176,12 +190,22 @@
 
 - (void)gotItem:(UIButton *)sender
 {
+    sender.enabled = NO;
+    
     CGRect frame = self.topScrollView.frame;
     frame.origin.x = frame.size.width * (sender.tag+1);
     frame.origin.y = 0;
     [self.topScrollView scrollRectToVisible:frame animated:YES];
     
+    GLGroceryItem *selectedButton = self.items[sender.tag];
+    selectedButton.navPin.selected = YES;
+    
     self.currentPage += 1;
+    
+    if (sender.tag + 1 < [self.items count]) {
+        GLGroceryItem *nextButton = self.items[sender.tag + 1];
+        [nextButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark -

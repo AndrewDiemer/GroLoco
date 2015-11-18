@@ -22,8 +22,6 @@
         coords.y = [dictionary[@"Coordinates"][@"y"] floatValue];
         _coordinates = coords;
         
-        NSLog(@"%f, %f", _coordinates.x, _coordinates.y);
-        
         _UPC = dictionary[@"UPC"];
         _itemDescription = dictionary[@"Description"];
         _POSDescription = dictionary[@"POSDescription"];
