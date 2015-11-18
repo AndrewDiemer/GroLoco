@@ -80,6 +80,18 @@ module.exports = function (app){
         res.send(testSet)
     })
 
+    app.get('/getitems', isAuthenticated, function(req,res){
+        GroceryItem.find({}, function(err, items){
+            if(err)
+                res.send(err)
+            if(items){
+                res.send(items)
+            }else{
+                res.send(404)
+            }
+        })
+    })
+
     app.post('/likeitem', isAuthenticated, function(req, res){
         //Mark ID
             console.log('hey')
@@ -113,6 +125,10 @@ module.exports = function (app){
         })
     })
 
+    app.post('/clearredis', isAuthenticated, function(req, res){
+
+    })
+
     app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
         var itemList = []
         var subSearch = req.params.subsearch
@@ -122,7 +138,7 @@ module.exports = function (app){
         var total_time = 0
 
         var redisQuery = 'autocomplete/' + subSearch
-        console.log(redisQuery)
+        // console.log(redisQuery)
 
         client.get(redisQuery, function(err, data){
             if(err)
@@ -130,7 +146,7 @@ module.exports = function (app){
             if(data){
                 time_2 = Date.now()
                 total_time = time_2-time_1
-                console.log('Time to retrieve using Redis: ' + total_time+'ms')
+                // console.log('Time to retrieve using Redis: ' + total_time+'ms')
                 res.send(JSON.parse(data))
             }else{
                 GroceryItem.find({}, function(err, groceryitems){
@@ -138,17 +154,49 @@ module.exports = function (app){
                         res.send(err)
                     if(groceryitems){
                         for(var i = 0; i < groceryitems.length; i++){
-                            if(groceryitems[i].Description){
-                                for (var j = 0; j < groceryitems[i].Description.length - subSearch.length + 1 ; j++) {                            
-                                    if(groceryitems[i].Description.substring(j, j + subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+
+                            var added = false
+                            //check the description
+                            if(groceryitems[i].Description && !added){
+                                var descriptionListOfWords = groceryitems[i].Description.split(' ')
+                                for (var j = 0; j < groceryitems[i].Description.length; j++) {                            
+                                    if(groceryitems[i].Description.substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
                                         itemList.push(groceryitems[i])
+                                        added = true
+                                        break;
                                     }
                                 }
                             }
+
+                            //check the POS Description
+                            if(groceryitems[i].POSDescription && !added){
+                                var POSDescriptionListOfWords = groceryitems[i].Description.split(' ')
+                                for (var j = 0; j < POSDescriptionListOfWords.length; j++) {
+                                    if(POSDescriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                        itemList.push(groceryitems[i])
+                                        added = true
+                                        break;
+                                    }
+                                }
+                            }
+
+                            //check sub category
+                            if(groceryitems[i].SubCategory && !added){
+                                var subCategoryListOfWords = groceryitems[i].Description.split(' ')
+                                for (var j = 0; j < subCategoryListOfWords.length; j++) {
+                                    if(subCategoryListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                        itemList.push(groceryitems[i])
+                                        added = true
+                                        break;
+                                    }
+                                }
+                            }
+
                         }
+
                         time_2 = Date.now()
                         total_time = time_2-time_1
-                        console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
+                        // console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
                         client.set(redisQuery, JSON.stringify(itemList))
                         res.send(itemList)
                     }
