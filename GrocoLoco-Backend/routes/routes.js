@@ -99,14 +99,12 @@ module.exports = function (app){
     })
 
     app.post('/likeitemtest', isAuthenticated, function(req, res){
-        //Mark ID
-
+        //train data with Mark's ID
         raccoon.liked('560c18022955001100873ddc', '564968036ad5a11572f7e12b')
-
         raccoon.liked('560c18022955001100873ddc', '564968036ad5a11572f7e12d')
         raccoon.liked('560c18022955001100873ddc', '564968036ad5a11572f7e129')
 
-        //morgan
+        //Morgan ID
         raccoon.liked('560a0c80fb729eab18ab31fb', '564968036ad5a11572f7e12b')
         res.send(200)
     })
@@ -163,7 +161,11 @@ module.exports = function (app){
     })
 
 
-    //work in progress
+    /*
+        work in progress
+        -morgan
+    */ 
+
     // app.get('/finditemsasync/:subsearch', isAuthenticated, function(req, res){
     //     var itemList = []
     //     var subSearch = req.params.subsearch
@@ -188,17 +190,20 @@ module.exports = function (app){
     //                 if(err)
     //                     res.send(err)
     //                 if(groceryitems){
+    //                     var itemList = [];
     //                     for(var i = 0; i < groceryitems.length; i++){
 
     //                         //check the description
     //                         async.parallel([
     //                             function(callback){
     //                                 if(groceryitems[i].Description){
-    //                                     console.log('first')
     //                                     var descriptionListOfWords = groceryitems[i].Description.split(' ')
+    //                                     console.log(descriptionListOfWords.length)
     //                                     for (var j = 0; j < descriptionListOfWords.length; j++) {                            
     //                                         if(descriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
     //                                             // itemList.push(groceryitems[i])
+    //                                             console.log('yes')
+
     //                                             callback(null, groceryitems[i])
     //                                             break;
     //                                         }
@@ -209,11 +214,14 @@ module.exports = function (app){
     //                             },
     //                             function(callback){
     //                                 if(groceryitems[i].POSDescription){
-    //                                     console.log('second')
     //                                     var POSDescriptionListOfWords = groceryitems[i].POSDescription.split(' ')
+    //                                     console.log(POSDescriptionListOfWords.length)
+
     //                                     for (var j = 0; j < POSDescriptionListOfWords.length; j++) {                            
     //                                         if(POSDescriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
     //                                             // itemList.push(groceryitems[i])
+    //                                             console.log('yes')
+
     //                                             callback(null,groceryitems[i])
     //                                             break;
     //                                         }
@@ -224,11 +232,13 @@ module.exports = function (app){
     //                             },
     //                             function(callback){
     //                                 if(groceryitems[i].SubCategory){
-    //                                     console.log('third')
+    //                                     console.log('what')
     //                                     var subCategoryListOfWords = groceryitems[i].SubCategory.split(' ')
+    //                                     console.log(subCategoryListOfWords.length)
     //                                     for (var j = 0; j < subCategoryListOfWords.length; j++) {                            
     //                                         if(subCategoryListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
     //                                             // itemList.push(groceryitems[i])
+    //                                             console.log('yes')
     //                                             callback(null,groceryitems[i])
     //                                             break;
     //                                         }
@@ -241,15 +251,25 @@ module.exports = function (app){
     //                         function(err, results){
     //                             if(err)
     //                                 res.send(err)
-    //                             console.log('now')
-    //                             itemList = _.uniq(results)
-    //                             client.set(redisQuery, JSON.stringify(itemList))
-    //                             res.send(itemList)
+    //                             console.log('results')
+    //                             console.log(results)
+
+    //                             var items = _.union(results)
+                                
+    //                             itemList.push(items)
+    //                             if(i== groceryitems.length-1){
+    //                                 res.send(itemList)
+    //                                 client.set(redisQuery, JSON.stringify(itemList))
+    //                             }
     //                         });
+                            
     //                     }
+
+                        
 
     //                     time_2 = Date.now()
     //                     total_time = time_2-time_1
+                        
     //                     // console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
                         
     //                 }
