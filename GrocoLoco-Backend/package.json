@@ -12,6 +12,7 @@
     "express": "~4.0.0",
     "express-session": "^1.11.3",
     "helmet": "^0.10.0",
+    "lodash": "^3.10.1",
     "method-override": "~2.1.2",
     "mongoose": "*",
     "morgan": "~1.0.0",

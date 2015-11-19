@@ -1,16 +1,18 @@
-var passport = require('passport');
-var clone = require('clone');
-var raccoon = require('raccoon');
+var _ = require('lodash')
+var clone = require('clone')
+var raccoon = require('raccoon')
+var passport = require('passport')
 var testSet = require('../machinelearningdata/testSet.js')
 
-//RACCOON ==========================================================
-// raccoon.config.nearestNeighbors = 5;  
-// raccoon.config.className = 'groceryitem';  // prefix for your items (used for redis) 
-// raccoon.config.numOfRecsStore = 30;  // number of recommendations to store per user 
-// raccoon.config.factorLeastSimilarLeastLiked = false; 
 
-// raccoon.connect('6379', '127.0.0.1') // auth is optional, but required for remote redis instances 
-// // remember to call them as environment variables with process.env.name_of_variable 
+//RACCOON ==========================================================
+raccoon.config.nearestNeighbors = 5;  
+raccoon.config.className = 'groceryitem';  // prefix for your items (used for redis) 
+raccoon.config.numOfRecsStore = 30;  // number of recommendations to store per user 
+raccoon.config.factorLeastSimilarLeastLiked = false; 
+
+raccoon.connect('21099', 'ec2-54-83-199-200.compute-1.amazonaws.com', 'paonqf6qoa86pv3gs30jg35a3s7') // auth is optional, but required for remote redis instances 
+// remember to call them as environment variables with process.env.name_of_variable 
 // raccoon.flush() // flushes your redis instance 
 
 //ROUTES ===========================================================
@@ -29,7 +31,6 @@ module.exports = function (app){
                         break;
                     }
                 }
-              
             } else
                 res.send(404)
             })
@@ -92,42 +93,172 @@ module.exports = function (app){
         })
     })
 
-    app.post('/likeitem', isAuthenticated, function(req, res){
+    app.delete('/flushreccomendations', isAuthenticated, function(req,res){
+        raccoon.flush()
+        res.send(200)
+    })
+
+    app.post('/likeitemtest', isAuthenticated, function(req, res){
         //Mark ID
-            console.log('hey')
 
-        raccoon.liked('560c18022955001100873ddc', testSet[0]._id.$oid, function() {
-            console.log();
-        })
-        // raccoon.flush();
-        raccoon.liked('560c18022955001100873ddc', testSet[2]._id.$oid, function() {
-            console.log();
-        })
-        raccoon.liked('560c18022955001100873ddc', testSet[3]._id.$oid, function() {
-            console.log();
-        })
+        raccoon.liked('560c18022955001100873ddc', '564968036ad5a11572f7e12b')
 
-
-
-        console.log(req.user._id)
+        raccoon.liked('560c18022955001100873ddc', '564968036ad5a11572f7e12d')
+        raccoon.liked('560c18022955001100873ddc', '564968036ad5a11572f7e129')
 
         //morgan
-        raccoon.liked('560a0c80fb729eab18ab31fb', testSet[0]._id.$oid,function() {
-            console.log();
-        })
+        raccoon.liked('560a0c80fb729eab18ab31fb', '564968036ad5a11572f7e12b')
         res.send(200)
     })
 
     app.get('/getreccomendations', isAuthenticated, function(req, res){
-        raccoon.recommendFor('560a0c80fb729eab18ab31fb', 5, function(results){
-            raccoon.flush()
-            res.send(results)
-        })
+        async.parallel([
+            function(callback){
+                raccoon.recommendFor(req.user._id, 3, function(results){
+                    callback(null, results);
+                })
+            },
+            function(callback){
+                raccoon.bestRated(function(results){
+                    GroceryList.findOne({
+                        'User':req.user
+                    }, function(err,list){
+                        if(err){
+                            callback(null);
+                        }else if(list){
+                            /*
+                            * make sure that the recommended items
+                            * are not already contained within the users grocery list
+                            */
+                            var newList = []
+                            for(var i = 0; i < results.length && newList < 2; i++){
+                                if(!_.includes(list, results[i])){
+                                    newList.push(results[i])
+                                }
+                            }
+                            callback(null, newList)
+                        }else{
+                            callback(null);
+                        }
+                    })
+                })
+            }
+        ],
+        function(err, results){
+            var groceryList = _.union(results[0],results[1])
+            console.log(groceryList)
+            GroceryItem.find({
+                '_id': { $in: groceryList }
+            },function(err, items){
+                if(err){
+                    res.send(err)
+                }
+                else if(items){
+                    res.send(items)
+                }
+                else
+                    res.send(404)
+            })
+        });
     })
 
-    app.post('/clearredis', isAuthenticated, function(req, res){
 
-    })
+    //work in progress
+    // app.get('/finditemsasync/:subsearch', isAuthenticated, function(req, res){
+    //     var itemList = []
+    //     var subSearch = req.params.subsearch
+
+    //     var time_1 = Date.now()
+    //     var time_2 = 0
+    //     var total_time = 0
+
+    //     var redisQuery = 'autocomplete/' + subSearch
+    //     // console.log(redisQuery)
+
+    //     client.get(redisQuery, function(err, data){
+    //         if(err)
+    //             res.send(err)
+    //         if(data){
+    //             time_2 = Date.now()
+    //             total_time = time_2-time_1
+    //             // console.log('Time to retrieve using Redis: ' + total_time+'ms')
+    //             res.send(JSON.parse(data))
+    //         }else{
+    //             GroceryItem.find({}, function(err, groceryitems){
+    //                 if(err)
+    //                     res.send(err)
+    //                 if(groceryitems){
+    //                     for(var i = 0; i < groceryitems.length; i++){
+
+    //                         //check the description
+    //                         async.parallel([
+    //                             function(callback){
+    //                                 if(groceryitems[i].Description){
+    //                                     console.log('first')
+    //                                     var descriptionListOfWords = groceryitems[i].Description.split(' ')
+    //                                     for (var j = 0; j < descriptionListOfWords.length; j++) {                            
+    //                                         if(descriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+    //                                             // itemList.push(groceryitems[i])
+    //                                             callback(null, groceryitems[i])
+    //                                             break;
+    //                                         }
+    //                                     }
+    //                                     // callback(null)
+
+    //                                 }
+    //                             },
+    //                             function(callback){
+    //                                 if(groceryitems[i].POSDescription){
+    //                                     console.log('second')
+    //                                     var POSDescriptionListOfWords = groceryitems[i].POSDescription.split(' ')
+    //                                     for (var j = 0; j < POSDescriptionListOfWords.length; j++) {                            
+    //                                         if(POSDescriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+    //                                             // itemList.push(groceryitems[i])
+    //                                             callback(null,groceryitems[i])
+    //                                             break;
+    //                                         }
+    //                                     }
+    //                                     // callback(null)
+
+    //                                 }
+    //                             },
+    //                             function(callback){
+    //                                 if(groceryitems[i].SubCategory){
+    //                                     console.log('third')
+    //                                     var subCategoryListOfWords = groceryitems[i].SubCategory.split(' ')
+    //                                     for (var j = 0; j < subCategoryListOfWords.length; j++) {                            
+    //                                         if(subCategoryListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+    //                                             // itemList.push(groceryitems[i])
+    //                                             callback(null,groceryitems[i])
+    //                                             break;
+    //                                         }
+    //                                     }
+    //                                     // callback(null)
+    //                                 }
+    //                             }
+    //                         ],
+    //                         // optional callback
+    //                         function(err, results){
+    //                             if(err)
+    //                                 res.send(err)
+    //                             console.log('now')
+    //                             itemList = _.uniq(results)
+    //                             client.set(redisQuery, JSON.stringify(itemList))
+    //                             res.send(itemList)
+    //                         });
+    //                     }
+
+    //                     time_2 = Date.now()
+    //                     total_time = time_2-time_1
+    //                     // console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
+                        
+    //                 }
+    //                 else
+    //                     res.send(404)
+    //            })
+    //         }
+    //     })
+    // });  
 
     app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
         var itemList = []
@@ -159,7 +290,7 @@ module.exports = function (app){
                             //check the description
                             if(groceryitems[i].Description && !added){
                                 var descriptionListOfWords = groceryitems[i].Description.split(' ')
-                                for (var j = 0; j < groceryitems[i].Description.length; j++) {                            
+                                for (var j = 0; j < descriptionListOfWords.length; j++) {                            
                                     if(groceryitems[i].Description.substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
                                         itemList.push(groceryitems[i])
                                         added = true
@@ -170,7 +301,7 @@ module.exports = function (app){
 
                             //check the POS Description
                             if(groceryitems[i].POSDescription && !added){
-                                var POSDescriptionListOfWords = groceryitems[i].Description.split(' ')
+                                var POSDescriptionListOfWords = groceryitems[i].POSDescription.split(' ')
                                 for (var j = 0; j < POSDescriptionListOfWords.length; j++) {
                                     if(POSDescriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
                                         itemList.push(groceryitems[i])
@@ -182,7 +313,7 @@ module.exports = function (app){
 
                             //check sub category
                             if(groceryitems[i].SubCategory && !added){
-                                var subCategoryListOfWords = groceryitems[i].Description.split(' ')
+                                var subCategoryListOfWords = groceryitems[i].SubCategory.split(' ')
                                 for (var j = 0; j < subCategoryListOfWords.length; j++) {
                                     if(subCategoryListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
                                         itemList.push(groceryitems[i])
@@ -205,34 +336,7 @@ module.exports = function (app){
                })
             }
         })
-
-
     });  
-
-    // //Auto lookup
-    // app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
-    //     var itemList = []
-    //     var subSearch = req.params.subsearch
-
-    //     GroceryItem.find({}, function(err, groceryitems){
-    //         if(err)
-    //             res.send(err)
-    //         if(groceryitems){
-    //             for(var i = 0; i < groceryitems.length; i++){
-    //                 if(groceryitems[i].Description){
-    //                     for (var j = 0; j < groceryitems[i].Description.length - subSearch.length + 1 ; j++) {                            
-    //                         if(groceryitems[i].Description.substring(j, j + subSearch.length).toLowerCase() == subSearch.toLowerCase()){
-    //                             itemList.push(groceryitems[i])
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //             res.send(itemList)
-    //         }
-    //         else
-    //             res.send(404)
-    //    })
-    // });  
 
     app.get('/userlocation', isAuthenticated, function(req, res){
         User.findOneAndUpdate({
@@ -487,6 +591,11 @@ module.exports = function (app){
 
     app.post('/addtolist', isAuthenticated, function(req, res) {
         for(var i = 0; i < req.body.List.length;i++){
+
+            //Add a liked item
+            raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
+
+            //Find the Add all items to the list
              GroceryList.findOneAndUpdate({
                 'User': req.user,
                 'GroceryListName': req.body.GroceryListName
