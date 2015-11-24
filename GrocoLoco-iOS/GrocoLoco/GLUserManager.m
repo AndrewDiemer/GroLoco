@@ -10,7 +10,8 @@
 
 @implementation GLUserManager
 
-+ (id)sharedManager {
++ (id)sharedManager
+{
     static GLUserManager *sharedMyManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -18,7 +19,6 @@
     });
     return sharedMyManager;
 }
-
 
 - (void)setPropertiesWithDict:(NSDictionary *)dict
 {

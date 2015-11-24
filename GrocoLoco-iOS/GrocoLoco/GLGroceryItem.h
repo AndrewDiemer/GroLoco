@@ -27,7 +27,6 @@ typedef struct {
 @property (nonatomic, strong) NSString *comments;
 @property (nonatomic, strong) UIButton *navPin;
 
-
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSDictionary *)objectAsDictionary;
 

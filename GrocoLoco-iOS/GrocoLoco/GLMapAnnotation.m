@@ -13,7 +13,6 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"\n(%f, %f) \n %@ : %@ \n %@", self.coordinate.longitude, self.coordinate.latitude, self.title, self.subTitle, self.url];
-    
 }
 
 @end

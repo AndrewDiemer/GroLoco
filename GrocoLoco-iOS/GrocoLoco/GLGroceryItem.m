@@ -10,18 +10,18 @@
 
 @implementation GLGroceryItem
 
-- (instancetype)initWithDictionary: (NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
-    if (self){
+    if (self) {
         _aisle = dictionary[@"Aisle"];
         _aisleShelf = dictionary[@"AisleShelf"];
-        
+
         Coordinates coords = _coordinates;
         coords.x = [dictionary[@"Coordinates"][@"x"] floatValue];
         coords.y = [dictionary[@"Coordinates"][@"y"] floatValue];
         _coordinates = coords;
-        
+
         _UPC = dictionary[@"UPC"];
         _itemDescription = dictionary[@"Description"];
         _POSDescription = dictionary[@"POSDescription"];
@@ -29,7 +29,7 @@
         _subcategory = dictionary[@"SubCategory"];
         _ID = dictionary[@"_id"];
         _comments = dictionary[@"Comment"];
-        
+
         _navPin = [UIButton buttonWithType:UIButtonTypeCustom];
         [_navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
         [_navPin setImage:[UIImage imageNamed:@"navPinComplete"] forState:UIControlStateSelected];
@@ -39,7 +39,7 @@
 
 - (NSString *)comments
 {
-    if (_comments.length != 0){
+    if (_comments.length != 0) {
         return _comments;
     }
     return @"";
@@ -48,18 +48,17 @@
 - (NSDictionary *)objectAsDictionary
 {
     return @{ @"Aisle" : self.aisle,
-              @"AisleShelf" : self.aisleShelf,
-              @"Coordinates" : @{@"x" : [NSNumber numberWithFloat:self.coordinates.x], @"y" : [NSNumber numberWithFloat:self.coordinates.y]},
-              @"Description" : self.itemDescription,
-              @"POSDescription" : self.POSDescription,
-              @"Position" : self.position,
-              @"SubCategory" : self.subcategory,
-              @"UPC" : self.UPC,
-              @"_id" : self.ID,
-              @"Comment" : self.comments,
-              };
+        @"AisleShelf" : self.aisleShelf,
+        @"Coordinates" : @{ @"x" : [NSNumber numberWithFloat:self.coordinates.x], @"y" : [NSNumber numberWithFloat:self.coordinates.y] },
+        @"Description" : self.itemDescription,
+        @"POSDescription" : self.POSDescription,
+        @"Position" : self.position,
+        @"SubCategory" : self.subcategory,
+        @"UPC" : self.UPC,
+        @"_id" : self.ID,
+        @"Comment" : self.comments,
+    };
 }
-
 
 - (NSString *)description
 {
