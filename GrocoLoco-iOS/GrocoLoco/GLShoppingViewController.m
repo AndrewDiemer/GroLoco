@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSMutableDictionary *itemsInSections;
 @property (strong, nonatomic) MHProgressBar *progressBar;
 @property (assign, nonatomic) CGFloat currentPage;
+@property (assign, nonatomic) NSInteger currentItem;
 
 @end
 
@@ -50,20 +51,32 @@
     self.progressBar = [[MHProgressBar alloc] initWithFrame:CGRectMake(20, yposition - 20, self.view.frame.size.width - 40, 20) trackColor:[UIColor GLdarkGreen] barColor:[UIColor GLlightGreen]];
     self.currentPage = 0;
     [self.view addSubview:self.progressBar];
-
+    
+    self.currentItem = 0;
+    
     [self makeItemViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-    for (GLGroceryItem *item in self.items) {
-        NSLog(@"here");
-        NSUInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 16;
-        NSUInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 32;
-
-        item.navPin.frame = CGRectMake(coordx, coordy, 32, 32);
+    
+    for (GLGroceryItem *item in self.items){
+        NSInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 12;
+        NSInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 24;
+        
+        NSLog(@"%ld, %ld", (long)coordx, (long)coordy);
+        
+        if (coordx < 0) {
+            //coordx = 0;
+            coordx = rand() % 450;
+        }
+        if (coordy < 0) {
+            //coordy = 0;
+            coordy = rand() % 600;
+        }
+        
+        item.navPin.frame = CGRectMake(coordx, coordy, 24, 24);
         [self.mapView addSubview:item.navPin];
         [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
         item.navPin.tag = [self.items indexOfObject:item];
@@ -76,6 +89,10 @@
             self.itemsInSections[item.aisle] = @[ item ].mutableCopy;
         }
     }
+    
+    GLGroceryItem *selectedButton = self.items[self.currentItem];
+    [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+    
     [self.tableView reloadData];
 }
 
@@ -90,8 +107,8 @@
     for (GLGroceryItem *item in self.items) {
         [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
     }
-
-    GLGroceryItem *selectedButton = self.items[sender.tag];
+    self.currentItem = sender.tag;
+    GLGroceryItem *selectedButton = self.items[self.currentItem];
     [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
 }
 
@@ -171,9 +188,10 @@
     for (GLGroceryItem *item in self.items) {
         [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
     }
-
-    //GLGroceryItem *selectedButton = self.items[self.currentPage];
-    //[selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+    
+    self.currentItem += (direction * 1);
+    GLGroceryItem *selectedButton = self.items[self.currentItem];
+    [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
 }
 
 - (void)makeItemViews
@@ -204,7 +222,8 @@
     self.currentPage += 1;
 
     if (sender.tag + 1 < [self.items count]) {
-        GLGroceryItem *nextButton = self.items[sender.tag + 1];
+        self.currentItem += 1;
+        GLGroceryItem *nextButton = self.items[self.currentItem];
         [nextButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
     }
 }
