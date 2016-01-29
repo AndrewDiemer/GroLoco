@@ -78,6 +78,7 @@ app.use(function(req, res, next) {
 
 // SCHEMAS ============================================
 require('./db/userSchema.js')
+require('./db/aisleSchema.js')
 require('./db/groceryItemSchema.js')
 require('./db/groceryListSchema.js')
 require('./db/blockCoordinatesSchema.js')
@@ -86,6 +87,7 @@ require('./db/iconImageSchema.js')
 
 // MODELS =============================================
 User = db.model('User', userSchema)
+Aisle = db.model('Aisle', aisleSchema)
 GroceryItem = db.model('GroceryItem', groceryItemSchema)
 GroceryList = db.model('GroceryList', groceryListSchema)
 Icon = db.model("IconImage", iconImageSchema);
@@ -97,7 +99,7 @@ ItemWidth = db.model('ItemWidth', itemWidthSchema)
 require('./routes/routes.js')(app, passport); 
 
 //CREATE DATA ====================================
-var createData = require('./CreateData/CreateData');
+var createData = require('./createData/CreateData.js');
 createData();
 
 // STORE ICON IMAGES IN THE DB

@@ -11,13 +11,52 @@ raccoon.config.className = 'groceryitem';  // prefix for your items (used for re
 raccoon.config.numOfRecsStore = 30;  // number of recommendations to store per user 
 raccoon.config.factorLeastSimilarLeastLiked = false; 
 
-raccoon.connect('21099', 'ec2-54-83-199-200.compute-1.amazonaws.com', 'paonqf6qoa86pv3gs30jg35a3s7') // auth is optional, but required for remote redis instances 
+// raccoon.connect('21099', 'ec2-54-83-199-200.compute-1.amazonaws.com', 'paonqf6qoa86pv3gs30jg35a3s7') // auth is optional, but required for remote redis instances 
 // remember to call them as environment variables with process.env.name_of_variable 
 // raccoon.flush() // flushes your redis instance 
 
 //ROUTES ===========================================================
 
 module.exports = function (app){
+    app.get('/aisles', function(req,res){
+        Aisle.find({}, function(err, aisles){
+            if(err)
+                res.send(err)
+            if(aisles){
+                res.send(aisles)
+            }else{
+                res.send(404)
+            }
+        })
+    })
+    app.post('/deleteblocks', function(req,res){
+        Aisle.collection.remove()
+        res.send(200)
+    })
+    app.post('/aisles', function(req,res){
+        var blocks = req.body.blocks
+        for (var i = 0; i < blocks.length; i++) {
+            var newAisle = new Aisle({
+                x: blocks[i].x,
+                y: blocks[i].y,
+                w: blocks[i].w,
+                h: blocks[i].h
+            })
+            newAisle.save(function(err, aisle){
+                if(err)
+                    res.send(err)
+                if(aisle){
+                    // res.send(aisle)
+                }else{
+                    res.send(404)
+                }
+            })
+        }
+        console.log('Saved '+ blocks.length + ' blocks!')
+        res.send('Saved '+ blocks.length + ' blocks!')
+
+        
+    })
 
     app.post('/getIcon', function(req,res){
 
@@ -310,8 +349,9 @@ module.exports = function (app){
                             //check the description
                             if(groceryitems[i].Description && !added){
                                 var descriptionListOfWords = groceryitems[i].Description.split(' ')
+                                console.log(descriptionListOfWords)
                                 for (var j = 0; j < descriptionListOfWords.length; j++) {                            
-                                    if(groceryitems[i].Description.substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                    if(descriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
                                         itemList.push(groceryitems[i])
                                         added = true
                                         break;
@@ -322,6 +362,8 @@ module.exports = function (app){
                             //check the POS Description
                             if(groceryitems[i].POSDescription && !added){
                                 var POSDescriptionListOfWords = groceryitems[i].POSDescription.split(' ')
+                                console.log(POSDescriptionListOfWords)
+
                                 for (var j = 0; j < POSDescriptionListOfWords.length; j++) {
                                     if(POSDescriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
                                         itemList.push(groceryitems[i])
@@ -334,6 +376,8 @@ module.exports = function (app){
                             //check sub category
                             if(groceryitems[i].SubCategory && !added){
                                 var subCategoryListOfWords = groceryitems[i].SubCategory.split(' ')
+                                console.log(subCategoryListOfWords)
+
                                 for (var j = 0; j < subCategoryListOfWords.length; j++) {
                                     if(subCategoryListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
                                         itemList.push(groceryitems[i])
@@ -347,8 +391,10 @@ module.exports = function (app){
 
                         time_2 = Date.now()
                         total_time = time_2-time_1
+                        if(added){
+                            client.set(redisQuery, JSON.stringify(itemList))
+                        }
                         // console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
-                        client.set(redisQuery, JSON.stringify(itemList))
                         res.send(itemList)
                     }
                     else
@@ -395,7 +441,7 @@ module.exports = function (app){
         })
     })
 
-    app.post('/deletegroceryitems', isAuthenticated, function(req, res){
+    app.delete('/groceryitems', isAuthenticated, function(req, res){
         GroceryList.findOneAndUpdate({
             'User': req.user,
             'GroceryListName': req.body.GroceryListName
@@ -412,7 +458,7 @@ module.exports = function (app){
         })
     })
 
-    app.post('/deletegroceryitem', isAuthenticated, function(req, res){
+    app.delete('/groceryitem', isAuthenticated, function(req, res){
         GroceryList.findOne({
             'User': req.user,
             'GroceryListName': req.body.GroceryListName
@@ -447,39 +493,40 @@ module.exports = function (app){
             }
         })
     })
-
-    app.post('/crossoutitem', isAuthenticated, function(req, res){
-        GroceryList.findOne({
-            'User': req.user,
-            'GroceryListName': req.body.GroceryListName
-        }, function(err, groceryList){
-            if(err)
-                res.send(err)
-            if(groceryList){
-                for(var i = 0; i < groceryList.List.length; i++){
-                    if(groceryList.List[i]._id == req.body._id){
-                        groceryList.List[i].CrossedOut = req.body.CrossedOut
-                         GroceryList.findOneAndUpdate({
-                            'User': req.user,
-                            'GroceryListName': req.body.GroceryListName
-                        },{
-                            'List': groceryList.List
-                        },{
-                            safe:true, upsert:true, new: true
-                        },
-                        function(err, groceryList){
-                            if(err)
-                                res.send(err)
-                            if(groceryList)
-                                res.send(groceryList)
-                        })
-                    }
-                }
-            }else{
-                res.send(404);
-            }
-        })
-    })
+    
+    // deprecated
+    // app.post('/crossoutitem', isAuthenticated, function(req, res){
+    //     GroceryList.findOne({
+    //         'User': req.user,
+    //         'GroceryListName': req.body.GroceryListName
+    //     }, function(err, groceryList){
+    //         if(err)
+    //             res.send(err)
+    //         if(groceryList){
+    //             for(var i = 0; i < groceryList.List.length; i++){
+    //                 if(groceryList.List[i]._id == req.body._id){
+    //                     groceryList.List[i].CrossedOut = req.body.CrossedOut
+    //                      GroceryList.findOneAndUpdate({
+    //                         'User': req.user,
+    //                         'GroceryListName': req.body.GroceryListName
+    //                     },{
+    //                         'List': groceryList.List
+    //                     },{
+    //                         safe:true, upsert:true, new: true
+    //                     },
+    //                     function(err, groceryList){
+    //                         if(err)
+    //                             res.send(err)
+    //                         if(groceryList)
+    //                             res.send(groceryList)
+    //                     })
+    //                 }
+    //             }
+    //         }else{
+    //             res.send(404);
+    //         }
+    //     })
+    // })
 
     app.post('/editgroceryitemcomment', isAuthenticated, function(req, res){
         GroceryList.findOne({
@@ -612,8 +659,8 @@ module.exports = function (app){
     app.post('/addtolist', isAuthenticated, function(req, res) {
         for(var i = 0; i < req.body.List.length;i++){
 
-            //Add a liked item
-            raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
+            //Add a liked item to the Recommendation Engine
+            // raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
 
             //Find the Add all items to the list
              GroceryList.findOneAndUpdate({
