@@ -51,22 +51,22 @@
     self.progressBar = [[MHProgressBar alloc] initWithFrame:CGRectMake(20, yposition - 20, self.view.frame.size.width - 40, 20) trackColor:[UIColor GLdarkGreen] barColor:[UIColor GLlightGreen]];
     self.currentPage = 0;
     [self.view addSubview:self.progressBar];
-    
+
     self.currentItem = 0;
-    
+
     [self makeItemViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    for (GLGroceryItem *item in self.items){
+
+    for (GLGroceryItem *item in self.items) {
         NSInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 12;
         NSInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 24;
-        
+
         NSLog(@"%ld, %ld", (long)coordx, (long)coordy);
-        
+
         if (coordx < 0) {
             //coordx = 0;
             coordx = rand() % 450;
@@ -75,7 +75,7 @@
             //coordy = 0;
             coordy = rand() % 600;
         }
-        
+
         item.navPin.frame = CGRectMake(coordx, coordy, 24, 24);
         [self.mapView addSubview:item.navPin];
         [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
@@ -89,10 +89,10 @@
             self.itemsInSections[item.aisle] = @[ item ].mutableCopy;
         }
     }
-    
+
     GLGroceryItem *selectedButton = self.items[self.currentItem];
     [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
-    
+
     [self.tableView reloadData];
 }
 
@@ -188,7 +188,7 @@
     for (GLGroceryItem *item in self.items) {
         [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
     }
-    
+
     self.currentItem += (direction * 1);
     GLGroceryItem *selectedButton = self.items[self.currentItem];
     [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
