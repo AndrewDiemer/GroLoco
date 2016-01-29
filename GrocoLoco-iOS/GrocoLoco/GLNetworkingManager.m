@@ -159,6 +159,8 @@
         }];
 }
 
+//TODO: Change this to match the new route
+
 + (void)deleteGroceryItem:(NSString *)groceryListName itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -179,6 +181,8 @@
             completionBlock(nil, error);
         }];
 }
+
+//TODO: Change this to match the new route
 
 + (void)deleteGroceryItems:(NSString *)groceryListName completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
