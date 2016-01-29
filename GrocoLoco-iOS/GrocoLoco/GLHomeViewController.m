@@ -288,7 +288,7 @@
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:reload withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
-    
+        
     sender.selected = !sender.selected;
 }
 
