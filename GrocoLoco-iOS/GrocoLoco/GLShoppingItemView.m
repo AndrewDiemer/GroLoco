@@ -10,7 +10,7 @@
 
 #import "GLGroceryItem.h"
 
-@interface GLShoppingItemView()
+@interface GLShoppingItemView ()
 
 @property (weak, nonatomic) IBOutlet UILabel *itemNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *itemAisleNumber;
@@ -28,10 +28,9 @@
 
     self.itemNameLabel.text = self.item.itemDescription;
     self.itemNotes.text = self.item.comments;
-    
+
     self.backgroundView.layer.cornerRadius = 5;
     self.backgroundView.backgroundColor = [UIColor GLlightBlue];
-
 }
 
 @end

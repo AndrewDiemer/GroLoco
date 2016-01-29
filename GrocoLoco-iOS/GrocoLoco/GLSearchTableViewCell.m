@@ -10,11 +10,10 @@
 
 #import "GLGroceryItem.h"
 
-@interface GLSearchTableViewCell()
+@interface GLSearchTableViewCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *itemImage;
 @property (weak, nonatomic) IBOutlet UILabel *itemNameLabel;
-
 
 @end
 

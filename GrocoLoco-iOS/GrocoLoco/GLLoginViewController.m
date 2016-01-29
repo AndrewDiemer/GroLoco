@@ -11,8 +11,8 @@
 @interface GLLoginViewController () <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
-@property (weak, nonatomic) IBOutlet UITextField* emailField;
-@property (weak, nonatomic) IBOutlet UITextField* passwordField;
+@property (weak, nonatomic) IBOutlet UITextField *emailField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIStackView *fieldStackView;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (weak, nonatomic) IBOutlet UIView *loginView;
@@ -23,28 +23,29 @@
 
 @implementation GLLoginViewController
 
-
 #pragma mark -
 #pragma mark View Lifecycle
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
     [GLNetworkingManager isUserLoggedInCompletion:^(NSDictionary *response, NSError *error) {
-        if (!error){
-            if (response[@"status"] == nil){
+        if (!error) {
+            if (response[@"status"] == nil) {
                 [[GLUserManager sharedManager] setPropertiesWithDict:response];
                 [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
             }
-            else{
+            else {
                 [self showError:@"User not logged in"];
             }
         }
-        else{
+        else {
             [self showError:error.description];
         }
     }];
@@ -55,21 +56,20 @@
     [super viewDidLoad];
     [self.fieldStackView removeArrangedSubview:self.nameField];
     [self.submitButton setTitle:@"Login" forState:UIControlStateNormal];
-    
+
     self.loginView.layer.cornerRadius = 5;
     self.loginView.layer.masksToBounds = YES;
-    
+
     self.submitButton.layer.cornerRadius = 5;
     // Do any additional setup after loading the view.
 }
-
 
 #pragma mark -
 #pragma mark Button Methods
 
 - (IBAction)switchToLogin:(id)sender
 {
-    if ([self.submitButton.titleLabel.text isEqualToString:@"Login"]){
+    if ([self.submitButton.titleLabel.text isEqualToString:@"Login"]) {
         return;
     }
     self.switchLoginButton.backgroundColor = [UIColor GLdarkGreen];
@@ -81,7 +81,7 @@
 }
 - (IBAction)switchToSignUp:(id)sender
 {
-    if ([self.submitButton.titleLabel.text isEqualToString:@"Sign Up"]){
+    if ([self.submitButton.titleLabel.text isEqualToString:@"Sign Up"]) {
         return;
     }
     self.switchSignUpButton.backgroundColor = [UIColor GLdarkGreen];
@@ -95,31 +95,34 @@
 - (IBAction)loginPressed:(UIButton *)sender
 {
     [self showFullScreenHUD];
-    if ([sender.titleLabel.text isEqualToString:@"Login"]){
-    [GLNetworkingManager loginUserWithEmail:self.emailField.text
-                                   Password:self.passwordField.text
-                                 completion:^(NSDictionary* response, NSError* error) {
-                                     [self hideFullScreenHUD];
-                                     if (!error) {
-                                         [[GLUserManager sharedManager] setPropertiesWithDict:response];
-                                         [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
-                                     }
-                                     else {
-                                         [self showError:error.description];
-                                     }
-                                 }];
+    if ([sender.titleLabel.text isEqualToString:@"Login"]) {
+        [GLNetworkingManager loginUserWithEmail:self.emailField.text
+                                       Password:self.passwordField.text
+                                     completion:^(NSDictionary *response, NSError *error) {
+                                         [self hideFullScreenHUD];
+                                         if (!error) {
+                                             [[GLUserManager sharedManager] setPropertiesWithDict:response];
+                                             [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
+                                         }
+                                         else {
+                                             [self showError:error.description];
+                                         }
+                                     }];
     }
-    else{
-        [GLNetworkingManager createNewUserWithName:self.nameField.text Password:self.passwordField.text Email:self.emailField.text completion:^(NSDictionary *response, NSError *error) {
-            [self hideFullScreenHUD];
-            if (!error) {
-                [[GLUserManager sharedManager] setPropertiesWithDict:response];
-                [self performSegueWithIdentifier:GL_SHOW_MAP_LOGIN sender:self];
-            }
-            else {
-                [self showError:error.description];
-            }
-        }];
+    else {
+        [GLNetworkingManager createNewUserWithName:self.nameField.text
+                                          Password:self.passwordField.text
+                                             Email:self.emailField.text
+                                        completion:^(NSDictionary *response, NSError *error) {
+                                            [self hideFullScreenHUD];
+                                            if (!error) {
+                                                [[GLUserManager sharedManager] setPropertiesWithDict:response];
+                                                [self performSegueWithIdentifier:GL_SHOW_MAP_LOGIN sender:self];
+                                            }
+                                            else {
+                                                [self showError:error.description];
+                                            }
+                                        }];
     }
 }
 

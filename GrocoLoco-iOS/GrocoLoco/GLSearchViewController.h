@@ -10,5 +10,4 @@
 
 @interface GLSearchViewController : GLBaseViewController
 
-
 @end
