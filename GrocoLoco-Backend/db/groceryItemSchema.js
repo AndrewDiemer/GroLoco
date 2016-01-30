@@ -2,12 +2,26 @@
 groceryItemSchema = new db.Schema({
 	UPC            : String,
 	Coordinates	   : { x: Number, y: Number },
-
+	Category 	   : Number,
 	Description    : String,  // SOBEYS 
 	POSDescription : String,  // SOBEYS
 	SubCategory    : String,  // SOBEYS
 	Aisle  	       : String,  // SOBEYS - created by taking Aisle info from Sobeys and removing shelf id from the end 
 	AisleShelf     : String,  // SOBEYS - created from full Aisle info from Sobeys
 	Position       : String,  // SOBEYS
-	Width		   : Number   // SOBEYS
+	Width		   : Number,  // SOBEYS
+	Price		   : Number   // SOBEYS
 })
+
+
+/*
+0 = Produce
+1 = Dairy
+2 = Deli
+3 = Frozen
+4 = grains
+5 = cans
+6 = personal care
+7 = bakery
+8 = other
+*/
