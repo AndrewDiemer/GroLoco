@@ -93,7 +93,6 @@ module.exports = function (app){
                     var coord = {x : 5, y : 5};
                     res.send(coord);
                 }
-
             }
         })
     });
@@ -111,10 +110,12 @@ module.exports = function (app){
                 SubCategory    : testSet[i].SubCategory,
                 Aisle          : testSet[i].Aisle, // created by taking Aisle info from Sobeys and removing shelf id from the end 
                 AisleShelf     : testSet[i].AisleShelf,  // created from full Aisle info from Sobeys
-                Position       : testSet[i].Position
+                Position       : testSet[i].Position,
+                Category       : testSet[i].Category,
+                Price          : testSet[i].Price
             });
             
-            console.error(testSet[i]);
+            console.log(testSet[i]);
             newItem.save(function (err) { if (err) console.log(err); })
         }
         res.send(testSet)
@@ -319,15 +320,32 @@ module.exports = function (app){
     //     })
     // });  
 
-    app.get('/finditems/:subsearch', isAuthenticated, function(req, res){
+    app.post('/category', isAuthenticated, function(req, res){
+        GroceryItem.find({
+            "Category": req.body.categoryNumber
+        }, function(err, groceryItems){
+            if(err)
+                res.send(err)
+            if(groceryItems){
+                res.send(groceryItems.sort(function(a, b) { return a.Category.localeCompare(b.Category)}))
+            }
+            else
+                res.send(404)
+        })
+    })
+
+    app.post('/finditems', isAuthenticated, function(req, res){
         var itemList = []
-        var subSearch = req.params.subsearch
+        var subSearch = req.body.subsearch.toLowerCase()
+        if (subSearch==' ') {
+            res.send(itemList)
+        };
 
         var time_1 = Date.now()
         var time_2 = 0
         var total_time = 0
 
-        var redisQuery = 'autocomplete/' + subSearch
+        var redisQuery = 'autocomplete/' + encodeURI(subSearch)
         // console.log(redisQuery)
 
         client.get(redisQuery, function(err, data){
@@ -343,55 +361,137 @@ module.exports = function (app){
                     if(err)
                         res.send(err)
                     if(groceryitems){
+
+                        var subSearchList = subSearch.split(' ')
+
                         for(var i = 0; i < groceryitems.length; i++){
-
                             var added = false
-                            //check the description
-                            if(groceryitems[i].Description && !added){
-                                var descriptionListOfWords = groceryitems[i].Description.split(' ')
-                                console.log(descriptionListOfWords)
-                                for (var j = 0; j < descriptionListOfWords.length; j++) {                            
-                                    if(descriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
-                                        itemList.push(groceryitems[i])
-                                        added = true
-                                        break;
+                            // for (var q = 0; q < subSearchList.length; q++) {
+                            //     subSearch = subSearchList[q]
+                                
+                                //check the description
+                                if(groceryitems[i].Description && !added ){
+                                    var descriptionListOfWords = groceryitems[i].Description.split(' ')
+                                    console.log(descriptionListOfWords)
+                                    for (var j = 0; j < descriptionListOfWords.length; j++) {
+                                        var addedInner = false
+                                        //check if it's greater than the substring
+                                        if(subSearch.length > descriptionListOfWords[j].length && descriptionListOfWords[j].toLowerCase() == subSearch.substring(0, descriptionListOfWords[j].length).toLowerCase()){
+                                            console.log('here')
+                                            j++
+                                            while(1){
+                                                var subSearchLong = subSearch.substring(descriptionListOfWords[j-1].length+1, subSearch.length)
+                                                console.log(subSearchLong)
+                                                if(descriptionListOfWords[j].substring(0, subSearchLong.length).toLowerCase() == subSearchLong.toLowerCase()){
+                                                    itemList.push(groceryitems[i])
+                                                    addedInner = true
+                                                    added = true
+                                                    break;
+                                                }
+                                                j++
+                                                if(j>=descriptionListOfWords.length)
+                                                    break;
+                                            }
+                                            break;
+                                            
+                                        }else if (!addedInner && descriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                            console.log('here2')
+                                            console.log(subSearch.length)
+                                            console.log(descriptionListOfWords[j].length)
+                                            
+                                            itemList.push(groceryitems[i])
+                                            added = true
+                                            break;
+                                        }                            
+                                        
                                     }
                                 }
-                            }
 
-                            //check the POS Description
-                            if(groceryitems[i].POSDescription && !added){
-                                var POSDescriptionListOfWords = groceryitems[i].POSDescription.split(' ')
-                                console.log(POSDescriptionListOfWords)
+                                // //check the POS Description
+                                if(groceryitems[i].POSDescription && !added){
+                                    var POSDescriptionListOfWords = groceryitems[i].POSDescription.split(' ')
+                                    console.log(POSDescriptionListOfWords)
 
-                                for (var j = 0; j < POSDescriptionListOfWords.length; j++) {
-                                    if(POSDescriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
-                                        itemList.push(groceryitems[i])
-                                        added = true
-                                        break;
+                                    for (var j = 0; j < POSDescriptionListOfWords.length; j++) {
+                                        var addedInner = false
+                                        //check if it's greater than the substring
+                                        if(subSearch.length > POSDescriptionListOfWords[j].length && POSDescriptionListOfWords[j].toLowerCase() == subSearch.substring(0, POSDescriptionListOfWords[j].length).toLowerCase()){
+                                            console.log('here')
+                                            j++
+                                            while(1){
+                                                var subSearchLong = subSearch.substring(POSDescriptionListOfWords[j-1].length+1, subSearch.length)
+                                                console.log(subSearchLong)
+                                                if(POSDescriptionListOfWords[j].substring(0, subSearchLong.length).toLowerCase() == subSearchLong.toLowerCase()){
+                                                    itemList.push(groceryitems[i])
+                                                    addedInner = true
+                                                    added = true
+                                                    break;
+                                                }
+                                                j++
+                                                if(j>=POSDescriptionListOfWords.length)
+                                                    break;
+                                            }
+                                            break;
+                                            
+                                        }else if (!addedInner && POSDescriptionListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                            console.log('here2')
+                                            console.log(subSearch.length)
+                                            console.log(POSDescriptionListOfWords[j].length)
+                                            
+                                            itemList.push(groceryitems[i])
+                                            added = true
+                                            break;
+                                        }                            
+                                        
                                     }
                                 }
-                            }
 
-                            //check sub category
-                            if(groceryitems[i].SubCategory && !added){
-                                var subCategoryListOfWords = groceryitems[i].SubCategory.split(' ')
-                                console.log(subCategoryListOfWords)
+                                // //check sub category
+                                if(groceryitems[i].SubCategory && !added){
+                                    var subCategoryListOfWords = groceryitems[i].SubCategory.split(' ')
+                                    console.log(subCategoryListOfWords)
 
-                                for (var j = 0; j < subCategoryListOfWords.length; j++) {
-                                    if(subCategoryListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
-                                        itemList.push(groceryitems[i])
-                                        added = true
-                                        break;
+                                    for (var j = 0; j < subCategoryListOfWords.length; j++) {
+                                        var addedInner = false
+                                        //check if it's greater than the substring
+                                        if(subSearch.length > subCategoryListOfWords[j].length && subCategoryListOfWords[j].toLowerCase() == subSearch.substring(0, subCategoryListOfWords[j].length).toLowerCase()){
+                                            console.log('here')
+                                            j++
+                                            while(1){
+                                                var subSearchLong = subSearch.substring(subCategoryListOfWords[j-1].length+1, subSearch.length)
+                                                console.log(subSearchLong)
+                                                if(subCategoryListOfWords[j].substring(0, subSearchLong.length).toLowerCase() == subSearchLong.toLowerCase()){
+                                                    itemList.push(groceryitems[i])
+                                                    addedInner = true
+                                                    added = true
+                                                    break;
+                                                }
+                                                j++
+                                                if(j>=subCategoryListOfWords.length)
+                                                    break;
+                                            }
+                                            break;
+                                            
+                                        }else if (!addedInner && subCategoryListOfWords[j].substring(0, subSearch.length).toLowerCase() == subSearch.toLowerCase()){
+                                            console.log('here2')
+                                            console.log(subSearch.length)
+                                            console.log(subCategoryListOfWords[j].length)
+                                            
+                                            itemList.push(groceryitems[i])
+                                            added = true
+                                            break;
+                                        }                            
+                                        
                                     }
                                 }
-                            }
-
+                            // }
                         }
 
                         time_2 = Date.now()
                         total_time = time_2-time_1
+                        console.log(redisQuery)
                         if(added){
+                            console.log(redisQuery)
                             client.set(redisQuery, JSON.stringify(itemList))
                         }
                         // console.log('Time to retrieve using MongoDB: ' + total_time+'ms')
