@@ -6,21 +6,23 @@
 //  Copyright © 2015 Mark Hall. All rights reserved.
 //
 
-#import "GLSearchViewController.h"
+#import "GLCategoryViewController.h"
 #import "GLGroceryItem.h"
 #import "GLHomeTableViewCell.h"
+#import "GLSearchViewController.h"
 #import "UIButton+GLCenterButton.h"
 
 @interface GLSearchViewController () <UISearchBarDelegate, UITableViewDelegate,
     UITableViewDataSource>
 
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutletCollection(UIButton)
     NSArray *categoryButtons;
 @property (strong, nonatomic) IBOutlet UIView *categoriesView;
 
 @property (strong, nonatomic) NSMutableArray *filertedItems;
+@property (assign, nonatomic) GLCategory selectedCategory;
+@property (weak, nonatomic) IBOutlet UIView *categoriesLabelView;
 
 @end
 
@@ -33,17 +35,17 @@
     self.filertedItems = @[].mutableCopy;
     [self getRecommendations];
 
-    [self.tableView
-        setContentInset:UIEdgeInsetsMake(
-                            0, 0, self.categoriesView.frame.size.height, 0)];
-    [self.tableView
-        setScrollIndicatorInsets:UIEdgeInsetsMake(
-                                     0, 0, self.categoriesView.frame.size.height,
-                                     0)];
+    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.categoriesView.frame.size.height, 0)];
+    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.categoriesView.frame.size.height, 0)];
 
     for (UIButton *button in self.categoryButtons) {
         [button centerImageAndTitle];
     }
+
+    UISearchBar *searchBar = [[UISearchBar alloc] init];
+    searchBar.delegate = self;
+    searchBar.showsCancelButton = YES;
+    self.navigationItem.titleView = searchBar;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -71,6 +73,15 @@
 }
 
 #pragma mark -
+#pragma mark Button Handlers
+
+- (IBAction)showCategory:(UIButton *)sender
+{
+    self.selectedCategory = sender.tag;
+    [self performSegueWithIdentifier:GL_SHOW_CATEGORY_SEGUE sender:self];
+}
+
+#pragma mark -
 #pragma mark UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -80,9 +91,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    GLHomeTableViewCell *cell =
-        [tableView dequeueReusableCellWithIdentifier:GL_SEARCH_TABLEVIEW_CELL
-                                        forIndexPath:indexPath];
+    GLHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GL_SEARCH_TABLEVIEW_CELL
+                                                                forIndexPath:indexPath];
 
     cell.item = self.filertedItems[indexPath.row];
 
@@ -115,7 +125,6 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    self.searchBar.text = @"";
     [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -123,12 +132,14 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     CGRect frame = self.categoriesView.frame;
-
+    CGRect frame2 = self.categoriesLabelView.frame;
     if (frame.origin.y != self.view.frame.size.height) {
+        frame2.origin.y += frame.size.height;
         frame.origin.y += frame.size.height;
         [UIView animateWithDuration:0.5
                          animations:^{
                              self.categoriesView.frame = frame;
+                             self.categoriesLabelView.frame = frame2;
                          }];
     }
 
@@ -153,6 +164,70 @@
                                      });
                                  }];
         });
+}
+- (IBAction)panCategories:(UIPanGestureRecognizer *)sender
+{
+    switch (sender.state) {
+    case UIGestureRecognizerStateBegan:
+    case UIGestureRecognizerStateChanged: {
+        CGFloat y = [sender locationInView:self.view].y;
+        if (y < self.view.frame.size.height - 360) {
+            break;
+        }
+        [self.categoriesLabelView setCenter:CGPointMake(self.categoriesLabelView.center.x, y)];
+        CGRect frame = self.categoriesView.frame;
+        frame.origin.y = y;
+        self.categoriesView.frame = frame;
+        break;
+    }
+    case UIGestureRecognizerStateEnded: {
+        CGFloat y = [sender locationInView:self.view].y;
+        if (y < self.view.frame.size.height - 180) {
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.categoriesLabelView setCenter:CGPointMake(self.categoriesLabelView.center.x, self.view.frame.size.height - 360)];
+                CGRect frame = self.categoriesView.frame;
+                frame.origin.y = self.view.frame.size.height - 360;
+                self.categoriesView.frame = frame;
+            }];
+        }
+        else {
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.categoriesLabelView setCenter:CGPointMake(self.categoriesLabelView.center.x, self.view.frame.size.height)];
+                CGRect frame = self.categoriesView.frame;
+                frame.origin.y = self.view.frame.size.height;
+                self.categoriesView.frame = frame;
+            }];
+        }
+        NSLog(@"%f", y);
+        break;
+    }
+    case UIGestureRecognizerStatePossible:
+    case UIGestureRecognizerStateCancelled:
+    case UIGestureRecognizerStateFailed:
+        break;
+    }
+}
+- (IBAction)categoriesTapped:(UIGestureRecognizer *)sender
+{
+    if (self.categoriesLabelView.center.y == self.view.frame.size.height) {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.categoriesLabelView setCenter:CGPointMake(self.categoriesLabelView.center.x, self.view.frame.size.height - 360)];
+            CGRect frame = self.categoriesView.frame;
+            frame.origin.y = self.view.frame.size.height - 360;
+            self.categoriesView.frame = frame;
+        }];
+    }
+}
+
+#pragma mark -
+#pragma mark Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:GL_SHOW_CATEGORY_SEGUE]) {
+        GLCategoryViewController *categoryVC = segue.destinationViewController;
+        categoryVC.category = self.selectedCategory;
+    }
 }
 
 @end
