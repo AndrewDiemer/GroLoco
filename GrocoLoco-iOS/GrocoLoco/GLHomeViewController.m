@@ -12,6 +12,8 @@
 #import "GLHomeTableViewCell.h"
 #import "GLGroceryItem.h"
 #import "GLShoppingViewController.h"
+#import "MMDrawerController.h"
+#import "UIViewController+MMDrawerController.h"
 
 @interface GLHomeViewController () <UITextFieldDelegate>
 
@@ -39,6 +41,12 @@
     [super viewDidLoad];
 
     [self.navigationItem setHidesBackButton:YES];
+    
+    // Begin Drawer Controller
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeBezelPanningCenterView;
+    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModePanningCenterView | MMCloseDrawerGestureModeTapCenterView;
+    
+    
 
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(loadGroceryLists:) forControlEvents:UIControlEventValueChanged];
@@ -295,6 +303,10 @@
     [self.tableView endUpdates];
 
     sender.selected = !sender.selected;
+}
+
+- (IBAction)mmOpenSettings:(id)sender {
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 #pragma mark -

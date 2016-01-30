@@ -26,12 +26,12 @@
 
 - (void)showFullScreenHUD
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:FULLSCREENHUD animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.dimBackground = YES;
 }
 
 - (void)hideFullScreenHUD
 {
-    [MBProgressHUD hideHUDForView:FULLSCREENHUD animated:YES];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 @end
