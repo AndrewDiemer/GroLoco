@@ -439,6 +439,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7On-R8-VLZ">
                                                 <rect key="frame" x="39" y="0.0" width="153" height="30"/>
                                                 <state key="normal" title="Logout"/>
+                                                <connections>
+                                                    <segue destination="Ybt-Eb-hQJ" kind="unwind" unwindAction="prepareForUnwind:" id="O1X-lG-bwO"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -508,6 +511,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="noB-6f-Dnk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ybt-Eb-hQJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4438" y="1436"/>
         </scene>
@@ -1017,6 +1021,6 @@
         <image name="storeMap" width="539" height="673"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pOy-MG-hfe"/>
+        <segue reference="SFg-sM-uFX"/>
     </inferredMetricsTieBreakers>
 </document>
