@@ -68,14 +68,10 @@
         NSInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 12;
         NSInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 24;
 
-        //NSLog(@"%ld, %ld", (long)coordx, (long)coordy);
-
         if (coordx < 0) {
-            //coordx = 0;
             coordx = rand() % 450;
         }
         if (coordy < 0) {
-            //coordy = 0;
             coordy = rand() % 600;
         }
 
@@ -198,9 +194,6 @@
     
     GLGroceryItem *selectedButton = self.items[self.currentItem];
     [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
-    
-    //CGPoint updatedOffset = self.topScrollView.contentOffset;
-    //self.currentItem = updatedOffset.x / self.view.frame.size.width;
 }
 
 - (void)makeItemViews
@@ -218,23 +211,48 @@
 
 - (void)gotItem:(UIButton *)sender
 {
-    sender.enabled = NO;
-
-    CGRect frame = self.topScrollView.frame;
-    frame.origin.x = frame.size.width * (sender.tag + 1);
-    frame.origin.y = 0;
-    [self.topScrollView scrollRectToVisible:frame animated:YES];
-
+    //sender.enabled = NO;
+    
     GLGroceryItem *selectedButton = self.items[sender.tag];
-    selectedButton.navPin.selected = YES;
-
-    self.currentPage += 1;
-
-    if (sender.tag + 1 < [self.items count]) {
-        self.currentItem += 1;
+    
+    if (selectedButton.navPin.selected) {
+        selectedButton.navPin.selected = NO;
+        
+        self.currentPage -= 1;
         GLGroceryItem *nextButton = self.items[self.currentItem];
         [nextButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
     }
+    else {
+        selectedButton.navPin.selected = YES;
+        CGRect frame = self.topScrollView.frame;
+        frame.origin.x = frame.size.width * (sender.tag + 1);
+        frame.origin.y = 0;
+        [self.topScrollView scrollRectToVisible:frame animated:YES];
+        
+        self.currentPage += 1;
+        
+        if (sender.tag + 1 < [self.items count]) {
+            self.currentItem += 1;
+            GLGroceryItem *nextButton = self.items[self.currentItem];
+            [nextButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+        }
+    }
+
+//    CGRect frame = self.topScrollView.frame;
+//    frame.origin.x = frame.size.width * (sender.tag + 1);
+//    frame.origin.y = 0;
+//    [self.topScrollView scrollRectToVisible:frame animated:YES];
+    
+//    GLGroceryItem *selectedButton = self.items[sender.tag];
+//    selectedButton.navPin.selected = YES;
+
+//    self.currentPage += 1;
+//
+//    if (sender.tag + 1 < [self.items count]) {
+//        self.currentItem += 1;
+//        GLGroceryItem *nextButton = self.items[self.currentItem];
+//        [nextButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+//    }
 }
 
 #pragma mark -
@@ -258,8 +276,6 @@
     
     GLGroceryItem *selectedButton = self.items[self.currentItem];
     [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
-    
-    //NSLog(@"%ld, %ld", (long)self.topScrollView.contentOffset.x, (long)self.newOffset.x);
     
     self.newOffset = self.topScrollView.contentOffset;
 }
