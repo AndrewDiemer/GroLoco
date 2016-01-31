@@ -26,6 +26,7 @@ static NSString *GL_HOME_TABLEVIEW_CELL = @"GLHomeTableViewCell";
 static NSString *GL_HOME_ADD_NEW_TABLEVIEW_CELL = @"GLHomeAddNewTableViewCell";
 static NSString *GL_SEARCH_TABLEVIEW_CELL = @"GLSearchTableViewCell";
 static NSString *GL_CATEGORY_TABLE_VIEW_CELL = @"GLCategoryTableViewCell";
+static NSString *GL_RECOMMENDATIONS_TABLE_VIEW_CELL = @"GLRecommendationsTableViewCell";
 
 typedef enum : NSUInteger {
     GLCategoryProduce,
