@@ -126,6 +126,17 @@
     }
 }
 
+- (IBAction) prepareForUnwind:(UIStoryboardSegue *)segue {
+    [GLNetworkingManager logoutUserCompletion:^(NSDictionary *response, NSError *error) {
+        if (!error) {
+            NSLog(@"Logout Successful");
+        }
+        else {
+            [self showError:error.description];
+        }
+    }];
+}
+
 /*
 #pragma mark - Navigation
 

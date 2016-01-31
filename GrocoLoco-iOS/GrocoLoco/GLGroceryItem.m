@@ -29,6 +29,7 @@
         _subcategory = dictionary[@"SubCategory"];
         _ID = dictionary[@"_id"];
         _comments = dictionary[@"Comment"];
+        _price = [NSNumber numberWithDouble:[dictionary[@"Price"] doubleValue]];
 
         _navPin = [UIButton buttonWithType:UIButtonTypeCustom];
         [_navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];

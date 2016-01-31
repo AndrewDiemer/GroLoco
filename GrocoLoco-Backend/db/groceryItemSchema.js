@@ -1,16 +1,28 @@
 
+// groceryItemSchema = new db.Schema({
+// 	UPC            : String,
+// 	Coordinates	   : { x: Number, y: Number },
+// 	Category 	   : Number,
+// 	Description    : String,  // SOBEYS 
+// 	POSDescription : String,  // SOBEYS
+// 	SubCategory    : String,  // SOBEYS
+// 	Aisle  	       : String,  // SOBEYS - created by taking Aisle info from Sobeys and removing shelf id from the end 
+// 	AisleShelf     : String,  // SOBEYS - created from full Aisle info from Sobeys
+// 	Position       : String,  // SOBEYS
+// 	Width		   : Number,  // SOBEYS
+// 	Price		   : Number   // SOBEYS
+// })
 groceryItemSchema = new db.Schema({
-	UPC            : String,
-	Coordinates	   : { x: Number, y: Number },
+	BlockNumber	   : Number,
+	ItemLocation   : Number,
+	Face		   : String,
+	Shelf		   : Number,
 	Category 	   : Number,
+	Price		   : Number,   // SOBEYS
 	Description    : String,  // SOBEYS 
-	POSDescription : String,  // SOBEYS
-	SubCategory    : String,  // SOBEYS
-	Aisle  	       : String,  // SOBEYS - created by taking Aisle info from Sobeys and removing shelf id from the end 
-	AisleShelf     : String,  // SOBEYS - created from full Aisle info from Sobeys
-	Position       : String,  // SOBEYS
-	Width		   : Number,  // SOBEYS
-	Price		   : Number   // SOBEYS
+	Aisle 		   : String,
+	StoreId		   : Number,
+	IconLink	   : String
 })
 
 

@@ -87,9 +87,13 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-GrocoLoco/AFNetworking.framework"
   install_framework "Pods-GrocoLoco/IQKeyboardManager.framework"
   install_framework "Pods-GrocoLoco/MBProgressHUD.framework"
+  install_framework "Pods-GrocoLoco/MMDrawerController.framework"
+  install_framework "Pods-GrocoLoco/MMDrawerController_Storyboard.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-GrocoLoco/AFNetworking.framework"
   install_framework "Pods-GrocoLoco/IQKeyboardManager.framework"
   install_framework "Pods-GrocoLoco/MBProgressHUD.framework"
+  install_framework "Pods-GrocoLoco/MMDrawerController.framework"
+  install_framework "Pods-GrocoLoco/MMDrawerController_Storyboard.framework"
 fi

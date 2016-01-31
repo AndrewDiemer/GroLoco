@@ -6,8 +6,8 @@
 //  Copyright © 2015 Mark Hall. All rights reserved.
 //
 
-#import "GLNetworkingManager.h"
 #import "GLGroceryItem.h"
+#import "GLNetworkingManager.h"
 
 @implementation GLNetworkingManager
 
@@ -159,8 +159,6 @@
         }];
 }
 
-//TODO: Change this to match the new route
-
 + (void)deleteGroceryItem:(NSString *)groceryListName itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -172,7 +170,7 @@
     params[@"_id"] = ID;
     params[@"GroceryListName"] = groceryListName;
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/deletegroceryitem"
+    [manager DELETE:@"https://grocolocoapp.herokuapp.com/groceryitem"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
@@ -181,8 +179,6 @@
             completionBlock(nil, error);
         }];
 }
-
-//TODO: Change this to match the new route
 
 + (void)deleteGroceryItems:(NSString *)groceryListName completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
@@ -194,7 +190,7 @@
     NSMutableDictionary *params = @{}.mutableCopy;
     params[@"GroceryListName"] = groceryListName;
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/deletegroceryitems"
+    [manager POST:@"https://grocolocoapp.herokuapp.com/groceryitems"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
@@ -270,8 +266,10 @@
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
-    [manager GET:[NSString stringWithFormat:@"https://grocolocoapp.herokuapp.com/findItems/%@", itemString]
-        parameters:nil
+    NSDictionary *params = @{ @"subsearch" : itemString };
+
+    [manager POST:[NSString stringWithFormat:@"https://grocolocoapp.herokuapp.com/findItems"]
+        parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             NSMutableArray *response = @[].mutableCopy;
             for (NSDictionary *item in responseObject) {
@@ -325,8 +323,29 @@
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
-    [manager GET:@"https://grocolocoapp.herokuapp.com/getrecommendations"
-        parameters:nil
+    [manager GET:@"https://grocolocoapp.herokuapp.com/getrecommendations" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
+        NSMutableArray *response = @[].mutableCopy;
+        for (NSDictionary *item in responseObject) {
+            [response addObject:[[GLGroceryItem alloc] initWithDictionary:item]];
+        }
+        completionBlock(response, nil);
+    }
+        failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            completionBlock(nil, error);
+        }];
+}
+
++ (void)getCategory:(GLCategory)category withCompletion:(void (^)(NSArray *response, NSError *error))completionBlock
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    NSDictionary *params = @{ @"categoryNumber" : [NSNumber numberWithInt:category] };
+
+    [manager POST:@"https://grocolocoapp.herokuapp.com/category"
+        parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             NSMutableArray *response = @[].mutableCopy;
             for (NSDictionary *item in responseObject) {

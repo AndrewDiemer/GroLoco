@@ -6,6 +6,7 @@
 //  Copyright © 2015 Mark Hall. All rights reserved.
 //
 
+#import "GLConstants.h"
 #import <Foundation/Foundation.h>
 
 @interface GLNetworkingManager : NSObject
@@ -41,5 +42,7 @@
 + (void)logoutUserCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock;
 
 + (void)getRecommendationsCompletion:(void (^)(NSArray *response, NSError *error))completionBlock;
+
++ (void)getCategory:(GLCategory)category withCompletion:(void (^)(NSArray *response, NSError *error))completionBlock;
 
 @end
