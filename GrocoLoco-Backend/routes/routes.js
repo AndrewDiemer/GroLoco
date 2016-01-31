@@ -101,18 +101,19 @@ module.exports = function (app){
     app.get('/testSet', isAuthenticated, function(req,res){
         for (var i = 0; i < testSet.length; i++) {
 
-            var UPCcode = Math.floor((Math.random() * 9999999999) + 1);
-
             var newItem = new GroceryItem({
-                UPC            : UPCcode, //"5820008030",
-                Description    : testSet[i].Description,
-                POSDescription : testSet[i].POSDescription,
-                SubCategory    : testSet[i].SubCategory,
-                Aisle          : testSet[i].Aisle, // created by taking Aisle info from Sobeys and removing shelf id from the end 
-                AisleShelf     : testSet[i].AisleShelf,  // created from full Aisle info from Sobeys
-                Position       : testSet[i].Position,
-                Category       : testSet[i].Category,
-                Price          : testSet[i].Price
+
+                BlockNumber  : testSet[i].BlockNumber,
+                ItemLocation : testSet[i].ItemLocation,
+                Face         : testSet[i].Face,
+                Shelf        : testSet[i].Shelf,
+                Category     : testSet[i].Category,
+                Price        : testSet[i].Price,
+                Description  : testSet[i].Description,
+                Aisle        : testSet[i].Aisle,
+                StoreId      : testSet[i].StoreId,
+                IconLink     : testSet[i].IconLink
+
             });
             
             console.log(testSet[i]);
