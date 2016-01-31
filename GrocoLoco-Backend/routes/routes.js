@@ -7,6 +7,26 @@ var testSet = require('../machinelearningdata/testSet.js')
 
 module.exports = function (app){
 
+    app.get('/populatedatabase', isAuthenticated, function(req,res){
+        for (var i = 0; i < testSet.length; i++) {
+            var newItem = new GroceryItem({
+                BlockNumber    : testSet[i].BlockNumber,
+                ItemLocation   : testSet[i].ItemLocation,
+                Face           : testSet[i].Face,
+                Shelf          : testSet[i].Shelf,
+                Category       : testSet[i].Category,
+                Price          : testSet[i].Price,   // SOBEYS
+                Description    : testSet[i].Description,  // SOBEYS 
+                Aisle          : testSet[i].Aisle,
+                StoreId        : testSet[i].StoreId,
+                IconLink       : testSet[i].IconLink
+            });
+            
+            newItem.save(function (err) { if (err) console.log(err); })
+        }
+        res.send(testSet)
+    })
+
     /*
         work in progress
         -morgan

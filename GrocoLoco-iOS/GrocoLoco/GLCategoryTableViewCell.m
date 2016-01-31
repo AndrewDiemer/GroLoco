@@ -23,7 +23,7 @@
 {
     _item = item;
     self.itemNameLabel.text = item.itemDescription;
-    self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", [item.price stringValue]];
+    self.itemPriceLabel.text = [NSString stringWithFormat:@"$%f", item.price];
 }
 
 @end
