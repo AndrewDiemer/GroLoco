@@ -10,12 +10,14 @@
 #import "GLCategoryViewController.h"
 #import "GLGroceryItem.h"
 
-@interface GLCategoryViewController () <UISearchBarDelegate>
+@interface GLCategoryViewController () <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray *filteredItems;
 @property (nonatomic, strong) NSMutableDictionary *itemsDict;
 @property (nonatomic, strong) NSArray *itemSectionTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UISearchController *searchController;
 
 @end
 
@@ -25,42 +27,48 @@
 {
     [super viewDidLoad];
 
-    UISearchBar *searchBar = [[UISearchBar alloc] init];
-    searchBar.delegate = self;
-    searchBar.showsCancelButton = YES;
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.delegate = self;
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.showsCancelButton = YES;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.definesPresentationContext = YES;
+
     switch (self.category) {
     case GLCategoryCans:
-        searchBar.placeholder = @"Search Cans";
+        self.searchController.searchBar.placeholder = @"Search Cans";
         break;
     case GLCategoryDeli:
-        searchBar.placeholder = @"Search Deli";
+        self.searchController.searchBar.placeholder = @"Search Deli";
         break;
     case GLCategoryDairy:
-        searchBar.placeholder = @"Search Dairy";
+        self.searchController.searchBar.placeholder = @"Search Dairy";
         break;
     case GLCategoryOther:
-        searchBar.placeholder = @"Search Other";
+        self.searchController.searchBar.placeholder = @"Search Other";
         break;
     case GLCategoryBakery:
-        searchBar.placeholder = @"Search Bakery";
+        self.searchController.searchBar.placeholder = @"Search Bakery";
         break;
     case GLCategoryFrozen:
-        searchBar.placeholder = @"Search Frozen";
+        self.searchController.searchBar.placeholder = @"Search Frozen";
         break;
     case GLCategoryGrains:
-        searchBar.placeholder = @"Search Grains";
+        self.searchController.searchBar.placeholder = @"Search Grains";
         break;
     case GLCategoryProduce:
-        searchBar.placeholder = @"Search Produce";
+        self.searchController.searchBar.placeholder = @"Search Produce";
         break;
     case GLCategoryPersonalCare:
-        searchBar.placeholder = @"Search Personal Care";
+        self.searchController.searchBar.placeholder = @"Search Personal Care";
         break;
 
     default:
         break;
     }
-    self.navigationItem.titleView = searchBar;
+    self.navigationItem.titleView = self.searchController.searchBar;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -103,26 +111,41 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if (self.searchController.active && ![self.searchController.searchBar.text isEqual:@""]) {
+        return @"";
+    }
     return [self.itemSectionTitles objectAtIndex:section];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
+    if (self.searchController.active && ![self.searchController.searchBar.text isEqual:@""]) {
+        return nil;
+    }
     return @[ @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z" ];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
+    if (self.searchController.active && ![self.searchController.searchBar.text isEqual:@""]) {
+        return 0;
+    }
     return [self.itemSectionTitles indexOfObject:title];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *_Nonnull)tableView
 {
+    if (self.searchController.active && ![self.searchController.searchBar.text isEqual:@""]) {
+        return 1;
+    }
     return [self.itemSectionTitles count];
 }
 
 - (NSInteger)tableView:(UITableView *_Nonnull)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.searchController.active && ![self.searchController.searchBar.text isEqual:@""]) {
+        return [self.filteredItems count];
+    }
     NSString *sectionTitle = [self.itemSectionTitles objectAtIndex:section];
     return [[self.itemsDict objectForKey:sectionTitle] count];
 }
@@ -136,8 +159,30 @@
     NSArray *sectionItems = [self.itemsDict objectForKey:sectionTitle];
 
     GLCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GL_CATEGORY_TABLE_VIEW_CELL forIndexPath:indexPath];
-    cell.item = sectionItems[indexPath.row];
+    if (self.searchController.active && ![self.searchController.searchBar.text isEqual:@""]) {
+        cell.item = self.filteredItems[indexPath.row];
+    }
+    else {
+        cell.item = sectionItems[indexPath.row];
+    }
+
     return cell;
+}
+
+#pragma mark -
+#pragma mark UISearchControllerDelegate
+
+- (void)filterContentForSearchText:(NSString *)searchString scope:(NSString *)scope
+{
+    [self.filteredItems removeAllObjects];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"itemDescription contains[c] %@", searchString];
+    self.filteredItems = [self.items filteredArrayUsingPredicate:resultPredicate].mutableCopy;
+    [self.tableView reloadData];
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    [self filterContentForSearchText:searchController.searchBar.text scope:@"ALL"];
 }
 
 @end

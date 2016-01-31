@@ -159,8 +159,6 @@
         }];
 }
 
-//TODO: Change this to match the new route
-
 + (void)deleteGroceryItem:(NSString *)groceryListName itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -192,7 +190,7 @@
     NSMutableDictionary *params = @{}.mutableCopy;
     params[@"GroceryListName"] = groceryListName;
 
-    [manager DELETE:@"https://grocolocoapp.herokuapp.com/groceryitems"
+    [manager POST:@"https://grocolocoapp.herokuapp.com/groceryitems"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
@@ -325,15 +323,13 @@
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
-    [manager GET:@"https://grocolocoapp.herokuapp.com/getrecommendations"
-        parameters:nil
-        success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
-            NSMutableArray *response = @[].mutableCopy;
-            for (NSDictionary *item in responseObject) {
-                [response addObject:[[GLGroceryItem alloc] initWithDictionary:item]];
-            }
-            completionBlock(response, nil);
+    [manager GET:@"https://grocolocoapp.herokuapp.com/getrecommendations" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
+        NSMutableArray *response = @[].mutableCopy;
+        for (NSDictionary *item in responseObject) {
+            [response addObject:[[GLGroceryItem alloc] initWithDictionary:item]];
         }
+        completionBlock(response, nil);
+    }
         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
             completionBlock(nil, error);
         }];

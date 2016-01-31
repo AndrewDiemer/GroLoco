@@ -21,18 +21,21 @@ function DeleteAllItems() {
 
 // ============================= CREATE MOCK GROCERY ITEMS ====================================
 
-function CreateGroceryItem(UPC, Description, POSDescription, SubCategory, Aisle, AisleShelf, Position) {
+function CreateGroceryItem(BlockNumber, ItemLocation, Face, Shelf, Category, Price, Description, Aisle, StoreId) {
 
   console.log('Creating Mock Data');
   var UPCcode = Math.floor((Math.random() * 9999999999) + 1);
   var newItem = new GroceryItem({
-    UPC            : UPC, //UPCcode, //"5820008030",
-    Description    : Description,
-    POSDescription : POSDescription,
-    SubCategory    : SubCategory,
-    Aisle          : Aisle, // created by taking Aisle info from Sobeys and removing shelf id from the end 
-    AisleShelf     : AisleShelf,  // created from full Aisle info from Sobeys
-    Position       : Position
+  BlockNumber    : BlockNumber,
+  ItemLocation   : ItemLocation,
+  Face           : Face,
+  Shelf          : Shelf,
+  Category       : Category,
+  Price          : Price,   
+  Description    : Description,   
+  Aisle          : Aisle,
+  StoreId        : StoreId
+
   });
   newItem.save(function (err) { if (err) console.log(err); })
 }

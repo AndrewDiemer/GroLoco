@@ -26,6 +26,7 @@
 		A75ABB771C5C2ECE0002B2ED /* GLCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A75ABB761C5C2ECE0002B2ED /* GLCategoryViewController.m */; };
 		A75ABB7B1C5C33B00002B2ED /* GLCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A75ABB7A1C5C33B00002B2ED /* GLCategoryTableViewCell.m */; };
 		A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */; };
+		A7EBD3581C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7EBD3571C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m */; };
 		A7F68BBF1BF7BB6A00FD7806 /* GLShoppingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */; };
 		A7F68BC21BF7BF8C00FD7806 /* GLShoppingItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */; };
 		A7F68BC51BF7BFBC00FD7806 /* GLShoppingItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BC41BF7BFBC00FD7806 /* GLShoppingItemView.m */; };
@@ -80,6 +81,8 @@
 		A75ABB7A1C5C33B00002B2ED /* GLCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLCategoryTableViewCell.m; sourceTree = "<group>"; };
 		A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSearchViewController.h; sourceTree = "<group>"; };
 		A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSearchViewController.m; sourceTree = "<group>"; };
+		A7EBD3561C5D2AF900C06ACC /* GLRecommendationsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLRecommendationsTableViewCell.h; sourceTree = "<group>"; };
+		A7EBD3571C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLRecommendationsTableViewCell.m; sourceTree = "<group>"; };
 		A7F68BBD1BF7BB6A00FD7806 /* GLShoppingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLShoppingViewController.h; sourceTree = "<group>"; };
 		A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLShoppingViewController.m; sourceTree = "<group>"; };
 		A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GLShoppingItemView.xib; sourceTree = "<group>"; };
@@ -242,6 +245,8 @@
 				A7FE71B61BF6C4DB001A0EA2 /* GLSearchTableViewCell.m */,
 				A786C2A41BDE7F9B003B90DE /* GLSearchViewController.h */,
 				A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */,
+				A7EBD3561C5D2AF900C06ACC /* GLRecommendationsTableViewCell.h */,
+				A7EBD3571C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m */,
 				A75ABB781C5C33890002B2ED /* Category View */,
 			);
 			name = Search;
@@ -395,6 +400,7 @@
 			files = (
 				A75ABB7B1C5C33B00002B2ED /* GLCategoryTableViewCell.m in Sources */,
 				A7FE71B71BF6C4DC001A0EA2 /* GLSearchTableViewCell.m in Sources */,
+				A7EBD3581C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m in Sources */,
 				A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */,
 				A712AD7A1BF80F2E002DC2DD /* GLGrocerySearchedItem.m in Sources */,
 				A702E9531BBDCB94001F24DC /* GLHomeTableViewCell.m in Sources */,
