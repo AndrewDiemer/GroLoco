@@ -1,6 +1,8 @@
 var raccoon = require('raccoon')
 var _ = require('lodash')
 var clone = require('clone')
+var testSet = require('../machinelearningdata/testSet.js')
+
 
 //RACCOON ==========================================================
 raccoon.config.nearestNeighbors = 5;  
