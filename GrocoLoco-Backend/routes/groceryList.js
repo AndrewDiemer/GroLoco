@@ -1,7 +1,7 @@
-
-
+var raccoon = require('raccoon')
 var _ = require('lodash')
 var clone = require('clone')
+
 
 module.exports = function (app){
 	app.get('/getitems', isAuthenticated, function(req,res){
@@ -175,29 +175,7 @@ module.exports = function (app){
         })
     })
 
-    app.post('/addtolist', isAuthenticated, function(req, res) {
-        for(var i = 0; i < req.body.List.length;i++){
-
-            //Add a liked item to the Recommendation Engine
-            raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
-
-            //Find the Add all items to the list
-             GroceryList.findOneAndUpdate({
-                'User': req.user,
-                'GroceryListName': req.body.GroceryListName
-            },{
-                $push:{'List': req.body.List[i]}
-            },{
-                safe:true, upsert:true, new: true
-            },
-            function(err, groceryList){
-                if(err)
-                    res.send(err)
-                if(groceryList)
-                    res.send(200)
-            })
-        }
-    })
+  
 
     app.post('/newgrocerylist', isAuthenticated, function(req, res) {
 

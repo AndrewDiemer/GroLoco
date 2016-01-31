@@ -229,7 +229,11 @@ module.exports = function (app, passport){
 
 	})
 	app.get('/blocks', function (req,res){
-		Block.find({}, function(err,blocks){res.send(blocks)})
+		Block.find({}, function (err, blocks){res.send(blocks)})
+	})
+
+	app.post('/blblbl', function (req,res){
+		GroceryItem.collection.remove()
 	})
 
 	app.get('/blocksGroceryList', isAuthenticated, function (req,res){
@@ -243,6 +247,7 @@ module.exports = function (app, passport){
 
 
 		Block.find({}, function(err,blocks){
+			console.log(req.user.GroceryList[0])
 			if(err)
 				res.send(err)
 			if(blocks){
@@ -252,23 +257,23 @@ module.exports = function (app, passport){
 					if(err)
 						res.send(err)
 					if(groceryList){
-						for (var i = 0; i < groceryList.length; i++){
-
-							switch(groceryList[i].Face){
+						
+						for (var i = 0; i < groceryList.List.length; i++){
+							switch(groceryList.List[i].Face){
 								case 'T':
-									blocks[groceryList[i].BlockNumber].TopItems.push(groceryList[i])
+									blocks[groceryList.List[i].BlockNumber].TopItems.push(groceryList.List[i])
 									break
 
 								case 'B':
-									blocks[groceryList[i].BlockNumber].BottomItems.push(groceryList[i])
+									blocks[groceryList.List[i].BlockNumber].BottomItems.push(groceryList.List[i])
 									break
 								
 								case 'L':
-									blocks[groceryList[i].BlockNumber].LeftItems.push(groceryList[i])
+									blocks[groceryList.List[i].BlockNumber].LeftItems.push(groceryList.List[i])
 									break
 							
 								case 'R':
-									blocks[groceryList[i].BlockNumber].RightItems.push(groceryList[i])
+									blocks[groceryList.List[i].BlockNumber].RightItems.push(groceryList.List[i])
 									break
 							}
 						}
