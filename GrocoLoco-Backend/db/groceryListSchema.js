@@ -3,18 +3,27 @@ groceryListSchema = new db.Schema({
 	GroceryListName	: String,
     Date			: { type: Date, default: Date.now },
     List 			: [{
-    	UPC            : String,
-		Description    : String,
-		POSDescription : String,
-		SubCategory    : String,
-		Aisle  	       : String,  // created by taking Aisle info from Sobeys and removing shelf id from the end 
-		AisleShelf     : String,  // created from full Aisle info from Sobeys
-		Position       : String,  // from somewhere on Sobeys end
-		Coordinates    : { 
-	        x        : Number, 
-	        y        : Number 
-	  	},
-	  	Comment       : String
+    	BlockNumber	  	: Number,
+    	ItemLocation   	: Number,
+    	Face 		   	: String,
+    	Shelf 			: Number,
+    	Category 		: Number,
+    	Price 			: Number,
+    	Description 	: String,
+    	Aisle 			: String,
+    	StoreId 		: Number,
+    	IconLink 		: String,
+    	Comment 		: String,
+    	Date			: { type: Date, default: Date.now }
+
+  //   	UPC            : String,
+		// Description    : String,
+		// POSDescription : String,
+		// SubCategory    : String,
+		// Aisle  	       : String,  // created by taking Aisle info from Sobeys and removing shelf id from the end 
+		// AisleShelf     : String,  // created from full Aisle info from Sobeys
+	 //  	Comment       : String,
+	  	
     }]
 })
 
