@@ -24,6 +24,9 @@
     
     self.settingsLabel.text = [NSString stringWithFormat: @"%@%@", [[GLUserManager sharedManager] name], @"'s Settings"];
 }
+- (IBAction)goToWebsite:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://grocolocoapp.herokuapp.com/#/"]];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -18,12 +18,15 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *topScrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *nextPressed;
+@property (weak, nonatomic) IBOutlet UIButton *prevPressed;
 
 @property (strong, nonatomic) MHSegmentedControl *segmentedControl;
 @property (strong, nonatomic) NSMutableDictionary *itemsInSections;
 @property (strong, nonatomic) MHProgressBar *progressBar;
 @property (assign, nonatomic) CGFloat currentPage;
 @property (assign, nonatomic) NSInteger currentItem;
+@property (assign, nonatomic) CGPoint newOffset;
 
 @end
 
@@ -65,7 +68,7 @@
         NSInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 12;
         NSInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 24;
 
-        NSLog(@"%ld, %ld", (long)coordx, (long)coordy);
+        //NSLog(@"%ld, %ld", (long)coordx, (long)coordy);
 
         if (coordx < 0) {
             //coordx = 0;
@@ -177,21 +180,27 @@
 - (void)movePage:(NSInteger)direction
 {
     CGPoint currentOffset = self.topScrollView.contentOffset;
+    
     if (direction == -1 && currentOffset.x == 0) {
         return;
     }
     else if (direction == 1 && currentOffset.x == self.topScrollView.contentSize.width - self.topScrollView.frame.size.width) {
         return;
     }
+    
     [self.topScrollView setContentOffset:CGPointMake(self.view.frame.size.width * direction + currentOffset.x, 0) animated:YES];
 
     for (GLGroceryItem *item in self.items) {
         [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
     }
-
+    
     self.currentItem += (direction * 1);
+    
     GLGroceryItem *selectedButton = self.items[self.currentItem];
     [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+    
+    //CGPoint updatedOffset = self.topScrollView.contentOffset;
+    //self.currentItem = updatedOffset.x / self.view.frame.size.width;
 }
 
 - (void)makeItemViews
@@ -231,11 +240,29 @@
 #pragma mark -
 #pragma mark UIScrollViewDelegate
 
-//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-//{
-//    CGFloat page = ceil(scrollView.contentOffset.x / self.topScrollView.frame.size.width);
-//    self.currentPage = page;
-//}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    //CGFloat page = ceil(scrollView.contentOffset.x / self.topScrollView.frame.size.width);
+    //self.currentPage = page;
+    
+    if (self.newOffset.x < self.topScrollView.contentOffset.x) {
+        self.currentItem += (1);
+    }
+    else if (self.newOffset.x > self.topScrollView.contentOffset.x) {
+        self.currentItem += (-1);
+    }
+    
+    for (GLGroceryItem *item in self.items) {
+        [item.navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
+    }
+    
+    GLGroceryItem *selectedButton = self.items[self.currentItem];
+    [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+    
+    //NSLog(@"%ld, %ld", (long)self.topScrollView.contentOffset.x, (long)self.newOffset.x);
+    
+    self.newOffset = self.topScrollView.contentOffset;
+}
 
 #pragma mark -
 #pragma mark MHSegmentedControlDelegate
