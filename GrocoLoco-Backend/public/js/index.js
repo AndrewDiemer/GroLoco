@@ -42,7 +42,8 @@ interact('.edit-rectangle')
     };
   }).on('doubletap', function(event){
     console.log(event)
-    console.log('Adding items')
+
+
     // console.log(this)
   })
   .inertia({
