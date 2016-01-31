@@ -98,6 +98,8 @@ BlockCoordinates = db.model('BlockCoordinates', blockCoordinatesSchema)
 
 //ROUTES ==============================================
 require('./routes/routes.js')(app, passport); 
+require('./routes/groceryList.js')(app, passport); 
+require('./routes/user.js')(app, passport); 
 require('./routes/authentication.js')(app, passport); 
 require('./routes/analytics.js')(app, passport); 
 require('./routes/blocks.js')(app, passport); 

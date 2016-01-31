@@ -228,9 +228,11 @@ module.exports = function (app, passport){
 
 
 	})
+	app.get('/blocks', function (req,res){
+		Block.find({}, function(err,blocks){res.send(blocks)})
+	})
 
-
-	app.get('/blocks', isAuthenticated, function (req,res){
+	app.get('/blocksGroceryList', isAuthenticated, function (req,res){
 		//Get the Blocks
 
 		//Get the Users Grocery list
