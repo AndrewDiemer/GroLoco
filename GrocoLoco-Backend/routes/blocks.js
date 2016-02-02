@@ -3,7 +3,7 @@
 module.exports = function (app, passport){
 
 
-	app.get('/populateTestBlock', function(req,res){
+	app.get('/populateTestBlock', isAuthenticated,function(req,res){
 		console.log('test')
 		GroceryItem.find({
 			'BlockNumber': 0,
@@ -38,7 +38,7 @@ module.exports = function (app, passport){
 	})
 
 
-	app.get('/whatsa', function(req,res){
+	app.get('/whatsa', isAuthenticated,function(req,res){
 		GroceryItem.find({
 			Description: 'apples'
 		}, function(err, items){
@@ -61,7 +61,7 @@ module.exports = function (app, passport){
 	})
 
 	//Create Block
-	app.post('/block', function (req, res){
+	app.post('/block', isAuthenticated, function (req, res){
 		// var blockNumbes = [0,1,2,3,4,5,6,7,8]
 		// for (var i = 0; i < Things.length; i++) {
 		// 	Things[i]
@@ -199,8 +199,6 @@ module.exports = function (app, passport){
 			Length 			: 0.53
 		})
 
-		// = .67 + .1 -.24
-
 		newBlock.save(function(err, block){
 			if(err)
 				res.send(err)
@@ -228,12 +226,9 @@ module.exports = function (app, passport){
 
 
 	})
+
 	app.get('/blocks', function (req,res){
 		Block.find({}, function (err, blocks){res.send(blocks)})
-	})
-
-	app.post('/blblbl', function (req,res){
-		GroceryItem.collection.remove()
 	})
 
 	app.get('/blocksGroceryList', isAuthenticated, function (req,res){
@@ -244,54 +239,71 @@ module.exports = function (app, passport){
 		//Get the items in the Groceyr list
 
 		//Assign those grocery items to the blocks, based on the right block and side
-
-
-		Block.find({}, function(err,blocks){
-			console.log(req.user.GroceryList[0])
+		Store.findOne({
+			'_id': req.user.Store
+		}, function(err, store){
 			if(err)
 				res.send(err)
-			if(blocks){
-				GroceryList.findOne({
-					'_id' : req.user.GroceryList[0]
-				}, function(err, groceryList){
+			if(store){
+				console.log(store)
+				// res.send(store.Blocks)
+				Block.find({
+					'_id': { $in: store.Blocks}
+				}, function(err,blocks){
 					if(err)
 						res.send(err)
-					if(groceryList){
-						
-						for (var i = 0; i < groceryList.List.length; i++){
-							switch(groceryList.List[i].Face){
-								case 'T':
-									blocks[groceryList.List[i].BlockNumber].TopItems.push(groceryList.List[i])
-									break
-
-								case 'B':
-									blocks[groceryList.List[i].BlockNumber].BottomItems.push(groceryList.List[i])
-									break
+					if(blocks){
+						GroceryList.findOne({
+							'_id' : req.user.GroceryList[0]
+						}, function(err, groceryList){
+							if(err)
+								res.send(err)
+							if(groceryList){
 								
-								case 'L':
-									blocks[groceryList.List[i].BlockNumber].LeftItems.push(groceryList.List[i])
-									break
-							
-								case 'R':
-									blocks[groceryList.List[i].BlockNumber].RightItems.push(groceryList.List[i])
-									break
+								for (var i = 0; i < groceryList.List.length; i++){
+									switch(groceryList.List[i].Face){
+										case 'T':
+											blocks[groceryList.List[i].BlockNumber].TopItems.push(groceryList.List[i])
+											break
+
+										case 'B':
+											blocks[groceryList.List[i].BlockNumber].BottomItems.push(groceryList.List[i])
+											break
+										
+										case 'L':
+											blocks[groceryList.List[i].BlockNumber].LeftItems.push(groceryList.List[i])
+											break
+									
+										case 'R':
+											blocks[groceryList.List[i].BlockNumber].RightItems.push(groceryList.List[i])
+											break
+									}
+								}
+								var map = {
+									StoreDimensions: store.StoreDimensions,
+									Blocks: blocks
+								}
+								res.send(map)
+							}else{
+								res.send({
+									status: 404,
+									message: 'Cannot find GroceryList!'
+								})
 							}
-						}
-						res.send(blocks)
+						})
 					}else{
 						res.send({
 							status: 404,
-							message: 'Cannot find GroceryList!'
+							message: 'There are no blocks.'
 						})
 					}
 				})
 			}else{
-				res.send({
-					status: 404,
-					message: 'There are no blocks.'
-				})
+				res.status(404).send("Store not found. :(")
 			}
 		})
+
+		
 	})
 
 	    app.get('/aisles', function(req,res){

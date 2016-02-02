@@ -52,55 +52,55 @@ module.exports = function (app){
     })
 
     app.get('/getrecommendations', isAuthenticated, function(req, res){
-        // async.parallel([
-        //     function(callback){
-        //         console.log('getting recommended')
-        //         raccoon.recommendFor(req.user._id, 3, function(results){
-        //             callback(null, results);
-        //         })
-        //     },
-        //     function(callback){
-        //         raccoon.bestRated(function(results){
-        //             GroceryList.findOne({
-        //                 'User':req.user
-        //             }, function(err,list){
-        //                 if(err){
-        //                     callback(null);
-        //                 }else if(list){
-        //                     /*
-        //                     * make sure that the recommended items
-        //                     * are not already contained within the users grocery list
-        //                     */
-        //                     var newList = []
-        //                     for(var i = 0; i < results.length && newList < 2; i++){
-        //                         if(!_.includes(list, results[i])){
-        //                             newList.push(results[i])
-        //                         }
-        //                     }
-        //                     callback(null, newList)
-        //                 }else{
-        //                     callback(null);
-        //                 }
-        //             })
-        //         })
-        //     }
-        // ],
-        // function(err, results){
-        //     var groceryList = _.union(results[0],results[1])
-        //     console.log(groceryList)
-        //     GroceryItem.find({
-        //         '_id': { $in: groceryList }
-        //     },function(err, items){
-        //         if(err){
-        //             res.send(err)
-        //         }
-        //         else if(items){
-        //             res.send(items)
-        //         }
-        //         else
-        //             res.send(404)
-        //     })
-        // });
+        async.parallel([
+            function(callback){
+                console.log('getting recommended')
+                raccoon.recommendFor(req.user._id, 3, function(results){
+                    callback(null, results);
+                })
+            },
+            function(callback){
+                raccoon.bestRated(function(results){
+                    GroceryList.findOne({
+                        'User':req.user
+                    }, function(err,list){
+                        if(err){
+                            callback(null);
+                        }else if(list){
+                            /*
+                            * make sure that the recommended items
+                            * are not already contained within the users grocery list
+                            */
+                            var newList = []
+                            for(var i = 0; i < results.length && newList < 2; i++){
+                                if(!_.includes(list, results[i])){
+                                    newList.push(results[i])
+                                }
+                            }
+                            callback(null, newList)
+                        }else{
+                            callback(null);
+                        }
+                    })
+                })
+            }
+        ],
+        function(err, results){
+            var groceryList = _.union(results[0],results[1])
+            console.log(groceryList)
+            GroceryItem.find({
+                '_id': { $in: groceryList }
+            },function(err, items){
+                if(err){
+                    res.send(err)
+                }
+                else if(items){
+                    res.send(items)
+                }
+                else
+                    res.send(404)
+            })
+        });
         res.send([])
     })
 }
