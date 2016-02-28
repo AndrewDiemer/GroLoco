@@ -45,4 +45,6 @@
 
 + (void)getCategory:(GLCategory)category withCompletion:(void (^)(NSArray *response, NSError *error))completionBlock;
 
++ (void)getBlocksGroceryListWithCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock;
+
 @end
