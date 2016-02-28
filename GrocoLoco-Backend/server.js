@@ -80,6 +80,7 @@ app.use(function(req, res, next) {
 require('./db/userSchema.js')
 require('./db/aisleSchema.js')
 require('./db/blockSchema.js')
+require('./db/storeSchema.js')
 require('./db/itemWidthSchema.js')
 require('./db/iconImageSchema.js')
 require('./db/groceryItemSchema.js')
@@ -89,6 +90,7 @@ require('./db/blockCoordinatesSchema.js')
 // MODELS =============================================
 User = db.model('User', userSchema)
 Aisle = db.model('Aisle', aisleSchema)
+Store = db.model('Store', storeSchema)
 Icon = db.model("IconImage", iconImageSchema);
 Block = db.model("Block", blockSchema);
 ItemWidth = db.model('ItemWidth', itemWidthSchema)
@@ -98,6 +100,7 @@ BlockCoordinates = db.model('BlockCoordinates', blockCoordinatesSchema)
 
 //ROUTES ==============================================
 require('./routes/routes.js')(app, passport); 
+require('./routes/store.js')(app, passport); 
 require('./routes/groceryList.js')(app, passport); 
 require('./routes/user.js')(app, passport); 
 require('./routes/authentication.js')(app, passport); 

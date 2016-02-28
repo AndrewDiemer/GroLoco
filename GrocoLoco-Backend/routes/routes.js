@@ -2,6 +2,7 @@ var _ = require('lodash')
 var clone = require('clone')
 var passport = require('passport')
 var testSet = require('../machinelearningdata/testSet.js')
+var request = require('request')
 
 //ROUTES ===========================================================
 

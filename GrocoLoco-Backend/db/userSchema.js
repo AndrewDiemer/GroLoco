@@ -5,7 +5,6 @@ userSchema = new db.Schema({
 	RegistrationDate		: { type: Date, default: Date.now },
 	GroceryList				: [{type: db.Schema.Types.ObjectId, ref: 'GroceryList'}],
 	StoreName				: String,
-	Longitude				: Number,
-	Latitude				: Number
+	Store 					: {type: db.Schema.Types.ObjectId, ref: 'Store'}
 })
 
