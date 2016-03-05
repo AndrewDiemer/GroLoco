@@ -7,6 +7,7 @@
 //
 
 #import "GLBlock.h"
+#import "GLGroceryItem.h"
 
 @implementation GLBlock
 
@@ -32,38 +33,46 @@
 
 #define WIDTH view.frame.size.width
 #define HEIGHT view.frame.size.height
-#define ITEMSIZE 14
+#define ITEMSIZE 25
 
 - (void)plotInView:(UIView *)view
 {
     UIView *blockPlot = [[UIView alloc] initWithFrame:CGRectMake(self.origin.x * WIDTH, self.origin.y * HEIGHT, self.width * WIDTH, self.length * HEIGHT)];
     blockPlot.layer.cornerRadius = 3;
     blockPlot.backgroundColor = [UIColor greenColor];
-    [view addSubview:   blockPlot];
+    [view addSubview:blockPlot];
 
     for (NSDictionary *item in self.bottomItems) {
-        UIView *itemView = [[UIView alloc] initWithFrame:CGRectMake(blockPlot.frame.size.width * [item[@"ItemLocation"] doubleValue], blockPlot.frame.size.height + ITEMSIZE / 2, ITEMSIZE, ITEMSIZE)];
-        itemView.layer.cornerRadius = ITEMSIZE / 2;
-        itemView.backgroundColor = [UIColor redColor];
-        [blockPlot addSubview:itemView];
+
+        GLGroceryItem *glItem = [[GLGroceryItem alloc] initWithDictionary:item];
+
+        glItem.navPin.frame = CGRectMake(blockPlot.frame.size.width * glItem.location, blockPlot.frame.size.height - ITEMSIZE / 2, ITEMSIZE, ITEMSIZE);
+        glItem.navPin.userInteractionEnabled = YES;
+        [blockPlot addSubview:glItem.navPin];
     }
     for (NSDictionary *item in self.topItems) {
-        UIView *itemView = [[UIView alloc] initWithFrame:CGRectMake(blockPlot.frame.size.width * [item[@"ItemLocation"] doubleValue], -3 * ITEMSIZE / 2, ITEMSIZE, ITEMSIZE)];
-        itemView.layer.cornerRadius = ITEMSIZE / 2;
-        itemView.backgroundColor = [UIColor redColor];
-        [blockPlot addSubview:itemView];
+
+        GLGroceryItem *glItem = [[GLGroceryItem alloc] initWithDictionary:item];
+
+        glItem.navPin.frame = CGRectMake(blockPlot.frame.size.width * glItem.location, -ITEMSIZE, ITEMSIZE, ITEMSIZE);
+        glItem.navPin.userInteractionEnabled = YES;
+        [blockPlot addSubview:glItem.navPin];
     }
     for (NSDictionary *item in self.leftItems) {
-        UIView *itemView = [[UIView alloc] initWithFrame:CGRectMake(-3 * ITEMSIZE / 2, blockPlot.frame.size.height * [item[@"ItemLocation"] doubleValue], ITEMSIZE, ITEMSIZE)];
-        itemView.layer.cornerRadius = ITEMSIZE / 2;
-        itemView.backgroundColor = [UIColor redColor];
-        [blockPlot addSubview:itemView];
+
+        GLGroceryItem *glItem = [[GLGroceryItem alloc] initWithDictionary:item];
+
+        glItem.navPin.frame = CGRectMake(-ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location, ITEMSIZE, ITEMSIZE);
+        glItem.navPin.userInteractionEnabled = YES;
+        [blockPlot addSubview:glItem.navPin];
     }
     for (NSDictionary *item in self.rightItems) {
-        UIView *itemView = [[UIView alloc] initWithFrame:CGRectMake(blockPlot.frame.size.width + ITEMSIZE / 2, blockPlot.frame.size.height * [item[@"ItemLocation"] doubleValue], ITEMSIZE, ITEMSIZE)];
-        itemView.layer.cornerRadius = ITEMSIZE / 2;
-        itemView.backgroundColor = [UIColor redColor];
-        [blockPlot addSubview:itemView];
+
+        GLGroceryItem *glItem = [[GLGroceryItem alloc] initWithDictionary:item];
+
+        glItem.navPin.frame = CGRectMake(blockPlot.frame.size.width - ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location, ITEMSIZE, ITEMSIZE);
+        glItem.navPin.userInteractionEnabled = YES;
+        [blockPlot addSubview:glItem.navPin];
     }
 }
 
