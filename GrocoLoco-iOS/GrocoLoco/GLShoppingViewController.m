@@ -55,6 +55,8 @@
     [self.view addSubview:self.progressBar];
     self.currentPage = 0;
     self.currentItem = 0;
+    
+    self.mapScrollView.delaysContentTouches = NO;
 
     [self makeItemViews];
 }
@@ -68,6 +70,7 @@
             [self showError:error.description];
         }
         else {
+
             NSDictionary *storeDimensions = response[@"StoreDimensions"];
             self.subview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2 * self.mapScrollView.frame.size.width, 2 * self.mapScrollView.frame.size.width * [storeDimensions[@"Ratio"][@"Number"] doubleValue])];
             self.subview.backgroundColor = [UIColor lightGrayColor];
@@ -86,24 +89,8 @@
     }];
 
     for (GLGroceryItem *item in self.items) {
-        //            NSInteger coordx = item.coordinates.x / 100 * self.mapView.frame.size.width - 12;
-        //            NSInteger coordy = item.coordinates.y / 100 * self.mapView.frame.size.height - 24;
-        //
-        //            NSLog(@"%ld, %ld", (long)coordx, (long)coordy);
-        //
-        //            if (coordx < 0) {
-        //                //coordx = 0;
-        //                coordx = rand() % 450;
-        //            }
-        //            if (coordy < 0) {
-        //                //coordy = 0;
-        //                coordy = rand() % 600;
-        //            }
-        //
-        //            item.navPin.frame = CGRectMake(coordx, coordy, 24, 24);
-        //            [self.mapView addSubview:item.navPin];
-        //            [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
-        //            item.navPin.tag = [self.items indexOfObject:item];
+        [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
+        item.navPin.tag = [self.items indexOfObject:item];
 
         if (self.itemsInSections[item.aisle]) {
             NSMutableArray *items = self.itemsInSections[item.aisle];
@@ -113,37 +100,14 @@
             self.itemsInSections[item.aisle] = @[ item ].mutableCopy;
         }
     }
-    //
-    //        if (coordx < 0) {
-    //            coordx = rand() % 450;
-    //        }
-    //        if (coordy < 0) {
-    //            coordy = rand() % 600;
-    //        }
-    //
-    //        item.navPin.frame = CGRectMake(coordx, coordy, 24, 24);
-    //        [self.mapView addSubview:item.navPin];
-    //        [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
-    //        item.navPin.tag = [self.items indexOfObject:item];
-    //
-    //        if (self.itemsInSections[item.aisle]) {
-    //            NSMutableArray *items = self.itemsInSections[item.aisle];
-    //            [items addObject:item];
-    //        }
-    //        else {
-    //            self.itemsInSections[item.aisle] = @[ item ].mutableCopy;
-    //        }
-    //    }
-    //
-    //    GLGroceryItem *selectedButton = self.items[self.currentItem];
-    //    [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
-    //
+    GLGroceryItem *selectedButton = self.items[self.currentItem];
+    [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
     [self.tableView reloadData];
 }
 
 - (void)itemSelected:(UIButton *)sender
 {
-
+    NSLog(@"here");
     CGRect frame = self.topScrollView.frame;
     frame.origin.x = frame.size.width * (sender.tag);
     frame.origin.y = 0;
@@ -328,6 +292,11 @@
 
         self.newOffset = self.topScrollView.contentOffset;
     }
+}
+
+- (BOOL)touchesShouldCancelInContentView:(UIView *)view
+{
+    return NO;
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
