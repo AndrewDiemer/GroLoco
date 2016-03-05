@@ -3,6 +3,7 @@ groceryListSchema = new db.Schema({
 	GroceryListName	: String,
     Date			: { type: Date, default: Date.now },
     List 			: [{
+        Recommended     : Boolean,
     	BlockNumber	  	: Number,
     	ItemLocation   	: Number,
     	Face 		   	: String,
