@@ -80,6 +80,28 @@ module.exports = function (app){
 
 	})
 
+	//Frequency of items purchased
+	app.get('/frequenciesOfItems', isAuthenticated, function (req, res){
+		GroceryList.find({}, function(err, list){
+			var dict = {}
+			for (var j = 0; j < list.length; j++) {
+				for (var i = 0; i < list[j].List.length; i++) {
+					// console.log(list.List[i])
+					if(typeof list[j].List[i].Description != "undefined"){
+						if(dict.hasOwnProperty(list[j].List[i].Description)){
+							//then increment
+							dict[list[j].List[i].Description]++
+						}else{
+							//assign new incremet
+							dict[list[j].List[i].Description] = 0
+						}
+					}
+				}
+			}
+			res.send(dict)
+		})
+	})
+
 	//When people make their groceyr list (line chart)
 	app.get('/numberOfUsers', isAuthenticated, function (req, res){
 		User.find({}, function(err, users){
