@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GLShoppingViewController : UIViewController
+@interface GLShoppingViewController : GLBaseViewController
 
 @property (strong, nonatomic) NSMutableArray *items;
 

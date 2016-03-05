@@ -358,4 +358,15 @@
         }];
 }
 
++ (void)getBlocksGroceryListWithCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:@"https://grocolocoapp.herokuapp.com/blocksGroceryList" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    }
+        failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            completionBlock(nil, error);
+        }];
+}
+
 @end
