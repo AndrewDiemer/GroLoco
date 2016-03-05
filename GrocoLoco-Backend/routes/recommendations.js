@@ -16,6 +16,7 @@ module.exports = function (app){
         res.send(200)
     })
 
+    try{
       app.post('/addtolist', isAuthenticated, function(req, res) {
         for(var i = 0; i < req.body.List.length;i++){
 
@@ -38,7 +39,11 @@ module.exports = function (app){
                     res.send(200)
             })
         }
-    })
+    })}
+      catch(err){
+        console.log("The addtolist route crashed motha fucka");
+        res.send(200)
+      }
 
 	app.post('/likeitemtest', isAuthenticated, function(req, res){
         //train data with Mark's ID
@@ -101,8 +106,6 @@ module.exports = function (app){
                     res.send(404)
             })
         });
-        // res.send([])
-        // res.send([])
     })
 
 }
