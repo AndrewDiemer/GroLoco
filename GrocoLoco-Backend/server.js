@@ -20,7 +20,7 @@ var express 		= require('express'),
 var redisPort = 6379
 var redisHost = '127.0.0.1'
 
-client = redis.createClient('redis://h:paonqf6qoa86pv3gs30jg35a3s7@ec2-54-83-199-200.compute-1.amazonaws.com:21099')
+client = redis.createClient('redis://h:paonqf6qoa86pv3gs30jg35a3s7@ec2-54-83-202-143.compute-1.amazonaws.com:8589')
 // client = redis.createClient(redisPort, redisHost)
 
 client.on('connect', function() {
@@ -28,7 +28,7 @@ client.on('connect', function() {
 });
 
 client.on("error", function (err) {
-        console.log("Error " + err);
+        console.log("Error " + err)
     });
 
 // DATBASE CONFIGS ===================================
