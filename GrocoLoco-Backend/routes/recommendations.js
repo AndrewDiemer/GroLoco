@@ -54,35 +54,27 @@ module.exports = function (app){
 
     
       app.post('/addtolist', isAuthenticated, function(req, res) {
-        try{
+        for(var i = 0; i < req.body.List.length;i++){
 
-            for(var i = 0; i < req.body.List.length;i++){
+            //Add a liked item to the Recommendation Engine
+            raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
 
-                //Add a liked item to the Recommendation Engine
-                raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
-
-                //Find the Add all items to the list
-                 GroceryList.findOneAndUpdate({
-                    'User': req.user,
-                    'GroceryListName': req.body.GroceryListName
-                },{
-                    $push:{'List': req.body.List[i]}
-                },{
-                    safe:true, upsert:true, new: true
-                },
-                function(err, groceryList){
-                    if(err)
-                        res.send(err)
-                    if(groceryList)
-                        res.send(200)
-                })
-            }
+            //Find the Add all items to the list
+             GroceryList.findOneAndUpdate({
+                'User': req.user,
+                'GroceryListName': req.body.GroceryListName
+            },{
+                $push:{'List': req.body.List[i]}
+            },{
+                safe:true, upsert:true, new: true
+            },
+            function(err, groceryList){
+                if(err)
+                    res.send(err)
+                if(groceryList)
+                    res.send(200)
+            })
         }
-        catch(err){
-            console.log("The addtolist route crashed motha fucka.. Because of Elliots small chabbad.");
-            res.send(200)
-        }
-
     })
       
 
