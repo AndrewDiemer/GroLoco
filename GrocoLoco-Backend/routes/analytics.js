@@ -10,7 +10,7 @@ module.exports = function (app){
 				for (var i = 0; i < lists.length; i++)
 					sum += lists[i].List.length
 				res.send({
-					Average: sum/ lists.length
+					Average: sum / lists.length
 				})
 			}else
 				res.send(0)
@@ -75,10 +75,10 @@ module.exports = function (app){
 		})
 	})
 
-	//When people make their grocery list (line chart)
-	app.get('/timingOfGroceryList', isAuthenticated, function (req, res){
+	// //When people make their grocery list (line chart)
+	// app.get('/timingOfGroceryList', isAuthenticated, function (req, res){
 
-	})
+	// })
 
 	//Frequency of items purchased
 	app.get('/frequenciesOfItems', isAuthenticated, function (req, res){
@@ -108,6 +108,20 @@ module.exports = function (app){
 				res.send({Number: users.length})
 			else
 				res.send({Number: 0})
+		})
+	})
+
+	app.get('/getRecommendationBreakdown', isAuthenticated, function (req,res){
+		GroceryList.find({}, function(err, grocerylists){
+			if(err){
+				res.send(err)
+			}if(grocerylists){
+				for (var i = 0; i < grocerylists.length; i++) {
+					console.log(grocerylists[i])
+				}
+			}else{
+				res.send(404)
+			}
 		})
 	})
 }

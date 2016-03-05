@@ -24,26 +24,25 @@ module.exports = function (app){
 
     app.get('/fuckelliot', function(req,res){
         console.log('somezing')
-        while(1){
-             var mailOptions = {
-                    from: 'morgan.moskalyk@gmail.com', // sender address 
-                    to: 'eleifer@uwo.ca', // list of receivers 
-                    subject: 'Its your fault Elliot! Contribute more.✔', // Subject line 
-                    text: 'Your conformation code is:', // plaintext body 
-                    html: '<h1>This is a personal welcome message from the GrocoLoco Team. </h1>'
-                    // +'Just in case you forgot, your password is: '+ Password
-                };
+        
+         var mailOptions = {
+                from: 'morgan.moskalyk@gmail.com', // sender address 
+                to: 'eleifer@uwo.ca', // list of receivers 
+                subject: 'Its your fault Elliot! Contribute more.✔', // Subject line 
+                text: 'Your conformation code is:', // plaintext body 
+                html: '<h1>This is a personal welcome message from the GrocoLoco Team. </h1>'
+                // +'Just in case you forgot, your password is: '+ Password
+            };
 
-                transporter.sendMail(mailOptions, function(error, info){
-                    if(error){
-                        console.log(error);
-                        
-                    }else{
-                        console.log('Message sent: ' + info.response);
-                        // passport.authenticate('local')
-                    }
-                });
-        }
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                    
+                }else{
+                    console.log('Message sent: ' + info.response);
+                    // passport.authenticate('local')
+                }
+            })
             
         console.log('somezing')
     })
