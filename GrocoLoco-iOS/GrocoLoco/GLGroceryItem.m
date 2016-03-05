@@ -72,9 +72,9 @@ static const NSString *GL_ITEM_ICONLINK = @"IconLink";
     };
 }
 
-//- (NSString *)description
-//{
-//    return [NSString stringWithFormat:@"%@", [self objectAsDictionary]];
-//}
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@", [self objectAsDictionary]];
+}
 
 @end

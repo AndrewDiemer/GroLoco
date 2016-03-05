@@ -80,6 +80,7 @@
                 [self showError:error.description];
             }
             else {
+                NSLog(@"%@", response);
                 self.items = response.mutableCopy;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData];
@@ -148,6 +149,23 @@
     }
     NSString *sectionTitle = [self.itemSectionTitles objectAtIndex:section];
     return [[self.itemsDict objectForKey:sectionTitle] count];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *section = self.itemSectionTitles[indexPath.section];
+    GLGroceryItem *item = self.itemsDict[section][indexPath.row];
+
+    [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName]
+                                    items:@[ [item objectAsDictionary] ]
+                               completion:^(NSDictionary *response, NSError *error) {
+                                   if (error) {
+                                       [self showError:error.description];
+                                   }
+                                   else {
+                                       [self.navigationController popViewControllerAnimated:YES];
+                                   }
+                               }];
 }
 
 #pragma mark -
