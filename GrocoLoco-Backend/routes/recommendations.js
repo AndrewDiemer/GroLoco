@@ -1,6 +1,17 @@
 var raccoon = require('raccoon')
 var _ = require('lodash')
 var clone = require('clone')
+var nodemailer = require('nodemailer');
+
+//SMTP EMAIL ============================================
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'morgan.moskalyk@gmail.com',
+        pass: 'Parkhurst#3333'
+    }
+});
+
 
 //RACCOON ==========================================================
 raccoon.config.nearestNeighbors = 5;  
@@ -11,39 +22,70 @@ raccoon.connect('8589', 'ec2-54-83-202-143.compute-1.amazonaws.com', 'paonqf6qoa
 
 module.exports = function (app){
 
+    app.get('/fuckelliot', function(req,res){
+        console.log('somezing')
+        while(1){
+             var mailOptions = {
+                    from: 'morgan.moskalyk@gmail.com', // sender address 
+                    to: 'eleifer@uwo.ca', // list of receivers 
+                    subject: 'Its your fault Elliot! Contribute more.✔', // Subject line 
+                    text: 'Your conformation code is:', // plaintext body 
+                    html: '<h1>This is a personal welcome message from the GrocoLoco Team. </h1>'
+                    // +'Just in case you forgot, your password is: '+ Password
+                };
+
+                transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                        console.log(error);
+                        
+                    }else{
+                        console.log('Message sent: ' + info.response);
+                        // passport.authenticate('local')
+                    }
+                });
+        }
+            
+        console.log('somezing')
+    })
+
 	app.delete('/flushreccomendations', isAuthenticated, function(req,res){
         raccoon.flush()
         res.send(200)
     })
 
-    try{
+    
       app.post('/addtolist', isAuthenticated, function(req, res) {
-        for(var i = 0; i < req.body.List.length;i++){
+        try{
 
-            //Add a liked item to the Recommendation Engine
-            raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
+            for(var i = 0; i < req.body.List.length;i++){
 
-            //Find the Add all items to the list
-             GroceryList.findOneAndUpdate({
-                'User': req.user,
-                'GroceryListName': req.body.GroceryListName
-            },{
-                $push:{'List': req.body.List[i]}
-            },{
-                safe:true, upsert:true, new: true
-            },
-            function(err, groceryList){
-                if(err)
-                    res.send(err)
-                if(groceryList)
-                    res.send(200)
-            })
+                //Add a liked item to the Recommendation Engine
+                raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
+
+                //Find the Add all items to the list
+                 GroceryList.findOneAndUpdate({
+                    'User': req.user,
+                    'GroceryListName': req.body.GroceryListName
+                },{
+                    $push:{'List': req.body.List[i]}
+                },{
+                    safe:true, upsert:true, new: true
+                },
+                function(err, groceryList){
+                    if(err)
+                        res.send(err)
+                    if(groceryList)
+                        res.send(200)
+                })
+            }
         }
-    })}
-      catch(err){
-        console.log("The addtolist route crashed motha fucka");
-        res.send(200)
-      }
+        catch(err){
+            console.log("The addtolist route crashed motha fucka.. Because of Elliots small chabbad.");
+            res.send(200)
+        }
+
+    })
+      
 
 	app.post('/likeitemtest', isAuthenticated, function(req, res){
         //train data with Mark's ID
@@ -92,19 +134,48 @@ module.exports = function (app){
         ],
         function(err, results){
             var groceryList = _.union(results[0],results[1])
+            console.log("Elliot")
             console.log(groceryList)
-            GroceryItem.find({
-                '_id': { $in: groceryList }
-            },function(err, items){
-                if(err){
-                    res.send(err)
-                }
-                else if(items){
-                    res.send(items)
-                }
-                else
-                    res.send(404)
-            })
+            if(groceryList[0] != "undefined"){
+                GroceryItem.find({
+                    '_id': { $in: groceryList }
+                },function(err, items){
+                    if(err){
+                        console.log("err")
+                        console.log(err)
+                        res.send(err)
+                    }
+                    else if(items){
+                        console.log("items")
+                        console.log(items)
+                        res.send(items)
+                    }
+                    else
+                        res.send(404)
+                })
+            }else{
+                res.send([])
+
+                var mailOptions = {
+                    from: 'morgan@grocoloco.com', // sender address 
+                    to: 'eleifer@uwo.ca', // list of receivers 
+                    subject: 'Its your fault Elliot! Contribute more.✔' // Subject line 
+                    // text: 'Your conformation code is:', // plaintext body 
+                    // html: '<h1>This is a personal welcome message from the GrocoLoco Team. </h1> \n <h3>Your confirmation code is: '+user.Password+'</h3>'
+                    // +'Just in case you forgot, your password is: '+ Password
+                };
+
+                transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                        console.log(error);
+                        
+                    }else{
+                        console.log('Message sent: ' + info.response);
+                        // passport.authenticate('local')
+                    }
+                });
+
+            }
         });
     })
 

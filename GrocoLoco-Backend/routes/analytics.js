@@ -86,13 +86,10 @@ module.exports = function (app){
 			var dict = {}
 			for (var j = 0; j < list.length; j++) {
 				for (var i = 0; i < list[j].List.length; i++) {
-					// console.log(list.List[i])
 					if(typeof list[j].List[i].Description != "undefined"){
 						if(dict.hasOwnProperty(list[j].List[i].Description)){
-							//then increment
 							dict[list[j].List[i].Description]++
 						}else{
-							//assign new incremet
 							dict[list[j].List[i].Description] = 0
 						}
 					}
