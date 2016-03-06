@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextPressed;
 @property (weak, nonatomic) IBOutlet UIButton *prevPressed;
 @property (weak, nonatomic) IBOutlet UIScrollView *mapScrollView;
+@property (weak, nonatomic) IBOutlet UIButton *backPressed;
 
 @property (strong, nonatomic) MHSegmentedControl *segmentedControl;
 @property (strong, nonatomic) NSMutableDictionary *itemsInSections;
@@ -335,6 +336,9 @@
         self.mapScrollView.frame.size.height);
     [self.mapScrollView scrollRectToVisible:centeredRect
                                    animated:animated];
+}
+- (IBAction)backPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -
