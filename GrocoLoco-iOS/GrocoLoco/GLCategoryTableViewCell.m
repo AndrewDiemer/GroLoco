@@ -23,8 +23,28 @@
 {
     _item = item;
     self.itemNameLabel.text = item.itemDescription;
-    self.itemPriceLabel.text = [NSString stringWithFormat:@"$%.02f", item.price];
     [self.itemImageview setImage:item.image];
+
+    if (item.promotion.isStillValid) {
+
+        NSString *oldPrice = [NSString stringWithFormat:@"$%.02f ", item.price];
+
+        NSMutableAttributedString *theAttributedString;
+        theAttributedString = [[NSAttributedString alloc] initWithString:oldPrice attributes:@{ NSStrikethroughStyleAttributeName : [NSNumber numberWithInteger:NSUnderlineStyleSingle], NSFontAttributeName : [UIFont systemFontOfSize:10] }].mutableCopy;
+
+        if ([item.promotion.type isEqualToString:@"%"]) {
+            NSString *newPrice = [NSString stringWithFormat:@"$%.02f", item.price * (1 - item.promotion.discount)];
+            [theAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:newPrice attributes:@{ NSForegroundColorAttributeName : [UIColor redColor] }]];
+        }
+        else {
+            NSString *newPrice = [NSString stringWithFormat:@"$%.02f", item.price - item.promotion.discount];
+            [theAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:newPrice attributes:@{ NSForegroundColorAttributeName : [UIColor redColor] }]];
+        }
+        self.itemPriceLabel.attributedText = theAttributedString;
+    }
+    else {
+        self.itemPriceLabel.text = [NSString stringWithFormat:@"$%.02f", item.price];
+    }
 }
 
 @end

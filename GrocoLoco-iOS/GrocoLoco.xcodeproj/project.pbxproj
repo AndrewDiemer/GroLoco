@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		156EDF491C5C4F48007FD726 /* GLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EDF481C5C4F48007FD726 /* GLSettingsViewController.m */; };
+		15C83CE41C8CE76100536401 /* GLAccountInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C83CE31C8CE76000536401 /* GLAccountInfoViewController.m */; };
 		69C365CDA95BFBB063953BDE /* Pods_GrocoLoco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E56798601A3537EA89129E5 /* Pods_GrocoLoco.framework */; };
 		A702E9221BBC01C9001F24DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9211BBC01C9001F24DC /* main.m */; };
 		A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9241BBC01C9001F24DC /* GLAppDelegate.m */; };
@@ -28,6 +29,8 @@
 		A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */; };
 		A79E875A1C8367CF00A86EB8 /* GLBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A79E87591C8367CF00A86EB8 /* GLBlock.m */; };
 		A7EBD3581C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7EBD3571C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m */; };
+		A7F506471C8CD4C40019E6E3 /* GLPromotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F506461C8CD4C40019E6E3 /* GLPromotionView.m */; };
+		A7F506491C8CD4D50019E6E3 /* GLPromotionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F506481C8CD4D50019E6E3 /* GLPromotionView.xib */; };
 		A7F68BBF1BF7BB6A00FD7806 /* GLShoppingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */; };
 		A7F68BC21BF7BF8C00FD7806 /* GLShoppingItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */; };
 		A7F68BC51BF7BFBC00FD7806 /* GLShoppingItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BC41BF7BFBC00FD7806 /* GLShoppingItemView.m */; };
@@ -46,6 +49,8 @@
 		0E56798601A3537EA89129E5 /* Pods_GrocoLoco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GrocoLoco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		156EDF471C5C4F48007FD726 /* GLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSettingsViewController.h; sourceTree = "<group>"; };
 		156EDF481C5C4F48007FD726 /* GLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSettingsViewController.m; sourceTree = "<group>"; };
+		15C83CE21C8CE76000536401 /* GLAccountInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLAccountInfoViewController.h; sourceTree = "<group>"; };
+		15C83CE31C8CE76000536401 /* GLAccountInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLAccountInfoViewController.m; sourceTree = "<group>"; };
 		1D1F75F61033C4AF2DCA9A53 /* Pods-GrocoLoco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrocoLoco.release.xcconfig"; path = "Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco.release.xcconfig"; sourceTree = "<group>"; };
 		8C416E4FB11360EE7CBB402D /* Pods-GrocoLoco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrocoLoco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco.debug.xcconfig"; sourceTree = "<group>"; };
 		A702E91D1BBC01C9001F24DC /* GrocoLoco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrocoLoco.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +91,9 @@
 		A79E87591C8367CF00A86EB8 /* GLBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLBlock.m; sourceTree = "<group>"; };
 		A7EBD3561C5D2AF900C06ACC /* GLRecommendationsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLRecommendationsTableViewCell.h; sourceTree = "<group>"; };
 		A7EBD3571C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLRecommendationsTableViewCell.m; sourceTree = "<group>"; };
+		A7F506451C8CD4C40019E6E3 /* GLPromotionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLPromotionView.h; sourceTree = "<group>"; };
+		A7F506461C8CD4C40019E6E3 /* GLPromotionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLPromotionView.m; sourceTree = "<group>"; };
+		A7F506481C8CD4D50019E6E3 /* GLPromotionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GLPromotionView.xib; sourceTree = "<group>"; };
 		A7F68BBD1BF7BB6A00FD7806 /* GLShoppingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLShoppingViewController.h; sourceTree = "<group>"; };
 		A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLShoppingViewController.m; sourceTree = "<group>"; };
 		A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GLShoppingItemView.xib; sourceTree = "<group>"; };
@@ -153,6 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				A702E9291BBC01C9001F24DC /* Main.storyboard */,
+				15C83CE21C8CE76000536401 /* GLAccountInfoViewController.h */,
+				15C83CE31C8CE76000536401 /* GLAccountInfoViewController.m */,
 				156EDF471C5C4F48007FD726 /* GLSettingsViewController.h */,
 				156EDF481C5C4F48007FD726 /* GLSettingsViewController.m */,
 				A702E9231BBC01C9001F24DC /* GLAppDelegate.h */,
@@ -239,6 +249,9 @@
 				A75ABB761C5C2ECE0002B2ED /* GLCategoryViewController.m */,
 				A75ABB791C5C33B00002B2ED /* GLCategoryTableViewCell.h */,
 				A75ABB7A1C5C33B00002B2ED /* GLCategoryTableViewCell.m */,
+				A7F506451C8CD4C40019E6E3 /* GLPromotionView.h */,
+				A7F506461C8CD4C40019E6E3 /* GLPromotionView.m */,
+				A7F506481C8CD4D50019E6E3 /* GLPromotionView.xib */,
 			);
 			name = "Category View";
 			sourceTree = "<group>";
@@ -342,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7F68BC21BF7BF8C00FD7806 /* GLShoppingItemView.xib in Resources */,
+				A7F506491C8CD4D50019E6E3 /* GLPromotionView.xib in Resources */,
 				A702E9301BBC01C9001F24DC /* LaunchScreen.storyboard in Resources */,
 				A702E92D1BBC01C9001F24DC /* Assets.xcassets in Resources */,
 				A702E92B1BBC01C9001F24DC /* Main.storyboard in Resources */,
@@ -405,6 +419,7 @@
 			files = (
 				A75ABB7B1C5C33B00002B2ED /* GLCategoryTableViewCell.m in Sources */,
 				A7FE71B71BF6C4DC001A0EA2 /* GLSearchTableViewCell.m in Sources */,
+				15C83CE41C8CE76100536401 /* GLAccountInfoViewController.m in Sources */,
 				A7EBD3581C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m in Sources */,
 				A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */,
 				A712AD7A1BF80F2E002DC2DD /* GLGrocerySearchedItem.m in Sources */,
@@ -413,6 +428,7 @@
 				A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */,
 				A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */,
 				A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */,
+				A7F506471C8CD4C40019E6E3 /* GLPromotionView.m in Sources */,
 				A7F68BC81BF7D17600FD7806 /* MHSegmentedControl.m in Sources */,
 				A712ADA31BF902B1002DC2DD /* MHProgressBar.m in Sources */,
 				156EDF491C5C4F48007FD726 /* GLSettingsViewController.m in Sources */,

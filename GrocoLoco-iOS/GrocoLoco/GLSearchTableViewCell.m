@@ -14,6 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *itemImage;
 @property (weak, nonatomic) IBOutlet UILabel *itemNameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *saleImage;
+@property (weak, nonatomic) IBOutlet UILabel *saleLabel;
 
 @end
 
@@ -23,6 +25,12 @@
 {
     self.itemNameLabel.text = item.itemDescription;
     [self.itemImage setImage:item.image];
+    self.saleImage.hidden = !item.promotion.isStillValid;
+    self.saleLabel.hidden = !item.promotion.isStillValid;
+
+    if (item.promotion.isStillValid) {
+        self.saleLabel.text = item.promotion.title;
+    }
 }
 
 @end
