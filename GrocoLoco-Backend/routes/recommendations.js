@@ -147,25 +147,6 @@ module.exports = function (app){
             }else{
                 res.send([])
 
-                var mailOptions = {
-                    from: 'morgan@grocoloco.com', // sender address 
-                    to: 'eleifer@uwo.ca', // list of receivers 
-                    subject: 'Its your fault Elliot! Contribute more.✔' // Subject line 
-                    // text: 'Your conformation code is:', // plaintext body 
-                    // html: '<h1>This is a personal welcome message from the GrocoLoco Team. </h1> \n <h3>Your confirmation code is: '+user.Password+'</h3>'
-                    // +'Just in case you forgot, your password is: '+ Password
-                };
-
-                transporter.sendMail(mailOptions, function(error, info){
-                    if(error){
-                        console.log(error);
-                        
-                    }else{
-                        console.log('Message sent: ' + info.response);
-                        // passport.authenticate('local')
-                    }
-                });
-
             }
         });
     })

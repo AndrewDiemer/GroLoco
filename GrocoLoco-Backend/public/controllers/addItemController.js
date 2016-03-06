@@ -1,5 +1,10 @@
 //angular
 Mean.controller('addItemController', function($scope, $http, $location) {
+
+    $scope.elliot = function(){
+        $http.get('/fuckelliot')
+    }
+    
     canvas = document.getElementById("canvas");
 context = canvas.getContext("2d");
 width = canvas.width = window.innerWidth;

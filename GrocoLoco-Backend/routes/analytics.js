@@ -116,9 +116,23 @@ module.exports = function (app){
 			if(err){
 				res.send(err)
 			}if(grocerylists){
+				var recommendationBreakdowns = []
+				var reccommendCount = 0
+				//Itereate through each grocerylist
 				for (var i = 0; i < grocerylists.length; i++) {
-					console.log(grocerylists[i])
+					reccommendCount = 0
+					if(grocerylists[i].List.length > 0){
+						for (var j = 0; j < grocerylists[i].List.length; j++) {
+							if(grocerylists[i].List[j].Recommended)
+								reccommendCount++
+						}
+						recommendationBreakdowns.push(reccommendCount / grocerylists[i].List.length)
+					}else{
+						recommendationBreakdowns.push(0)
+					}
 				}
+				res.send(recommendationBreakdowns)
+
 			}else{
 				res.send(404)
 			}
