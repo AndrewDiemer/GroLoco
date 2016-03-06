@@ -551,16 +551,16 @@
                                     <outlet property="delegate" destination="Xdt-6L-pH4" id="D0d-El-xtx"/>
                                 </connections>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYj-ZG-HbR">
-                                <rect key="frame" x="8" y="65" width="31" height="30"/>
-                                <state key="normal" title="Prev"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYj-ZG-HbR">
+                                <rect key="frame" x="8" y="69" width="21" height="22"/>
+                                <state key="normal" image="back"/>
                                 <connections>
                                     <action selector="previousPressed:" destination="Xdt-6L-pH4" eventType="touchUpInside" id="P99-VP-HLa"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIa-9M-Oqn">
-                                <rect key="frame" x="560" y="65" width="32" height="30"/>
-                                <state key="normal" title="Next"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIa-9M-Oqn">
+                                <rect key="frame" x="571" y="69" width="21" height="22"/>
+                                <state key="normal" image="next"/>
                                 <connections>
                                     <action selector="nextPressed:" destination="Xdt-6L-pH4" eventType="touchUpInside" id="Dlz-bv-Ekj"/>
                                 </connections>
@@ -1231,6 +1231,7 @@
     <resources>
         <image name="accountInfo" width="24" height="24"/>
         <image name="arrow" width="24" height="24"/>
+        <image name="back" width="21" height="21"/>
         <image name="burgerMenu" width="24" height="24"/>
         <image name="cans" width="32" height="32"/>
         <image name="changeStore" width="24" height="24"/>
@@ -1240,6 +1241,7 @@
         <image name="globe" width="24" height="24"/>
         <image name="grain" width="32" height="32"/>
         <image name="logOut" width="24" height="24"/>
+        <image name="next" width="21" height="21"/>
         <image name="personalCare" width="32" height="32"/>
         <image name="produce" width="32" height="32"/>
         <image name="settingsImage" width="1920" height="1080"/>
