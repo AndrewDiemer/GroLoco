@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@interface GLPromotion : NSObject
+
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *type;
+@property (nonatomic, assign) CGFloat discount;
+@property (nonatomic, assign, getter=isStillValid) BOOL isStillValid;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
+@end
+
 @interface GLGroceryItem : NSObject
 
 @property (nonatomic, assign) NSInteger blockNumber;
@@ -24,6 +35,7 @@
 @property (nonatomic, assign) NSInteger storeID;
 @property (nonatomic, strong) NSURL *iconLink;
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) GLPromotion *promotion;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSDictionary *)objectAsDictionary;

@@ -20,6 +20,63 @@ static const NSString *GL_ITEM_COMMENT = @"Comment";
 static const NSString *GL_ITEM_PRICE = @"Price";
 static const NSString *GL_ITEM_STOREID = @"StoreId";
 static const NSString *GL_ITEM_ICONLINK = @"IconLink";
+static const NSString *GL_ITEM_ISPROMO = @"IsPromo";
+static const NSString *GL_ITEM_PROMOTION = @"Promotion";
+static const NSString *GL_PROMO_TITLE = @"PromoTitle";
+static const NSString *GL_PROMO_DISCOUNT = @"PromoDiscount";
+static const NSString *GL_PROMO_TYPE = @"Type";
+static const NSString *GL_PROMO_START_DATE = @"PromoStartDate";
+static const NSString *GL_PROMO_END_DATE = @"PromoEndDate";
+
+@interface GLPromotion ()
+
+@property (nonatomic, strong) NSDate *startDate;
+@property (nonatomic, strong) NSDate *endDate;
+
+@end
+
+@implementation GLPromotion
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    if (self) {
+        _title = dictionary[GL_PROMO_TITLE];
+        _type = dictionary[GL_PROMO_TYPE];
+        _discount = [dictionary[GL_PROMO_DISCOUNT] doubleValue];
+
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+
+        _startDate = [formatter dateFromString:dictionary[GL_PROMO_START_DATE]];
+        _endDate = [formatter dateFromString:dictionary[GL_PROMO_END_DATE]];
+    }
+    return self;
+}
+
+- (BOOL)isStillValid
+{
+    NSDate *now = [NSDate date];
+    return [now compare:self.startDate] == NSOrderedDescending && [now compare:self.endDate] == NSOrderedAscending;
+}
+
+- (NSDictionary *)objectAsDictionary
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+
+    return @{
+        GL_PROMO_TITLE : self.title,
+        GL_PROMO_TYPE : self.type,
+        GL_PROMO_DISCOUNT : @(self.discount),
+        GL_PROMO_START_DATE : [formatter stringFromDate:self.startDate],
+        GL_PROMO_END_DATE : [formatter stringFromDate:self.endDate]
+    };
+}
+
+@end
 
 @implementation GLGroceryItem
 
@@ -42,6 +99,12 @@ static const NSString *GL_ITEM_ICONLINK = @"IconLink";
         [_navPin setImage:[UIImage imageNamed:@"navPinComplete"] forState:UIControlStateSelected];
         _storeID = [dictionary[GL_ITEM_STOREID] integerValue];
         [self setIconLink:[NSURL URLWithString:dictionary[GL_ITEM_ICONLINK]]];
+        NSDictionary *promotionDict = dictionary[GL_ITEM_PROMOTION];
+        NSLog(@"%@", promotionDict);
+        if (promotionDict) {
+            _promotion = [[GLPromotion alloc] initWithDictionary:promotionDict];
+        }
+        NSLog(@"%d", self.promotion.isStillValid);
     }
     return self;
 }
@@ -78,7 +141,8 @@ static const NSString *GL_ITEM_ICONLINK = @"IconLink";
         GL_ITEM_COMMENT : self.comments,
         GL_ITEM_PRICE : @(self.price),
         GL_ITEM_STOREID : @(self.storeID),
-        GL_ITEM_ICONLINK : [self.iconLink absoluteString]
+        GL_ITEM_ICONLINK : [self.iconLink absoluteString],
+        GL_ITEM_PROMOTION : [self.promotion objectAsDictionary]
     };
 }
 
