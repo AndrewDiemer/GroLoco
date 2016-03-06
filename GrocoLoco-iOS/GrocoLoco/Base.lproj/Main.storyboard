@@ -892,7 +892,7 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GLSearchTableViewCell" rowHeight="91" id="Z7H-AC-d2l" customClass="GLSearchTableViewCell">
-                                        <rect key="frame" x="0.0" y="113.5" width="600" height="91"/>
+                                        <rect key="frame" x="0.0" y="49.5" width="600" height="91"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z7H-AC-d2l" id="hop-2q-f25">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="90.5"/>
@@ -926,7 +926,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GLRecommendationsTableViewCell" rowHeight="45" id="tKU-lw-eXu" customClass="GLRecommendationsTableViewCell">
-                                        <rect key="frame" x="0.0" y="204.5" width="600" height="45"/>
+                                        <rect key="frame" x="0.0" y="140.5" width="600" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tKU-lw-eXu" id="yb5-tI-s3e">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44.5"/>
