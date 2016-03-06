@@ -28,6 +28,8 @@
 		A786C2A61BDE7F9B003B90DE /* GLSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A786C2A51BDE7F9B003B90DE /* GLSearchViewController.m */; };
 		A79E875A1C8367CF00A86EB8 /* GLBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A79E87591C8367CF00A86EB8 /* GLBlock.m */; };
 		A7EBD3581C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7EBD3571C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m */; };
+		A7F506471C8CD4C40019E6E3 /* GLPromotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F506461C8CD4C40019E6E3 /* GLPromotionView.m */; };
+		A7F506491C8CD4D50019E6E3 /* GLPromotionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F506481C8CD4D50019E6E3 /* GLPromotionView.xib */; };
 		A7F68BBF1BF7BB6A00FD7806 /* GLShoppingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */; };
 		A7F68BC21BF7BF8C00FD7806 /* GLShoppingItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */; };
 		A7F68BC51BF7BFBC00FD7806 /* GLShoppingItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F68BC41BF7BFBC00FD7806 /* GLShoppingItemView.m */; };
@@ -86,6 +88,9 @@
 		A79E87591C8367CF00A86EB8 /* GLBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLBlock.m; sourceTree = "<group>"; };
 		A7EBD3561C5D2AF900C06ACC /* GLRecommendationsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLRecommendationsTableViewCell.h; sourceTree = "<group>"; };
 		A7EBD3571C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLRecommendationsTableViewCell.m; sourceTree = "<group>"; };
+		A7F506451C8CD4C40019E6E3 /* GLPromotionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLPromotionView.h; sourceTree = "<group>"; };
+		A7F506461C8CD4C40019E6E3 /* GLPromotionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLPromotionView.m; sourceTree = "<group>"; };
+		A7F506481C8CD4D50019E6E3 /* GLPromotionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GLPromotionView.xib; sourceTree = "<group>"; };
 		A7F68BBD1BF7BB6A00FD7806 /* GLShoppingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLShoppingViewController.h; sourceTree = "<group>"; };
 		A7F68BBE1BF7BB6A00FD7806 /* GLShoppingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLShoppingViewController.m; sourceTree = "<group>"; };
 		A7F68BC11BF7BF8C00FD7806 /* GLShoppingItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GLShoppingItemView.xib; sourceTree = "<group>"; };
@@ -239,6 +244,9 @@
 				A75ABB761C5C2ECE0002B2ED /* GLCategoryViewController.m */,
 				A75ABB791C5C33B00002B2ED /* GLCategoryTableViewCell.h */,
 				A75ABB7A1C5C33B00002B2ED /* GLCategoryTableViewCell.m */,
+				A7F506451C8CD4C40019E6E3 /* GLPromotionView.h */,
+				A7F506461C8CD4C40019E6E3 /* GLPromotionView.m */,
+				A7F506481C8CD4D50019E6E3 /* GLPromotionView.xib */,
 			);
 			name = "Category View";
 			sourceTree = "<group>";
@@ -342,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7F68BC21BF7BF8C00FD7806 /* GLShoppingItemView.xib in Resources */,
+				A7F506491C8CD4D50019E6E3 /* GLPromotionView.xib in Resources */,
 				A702E9301BBC01C9001F24DC /* LaunchScreen.storyboard in Resources */,
 				A702E92D1BBC01C9001F24DC /* Assets.xcassets in Resources */,
 				A702E92B1BBC01C9001F24DC /* Main.storyboard in Resources */,
@@ -413,6 +422,7 @@
 				A702E9411BBC5B81001F24DC /* GLHomeViewController.m in Sources */,
 				A702E93D1BBC5992001F24DC /* GLLoginViewController.m in Sources */,
 				A702E93A1BBC4FF6001F24DC /* GLNetworkingManager.m in Sources */,
+				A7F506471C8CD4C40019E6E3 /* GLPromotionView.m in Sources */,
 				A7F68BC81BF7D17600FD7806 /* MHSegmentedControl.m in Sources */,
 				A712ADA31BF902B1002DC2DD /* MHProgressBar.m in Sources */,
 				156EDF491C5C4F48007FD726 /* GLSettingsViewController.m in Sources */,
