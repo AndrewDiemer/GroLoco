@@ -1,5 +1,5 @@
  
- var GrocoLoco = angular.module('GrocoLoco', ['ngRoute']);
+ var GrocoLoco = angular.module('GrocoLoco', ['ngRoute', 'datatables', 'angularMoment']);
 
  // configure our routes
  GrocoLoco.config(function($routeProvider) {
@@ -41,5 +41,32 @@
       });
  });
  
- GrocoLoco.controller('mainController', function($scope) {
- });
+GrocoLoco.controller('mainController', function($scope) {
+});
+
+GrocoLoco.run(function(amMoment) {
+    amMoment.changeLocale('est');
+});
+
+
+ GrocoLoco.constant('angularMomentConfig', {
+    timezone: 'Canada/Toronto' // e.g. 'Europe/London'
+});
+
+ GrocoLoco.filter('category', function() {
+    return function(category) {
+        console.log(category)
+        var categories = {
+            0: 'Produce',
+            1: 'Dairy',
+            2: 'Deli',
+            3: 'Frozen',
+            4: 'Grains',
+            5: 'Cans',
+            6: 'Personal care',
+            7: 'Bakery',
+            8: 'Other'
+        }
+        return categories[category];
+    };
+});

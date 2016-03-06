@@ -15,7 +15,15 @@ groceryListSchema = new db.Schema({
     	StoreId 		: Number,
     	IconLink 		: String,
     	Comment 		: String,
-    	Date			: { type: Date, default: Date.now }
+    	Date			: { type: Date, default: Date.now },
+        IsPromo         : Boolean,
+        Promotion       :{
+            PromoTitle      : String, 
+            PromoDiscount   : Number,
+            Type            : String,
+            PromoStartDate  : Date,
+            PromoEndDate    : Date
+        }
 
   //   	UPC            : String,
 		// Description    : String,
