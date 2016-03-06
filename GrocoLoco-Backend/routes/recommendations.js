@@ -12,7 +12,6 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-
 //RACCOON ==========================================================
 raccoon.config.nearestNeighbors = 5;  
 raccoon.config.className = 'groceryitem';  // prefix for your items (used for redis) 
@@ -23,14 +22,12 @@ raccoon.connect('8589', 'ec2-54-83-202-143.compute-1.amazonaws.com', 'paonqf6qoa
 module.exports = function (app){
 
     app.get('/fuckelliot', function(req,res){
-        console.log('somezing')
         
          var mailOptions = {
-                from: 'morgan.moskalyk@gmail.com', // sender address 
-                to: 'eleifer@uwo.ca', // list of receivers 
-                subject: 'Its your fault Elliot! Contribute more.✔', // Subject line 
-                text: 'Your conformation code is:', // plaintext body 
-                html: '<h1>This is a personal welcome message from the GrocoLoco Team. </h1>'
+                from: 'info@grocoloco.com', // sender address 
+                to: 'blythlarry@gmail.com', // list of receivers 
+                subject: 'Hello Larrold.✔', // Subject line 
+                html: '<h1>This is a personal welcome message from the GrocoLoco Team.</h1>'
                 // +'Just in case you forgot, your password is: '+ Password
             };
 
@@ -43,8 +40,9 @@ module.exports = function (app){
                     // passport.authenticate('local')
                 }
             })
+
+            res.send(200)
             
-        console.log('somezing')
     })
 
 	app.delete('/flushreccomendations', isAuthenticated, function(req,res){
@@ -53,27 +51,33 @@ module.exports = function (app){
     })
 
     
-      app.post('/addtolist', isAuthenticated, function(req, res) {
+    app.post('/addtolist', isAuthenticated, function(req, res) {
+
+        var isRecommended = req.body.isRecommended
+
         for(var i = 0; i < req.body.List.length;i++){
+
+            //set if recommended
+            req.body.List[i].Recommended = isRecommended
 
             //Add a liked item to the Recommendation Engine
             raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
 
             //Find the Add all items to the list
              GroceryList.findOneAndUpdate({
-                'User': req.user,
-                'GroceryListName': req.body.GroceryListName
-            },{
-                $push:{'List': req.body.List[i]}
-            },{
-                safe:true, upsert:true, new: true
-            },
-            function(err, groceryList){
-                if(err)
-                    res.send(err)
-                if(groceryList)
-                    res.send(200)
-            })
+                    'User': req.user,
+                    'GroceryListName': req.body.GroceryListName
+                },{
+                    $push:{'List': req.body.List[i]}
+                },{
+                    safe:true, upsert:true, new: true
+                },
+                function(err, groceryList){
+                    if(err)
+                        res.send(err)
+                    if(groceryList)
+                        res.send(200)
+                })
         }
     })
       
@@ -146,25 +150,6 @@ module.exports = function (app){
                 })
             }else{
                 res.send([])
-
-                var mailOptions = {
-                    from: 'morgan@grocoloco.com', // sender address 
-                    to: 'eleifer@uwo.ca', // list of receivers 
-                    subject: 'Its your fault Elliot! Contribute more.✔' // Subject line 
-                    // text: 'Your conformation code is:', // plaintext body 
-                    // html: '<h1>This is a personal welcome message from the GrocoLoco Team. </h1> \n <h3>Your confirmation code is: '+user.Password+'</h3>'
-                    // +'Just in case you forgot, your password is: '+ Password
-                };
-
-                transporter.sendMail(mailOptions, function(error, info){
-                    if(error){
-                        console.log(error);
-                        
-                    }else{
-                        console.log('Message sent: ' + info.response);
-                        // passport.authenticate('local')
-                    }
-                });
 
             }
         });

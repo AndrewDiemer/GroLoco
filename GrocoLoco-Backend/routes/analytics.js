@@ -1,5 +1,9 @@
 module.exports = function (app){
 
+	app.get('/usersOverTime', isAuthenticated, function(req,res){
+		// User.find({}, function())
+	})
+
 	//Average Grocerylist size (Number)
 	app.get('/averageGrocerySize', isAuthenticated, function (req, res){
 		GroceryList.find({}, function(err, lists){
@@ -11,6 +15,40 @@ module.exports = function (app){
 					sum += lists[i].List.length
 				res.send({
 					Average: sum / lists.length
+				})
+			}else
+				res.send(0)
+		})
+	})
+
+	//Average Grocerylist size (Number)
+	app.get('/averageGrocerySizeDistribution', isAuthenticated, function (req, res){
+		
+		var distribution = {}
+
+		GroceryList.find({}, function(err, lists){
+			if(err)
+				res.send(err)
+			if(lists){
+				for (var i = 0; i < lists.length; i++){
+					if(distribution.hasOwnProperty(lists[i].List.length)){
+						distribution[lists[i].List.length] ++
+					}else{
+						distribution[lists[i].List.length] = 1
+					}
+				}
+
+				var keys = Object.keys(distribution)
+				var dataSize = parseInt(keys[keys.length - 1])
+
+				for (var i = 0; i < dataSize; i++) {
+					if(!distribution.hasOwnProperty(String(i))) {
+						distribution[i] = 0
+					}
+				}
+
+				res.send({
+					Distrubition: distribution
 				})
 			}else
 				res.send(0)
@@ -116,11 +154,52 @@ module.exports = function (app){
 			if(err){
 				res.send(err)
 			}if(grocerylists){
+				var recommendationBreakdowns = []
+				var reccommendCount = 0
+				//Itereate through each grocerylist
 				for (var i = 0; i < grocerylists.length; i++) {
-					console.log(grocerylists[i])
+					reccommendCount = 0
+					if(grocerylists[i].List.length > 0){
+						for (var j = 0; j < grocerylists[i].List.length; j++) {
+							if(grocerylists[i].List[j].Recommended)
+								reccommendCount++
+						}
+						recommendationBreakdowns.push(reccommendCount / grocerylists[i].List.length)
+					}else{
+						recommendationBreakdowns.push(0)
+					}
 				}
+				res.send({RecommendationBreakdownList: recommendationBreakdowns})
+
 			}else{
 				res.send(404)
+			}
+		})
+	})
+
+	//Of all the items added to the grocery list, get the % that are from recommended
+	app.get('/getRecommendationTotal', isAuthenticated, function(req,res){
+		GroceryList.find({}, function(err, grocerylists){
+			if(err){
+				res.send(err)
+			}if(grocerylists){
+				var recommendationBreakdowns = []
+				var reccommendCount = 0
+				var groceryItemCount = 0
+				//Itereate through each grocerylist
+				for (var i = 0; i < grocerylists.length; i++) {
+					if(grocerylists[i].List.length > 0){
+						for (var j = 0; j < grocerylists[i].List.length; j++) {
+							if(grocerylists[i].List[j].Recommended)
+								reccommendCount++
+							groceryItemCount++
+						}
+					}
+				}
+				res.send({TotalBreakdown: reccommendCount / groceryItemCount})
+
+			}else{
+				res.send(0)
 			}
 		})
 	})
