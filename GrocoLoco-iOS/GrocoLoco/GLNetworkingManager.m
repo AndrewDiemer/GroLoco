@@ -101,7 +101,8 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"text/plain", nil];
 
     NSDictionary *params = @{ @"GroceryListName" : groceryListName,
         @"List" : items
