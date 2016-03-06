@@ -28,9 +28,16 @@
 
     self.itemNameLabel.text = self.item.itemDescription;
     self.itemNotes.text = self.item.comments;
+    self.itemAisleNumber.text = self.item.aisle;
+
+    [self.gotItemButton setTitle:@"" forState:UIControlStateNormal];
+    [self.gotItemButton setImage:[UIImage imageNamed:@"gotItem"] forState:UIControlStateSelected];
 
     self.backgroundView.layer.cornerRadius = 5;
     self.backgroundView.backgroundColor = [UIColor GLlightBlue];
+}
+- (IBAction)gotItemButtonPressed:(UIButton *)sender {
+    sender.selected = !sender.selected;
 }
 
 @end

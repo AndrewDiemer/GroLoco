@@ -40,7 +40,7 @@
     [super viewDidLoad];
 
     self.topScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.items count], self.topScrollView.frame.size.height);
-
+    
     self.segmentedControl = [[MHSegmentedControl alloc] initWithFrame:CGRectMake(20, self.view.frame.size.height - 40, self.view.frame.size.width - 40, 30) Option:@"Map" andOption:@"List" backgroundColor:[UIColor GLlightGreen] selectedIndex:0];
 
     self.segmentedControl.delegate = self;
@@ -94,7 +94,7 @@
             for (GLGroceryItem *item in self.items) {
                 [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
                 item.navPin.tag = [self.items indexOfObject:item];
-
+                
                 if (self.itemsInSections[item.aisle]) {
                     NSMutableArray *items = self.itemsInSections[item.aisle];
                     [items addObject:item];
@@ -224,6 +224,7 @@
         GLShoppingItemView *itemView = [[[NSBundle mainBundle] loadNibNamed:@"GLShoppingItemView" owner:self options:nil] firstObject];
         itemView.frame = CGRectMake(self.view.frame.size.width * i, 0, self.topScrollView.frame.size.width, self.topScrollView.frame.size.height - 25);
         itemView.item = item;
+        
         itemView.gotItemButton.tag = i;
         [itemView.gotItemButton addTarget:self action:@selector(gotItem:) forControlEvents:UIControlEventTouchUpInside];
         [self.topScrollView addSubview:itemView];
@@ -235,7 +236,7 @@
     //sender.enabled = NO;
 
     GLGroceryItem *selectedButton = self.items[sender.tag];
-
+    
     if (selectedButton.navPin.selected) {
         selectedButton.navPin.selected = NO;
 
