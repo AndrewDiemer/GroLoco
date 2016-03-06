@@ -9,15 +9,20 @@
 #import "GLCategoryTableViewCell.h"
 #import "GLCategoryViewController.h"
 #import "GLGroceryItem.h"
+#import "GLPromotionView.h"
 
 @interface GLCategoryViewController () <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, strong) NSMutableArray *filteredItems;
+@property (nonatomic, strong) NSMutableArray *discountedItems;
 @property (nonatomic, strong) NSMutableDictionary *itemsDict;
 @property (nonatomic, strong) NSArray *itemSectionTitles;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UISearchController *searchController;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIScrollView *topScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *noPromoLabel;
 
 @end
 
@@ -36,39 +41,45 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.definesPresentationContext = YES;
 
+    self.searchController.searchBar.placeholder = [NSString stringWithFormat:@"Search %@", [self categoryName]];
+
+    self.navigationItem.titleView = self.searchController.searchBar;
+}
+
+- (NSString *)categoryName
+{
     switch (self.category) {
     case GLCategoryCans:
-        self.searchController.searchBar.placeholder = @"Search Cans";
+        return @"Cans";
         break;
     case GLCategoryDeli:
-        self.searchController.searchBar.placeholder = @"Search Deli";
+        return @"Deli";
         break;
     case GLCategoryDairy:
-        self.searchController.searchBar.placeholder = @"Search Dairy";
+        return @"Dairy";
         break;
     case GLCategoryOther:
-        self.searchController.searchBar.placeholder = @"Search Other";
+        return @"Other";
         break;
     case GLCategoryBakery:
-        self.searchController.searchBar.placeholder = @"Search Bakery";
+        return @"Bakery";
         break;
     case GLCategoryFrozen:
-        self.searchController.searchBar.placeholder = @"Search Frozen";
+        return @"Frozen";
         break;
     case GLCategoryGrains:
-        self.searchController.searchBar.placeholder = @"Search Grains";
+        return @"Grains";
         break;
     case GLCategoryProduce:
-        self.searchController.searchBar.placeholder = @"Search Produce";
+        return @"Produce";
         break;
     case GLCategoryPersonalCare:
-        self.searchController.searchBar.placeholder = @"Search Personal Care";
+        return @"Personal Care";
         break;
 
     default:
         break;
     }
-    self.navigationItem.titleView = self.searchController.searchBar;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -93,6 +104,7 @@
 {
     _items = items;
     self.itemsDict = @{}.mutableCopy;
+    self.discountedItems = @[].mutableCopy;
 
     for (GLGroceryItem *item in items) {
         NSString *firstLetter = [[item.itemDescription substringToIndex:1] uppercaseString];
@@ -102,8 +114,32 @@
             [self.itemsDict setObject:letterList forKey:firstLetter];
         }
         [letterList addObject:item];
+
+        if (item.promotion.isStillValid) {
+            [self.discountedItems addObject:item];
+        }
+    }
+    if ([self.discountedItems count] > 0) {
+        [self makeDiscountViews];
+        self.noPromoLabel.hidden = YES;
+    }
+    else {
+        self.noPromoLabel.hidden = NO;
+        self.noPromoLabel.text = [NSString stringWithFormat:@"No promotions in %@", [self categoryName]];
     }
     self.itemSectionTitles = [[self.itemsDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+}
+
+- (void)makeDiscountViews
+{
+    self.topScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.discountedItems count], self.topScrollView.frame.size.height);
+    for (NSInteger i = 0; i < [self.discountedItems count]; i++) {
+        GLGroceryItem *item = self.discountedItems[i];
+        GLPromotionView *itemView = [[[NSBundle mainBundle] loadNibNamed:@"GLPromotionView" owner:self options:nil] firstObject];
+        itemView.frame = CGRectMake(self.view.frame.size.width * i + 25, 25, self.topScrollView.frame.size.width - 50, self.topScrollView.frame.size.height - 50);
+        itemView.item = item;
+        [self.topScrollView addSubview:itemView];
+    }
 }
 
 #pragma mark -

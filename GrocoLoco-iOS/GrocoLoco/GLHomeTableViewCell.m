@@ -6,8 +6,8 @@
 //  Copyright © 2015 Mark Hall. All rights reserved.
 //
 
-#import "GLHomeTableViewCell.h"
 #import "GLGroceryItem.h"
+#import "GLHomeTableViewCell.h"
 
 @implementation GLHomeTableViewCell
 

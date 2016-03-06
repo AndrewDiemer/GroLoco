@@ -141,14 +141,23 @@
 {
     return self.showRecommendations ? @"Recommendations for you" : @"";
 }
+- (IBAction)donePressed:(id)sender
+{
+    [self closeSearch];
+}
+
+- (void)closeSearch
+{
+    [self.view endEditing:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark -
 #pragma mark UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [self.view endEditing:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self closeSearch];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText

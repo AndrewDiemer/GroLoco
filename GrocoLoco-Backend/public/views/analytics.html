@@ -129,18 +129,90 @@
                 <h1>Analytics</h1>
                 <hr>
                 <div class="example">
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                </div>
+
+                  <div class="col-md-4">
+                    <div class="widget">
+                      <div class="widget-content padding-25 bg-blue-600">
+                        <div class="counter counter-lg counter-inverse">
+                          <div class="counter-label text-uppercase">Current Number of Users</div>
+                          <span class="counter-number" id="currentNumberOfUsers"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="widget">
+                      <div class="widget-content padding-25 bg-purple-600">
+                        <div class="counter counter-lg counter-inverse">
+                          <div class="counter-label text-uppercase">Average Grocery List Size</div>
+                          <div class="counter-number-group">
+                            <span class="counter-number" id="averageListSize"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="widget">
+                      <div class="widget-content padding-25 bg-red-600">
+                        <div class="counter counter-lg counter-inverse">
+                          <div class="counter-label text-uppercase">Recommended Items per List</div>
+                          <span class="counter-number" id="recommendedItemsPerList"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12" >
+                    <!-- Example Overlapping Bars -->
+                    <div class="example-wrap">
+                      <div class="example">
+                        <div class="counter-label text-uppercase">All List Sizes</div>
+                        <div class="ct-chart" id="exampleOverlappingBar"></div>
+                      </div>
+                    </div>
+                    <!-- End Example Overlapping Bars -->
+                  </div>
+                  <div class="col-md-12">
+                    <!-- Example Overlapping Bars -->
+                    <div class="example-wrap">
+                      <div class="example">
+                        <div class="counter-label text-uppercase">Number of Items Comming from Recommendations</div>
+                        <div class="ct-chart" id="exampleOverlappingBar1"></div>
+                      </div>
+                    </div>
+                    <!-- End Example Overlapping Bars -->
+                  </div>
+                  <!-- End Example Overlapping Bars -->
+                  </div>
+                  <div class="col-md-12">
+                    <!-- Example Overlapping Bars -->
+                    <div class="example-wrap">
+                      <div class="example">
+                        <div class="counter-label text-uppercase">Purchases per Category</div>
+                        <div class="ct-chart" id="exampleOverlappingBar2"></div>
+                      </div>
+                    </div>
+                    <!-- End Example Overlapping Bars -->
+                  </div>
+                  <div class="col-md-4">
+                  <!-- Example Simple Pie Chart -->
+                    <div class="example-wrap">
+                      <div class="example">
+                        <div class="ct-chart" id="exampleSimplePie"></div>
+                      </div>
+                    </div>
+                  <!-- End Example Simple Pie Chart -->
+                  </div>
+                  <div class="col-md-4">
+                    <!-- Example Overlapping Bars -->
+                    <div class="example-wrap">
+                      <div class="example">
+                        <div class="ct-chart" id="exampleOverlappingBar3"></div>
+                      </div>
+                    </div>
+                    <!-- End Example Overlapping Bars -->
+                  </div>
+>>>>>>> 0581dee8b507f8c7b6f683fa4ff09eaa6cdcaef5
               </div>
             </div>
           </div>
@@ -162,3 +234,9 @@
   <script src="../js/components/matchheight.js"></script>
   <script src="../js/components/asscrollable.js"></script>
   <script src="../examples/js/advanced/scrollable.js"></script>
+
+  <link rel="stylesheet" href="../css/chartist.css">
+  <script src="../css/chartist.js"></script>
+
+  <script src="../controllers/analyticsControllerjs"></script>
+
