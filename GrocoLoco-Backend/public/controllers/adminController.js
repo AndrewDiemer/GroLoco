@@ -1,5 +1,5 @@
 //http://codepen.io/taye/pen/xEJeo
-Mean.controller('adminController', function($scope, $http, $location) {
+GrocoLoco.controller('adminController', function($scope, $http, $location) {
 	var shapeCount = 1 ;
 	var rectangles = []
 	var svgCanvas = document.querySelector('svg'),

@@ -1,0 +1,161 @@
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description" content="maple tree capital">
+  <meta name="author" content="">
+
+  <title>Data.com | Maple Tree Capital</title>
+      <!-- <link rel="stylesheet" type="text/css" href="./bower_components/ng-table/dist/ng-table.min.css"> -->
+
+  
+  <!--[if lt IE 9]>
+    <script src="../vendor/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 10]>
+    <script src="../vendor/media-match/media.match.min.js"></script>
+    <script src="../vendor/respond/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- Scripts -->
+  <script>
+    Breakpoints();
+  </script>
+</head>
+<body class="dashboard">
+
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div ng-controller='headerController'>
+<nav class="site-navbar  navbar navbar-default navbar-fixed-top navbar-mega " role="navigation" >
+  <div class="navbar-header site-menubar-light">
+    <button type="button" class="navbar-toggle hamburger hamburger-close navbar-toggle-left hided"
+    data-toggle="menubar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="hamburger-bar"></span>
+    </button>
+    <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+      <div style="text-align: center;">
+        <span class="navbar-brand-text"> GrocoLoco</span>
+      </div>
+    </div>
+  </div>
+  <div class="navbar-container container-fluid">
+    <ul class="nav navbar-toolbar">
+      <li class="hidden-float" id="toggleMenubar">
+        <a id='hamburger' data-toggle="menubar">
+          <i class="icon hamburger hamburger-arrow-left">
+              <span class="sr-only">Toggle menubar</span>
+              <span class="hamburger-bar"></span>
+            </i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="site-menubar">
+  <div class="site-menubar-body">
+    <div>
+      <ul class="site-menu">
+        <li class="site-menu-category">Navigation</li>
+        <br>
+        <li id='analytics-tab' class="site-menu-item" ng-click="analytics()" >
+          <a   >
+            <i class="site-menu-icon fa fa-line-chart fa-2x" ></i>
+            <span class="site-menu-title">Analytics</span>
+          </a>
+        </li>
+        <li id='store-builder-tab' class="site-menu-item" ng-click="storeBuilder()">
+          <a   >
+            <i class="site-menu-icon fa fa-arrows fa-2x" aria-hidden="true"></i>
+            <span class="site-menu-title">Store Builder</span>
+          </a>
+        </li>
+        <li id='grocery-manager-tab' class="site-menu-item" ng-click="groceryManager()" >
+          <a >
+            <i class="site-menu-icon fa fa-cart-plus fa-2x" aria-hidden="true"></i>
+            <span class="site-menu-title">Grocery Manager</span>
+          </a>
+        </li>
+       <!--  <li id='industry-main-tab' class="site-menu-item has-sub">
+              <a href="javascript:void(0)" data-slug="layout">
+                <i class="site-menu-icon fa fa-industry" aria-hidden="true"></i>
+                <span class="site-menu-title">Industry Canada</span>
+                <span class="site-menu-arrow"></span>
+              </a>
+              <ul class="site-menu-sub">
+                <li id='industry-search-tab' class="site-menu-item is-shown" ng-click="industryCanada()">
+                  <a class="animsition-link" href="" data-slug="layout-menu-collapsed">
+                    <i class="site-menu-icon " aria-hidden="true"></i>
+                    <span class="site-menu-title">Industry Browse</span>
+                  </a>
+                </li>
+                <li id='naics-lookup-tab' class="site-menu-item is-shown" ng-click="naicsLookUp()">
+                  <a class="animsition-link" href="" data-slug="layout-menu-expended">
+                    <i class="site-menu-icon " aria-hidden="true"></i>
+                    <span class="site-menu-title">NAICS Lookup</span>
+                  </a>
+                </li>
+              </ul>
+        </li> -->
+        <li id='promotions-tab' class="site-menu-item" ng-click="promotions()" >
+          <a >
+            <i class="site-menu-icon fa fa-gift fa-2x" aria-hidden="true"></i>
+            <span class="site-menu-title">Promotions</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-menubar-footer" >
+  <a href="" ng-click="logout()" style="width: 100%;">
+    <span class="fa fa-external-link"> Logout</span>
+  </a>
+  </div>
+</div>
+</div>
+  <div class="page">
+    <div class="page-content padding-30 container-fluid" style="height: 100vh;">
+      <div class="row" data-plugin="matchHeight" data-by-row="true">
+        <div class="col-md-12">
+          <div class="panel" style="margin-top: 60px;">
+            <div class="panel-body container-fluid">
+              <div class="example-wrap">
+                <h1>Promotions</h1>
+                <hr>
+                <div class="example">
+                <!-- <table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="true">
+                    <tr ng-repeat="user in $data">
+                        <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                            {{user.name}}</td>
+                        <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
+                            {{user.age}}</td>
+                    </tr>
+                </table> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+  <!-- Scripts -->
+  <script src="../js/core.js"></script>
+  <script src="../js/site.js"></script>
+
+  <script src="../js/sections/menu.js"></script>
+  <script src="../js/sections/menubar.js"></script>
+  <script src="../js/sections/sidebar.js"></script>
+
+  <!-- Scripts For This Page -->
+  <script src="../js/components/matchheight.js"></script>
+  <script src="../js/components/asscrollable.js"></script>
+  <script src="../examples/js/advanced/scrollable.js"></script>
