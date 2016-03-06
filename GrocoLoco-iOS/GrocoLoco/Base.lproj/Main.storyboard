@@ -385,7 +385,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settingsImage" translatesAutoresizingMaskIntoConstraints="NO" id="YD9-TL-vmX">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="83"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="UeV-t2-G7U">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="UeV-t2-G7U">
                                 <rect key="frame" x="20" y="91" width="198" height="210"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="BC2-f8-gsq">
@@ -441,6 +441,9 @@
                                                     <constraint firstAttribute="width" secondItem="gVQ-V2-yF0" secondAttribute="height" multiplier="1:1" id="x0k-eR-1Ia"/>
                                                 </constraints>
                                                 <state key="normal" image="accountInfo"/>
+                                                <connections>
+                                                    <segue destination="mLu-cf-nRd" kind="show" id="AmN-F4-0oj"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oun-eu-BJW">
                                                 <rect key="frame" x="45" y="0.0" width="153" height="30"/>
@@ -477,10 +480,10 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="NZR-k5-M32">
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="NZR-k5-M32">
                                         <rect key="frame" x="0.0" y="180" width="198" height="30"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sz8-6v-rKA">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sz8-6v-rKA">
                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="Sz8-6v-rKA" secondAttribute="height" multiplier="1:1" id="Uft-NJ-UBk"/>
@@ -490,7 +493,7 @@
                                                     <segue destination="Ybt-Eb-hQJ" kind="unwind" unwindAction="prepareForUnwind:" id="aJg-bM-CJg"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7On-R8-VLZ">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7On-R8-VLZ">
                                                 <rect key="frame" x="45" y="0.0" width="153" height="30"/>
                                                 <state key="normal" title="Logout">
                                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -577,10 +580,10 @@
             </objects>
             <point key="canvasLocation" x="4438" y="1436"/>
         </scene>
-        <!--View Controller-->
+        <!--Account Info View Controller-->
         <scene sceneID="v4e-sp-Bkv">
             <objects>
-                <viewController id="mLu-cf-nRd" sceneMemberID="viewController">
+                <viewController id="mLu-cf-nRd" customClass="GLAccountInfoViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="APs-8r-hmu"/>
                         <viewControllerLayoutGuide type="bottom" id="Tbb-jF-rOi"/>
@@ -593,7 +596,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vK1-Y3-s8V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4438" y="2172"/>
+            <point key="canvasLocation" x="4438" y="2215"/>
         </scene>
         <!--Shopping View Controller-->
         <scene sceneID="IzR-CX-VG6">
@@ -1328,11 +1331,12 @@
         <image name="next" width="21" height="21"/>
         <image name="personalCare" width="32" height="32"/>
         <image name="produce" width="32" height="32"/>
-        <image name="settingsImage" width="1920" height="1080"/>
+        <image name="settingsImage" width="640" height="360"/>
         <image name="shareList" width="80" height="80"/>
         <image name="storeBG" width="531" height="199"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SFg-sM-uFX"/>
+        <segue reference="fP9-HG-NRd"/>
     </inferredMetricsTieBreakers>
 </document>
