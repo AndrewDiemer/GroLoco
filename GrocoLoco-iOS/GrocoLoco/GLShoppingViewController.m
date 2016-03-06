@@ -73,7 +73,6 @@
             [self showError:error.description];
         }
         else {
-            NSLog(@"here");
             NSDictionary *storeDimensions = response[@"StoreDimensions"];
             self.subview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2 * self.mapScrollView.frame.size.width, 2 * self.mapScrollView.frame.size.width * [storeDimensions[@"Ratio"][@"Number"] doubleValue])];
             self.subview.backgroundColor = [UIColor lightGrayColor];
@@ -94,7 +93,6 @@
             for (GLGroceryItem *item in self.items) {
                 [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
                 item.navPin.tag = [self.items indexOfObject:item];
-                NSLog(@"%@", item.navPin.superview);
 
                 if (self.itemsInSections[item.aisle]) {
                     NSMutableArray *items = self.itemsInSections[item.aisle];
@@ -114,7 +112,6 @@
 
 - (void)itemSelected:(UIButton *)sender
 {
-    NSLog(@"here");
     CGRect frame = self.topScrollView.frame;
     frame.origin.x = frame.size.width * (sender.tag);
     frame.origin.y = 0;
@@ -126,6 +123,8 @@
     self.currentItem = sender.tag;
     GLGroceryItem *selectedButton = self.items[self.currentItem];
     [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+    CGRect frame2 = [selectedButton.navPin convertRect:selectedButton.navPin.bounds toView:self.mapScrollView];
+    [self scrollRectToVisibleCenteredOn:frame2 animated:YES];
 }
 
 - (IBAction)nextPressed:(id)sender
@@ -213,6 +212,8 @@
 
     GLGroceryItem *selectedButton = self.items[self.currentItem];
     [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+    CGRect frame = [selectedButton.navPin convertRect:selectedButton.navPin.bounds toView:self.mapScrollView];
+    [self scrollRectToVisibleCenteredOn:frame animated:YES];
 }
 
 - (void)makeItemViews
@@ -240,6 +241,8 @@
         self.currentPage -= 1;
         GLGroceryItem *nextButton = self.items[self.currentItem];
         [nextButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+        CGRect frame = [nextButton.navPin convertRect:nextButton.navPin.bounds toView:self.mapScrollView];
+        [self scrollRectToVisibleCenteredOn:frame animated:YES];
     }
     else {
         selectedButton.navPin.selected = YES;
@@ -254,6 +257,8 @@
             self.currentItem += 1;
             GLGroceryItem *nextButton = self.items[self.currentItem];
             [nextButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+            CGRect frame = [nextButton.navPin convertRect:nextButton.navPin.bounds toView:self.mapScrollView];
+            [self scrollRectToVisibleCenteredOn:frame animated:YES];
         }
     }
 
@@ -312,6 +317,24 @@
         return self.subview;
     }
     return nil;
+}
+
+- (void)scrollRectToVisibleCenteredOn:(CGRect)visibleRect
+                             animated:(BOOL)animated
+{
+    CGPoint center = visibleRect.origin;
+    center.x += visibleRect.size.width / 2;
+    center.y += visibleRect.size.height / 2;
+
+    center.x *= self.mapScrollView.zoomScale;
+    center.y *= self.mapScrollView.zoomScale;
+
+    CGRect centeredRect = CGRectMake(center.x - self.mapScrollView.frame.size.width / 2.0,
+        center.y - self.mapScrollView.frame.size.height / 2.0,
+        self.mapScrollView.frame.size.width,
+        self.mapScrollView.frame.size.height);
+    [self.mapScrollView scrollRectToVisible:centeredRect
+                                   animated:animated];
 }
 
 #pragma mark -
