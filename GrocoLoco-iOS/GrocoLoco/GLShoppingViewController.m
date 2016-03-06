@@ -73,7 +73,7 @@
             [self showError:error.description];
         }
         else {
-
+            NSLog(@"here");
             NSDictionary *storeDimensions = response[@"StoreDimensions"];
             self.subview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2 * self.mapScrollView.frame.size.width, 2 * self.mapScrollView.frame.size.width * [storeDimensions[@"Ratio"][@"Number"] doubleValue])];
             self.subview.backgroundColor = [UIColor lightGrayColor];
@@ -88,28 +88,28 @@
             NSDictionary *blocksDict = response[@"Blocks"];
             for (NSDictionary *dict in blocksDict) {
                 GLBlock *block = [[GLBlock alloc] initWithDict:dict];
-                [block plotInView:self.subview];
+                [block plotInView:self.subview items:self.items];
             }
+
+            for (GLGroceryItem *item in self.items) {
+                [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
+                item.navPin.tag = [self.items indexOfObject:item];
+                NSLog(@"%@", item.navPin.superview);
+
+                if (self.itemsInSections[item.aisle]) {
+                    NSMutableArray *items = self.itemsInSections[item.aisle];
+                    [items addObject:item];
+                }
+                else {
+                    self.itemsInSections[item.aisle] = @[ item ].mutableCopy;
+                }
+            }
+            GLGroceryItem *selectedButton = self.items[self.currentItem];
+            [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
+            [self.tableView reloadData];
         }
 
     }];
-
-    for (GLGroceryItem *item in self.items) {
-
-        [item.navPin addTarget:self action:@selector(itemSelected:) forControlEvents:UIControlEventTouchUpInside];
-        item.navPin.tag = [self.items indexOfObject:item];
-
-        if (self.itemsInSections[item.aisle]) {
-            NSMutableArray *items = self.itemsInSections[item.aisle];
-            [items addObject:item];
-        }
-        else {
-            self.itemsInSections[item.aisle] = @[ item ].mutableCopy;
-        }
-    }
-    GLGroceryItem *selectedButton = self.items[self.currentItem];
-    [selectedButton.navPin setImage:[UIImage imageNamed:@"navPinSelected"] forState:UIControlStateNormal];
-    [self.tableView reloadData];
 }
 
 - (void)itemSelected:(UIButton *)sender

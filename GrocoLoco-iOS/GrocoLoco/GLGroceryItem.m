@@ -77,4 +77,18 @@ static const NSString *GL_ITEM_ICONLINK = @"IconLink";
     return [NSString stringWithFormat:@"%@", [self objectAsDictionary]];
 }
 
+- (BOOL)isEqual:(GLGroceryItem *)object
+{
+    if (self == object) {
+        return YES;
+    }
+
+    return [self.ID isEqualToString:object.ID];
+}
+
+- (NSUInteger)hash
+{
+    return [self hash];
+}
+
 @end
