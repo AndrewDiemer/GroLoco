@@ -41,10 +41,13 @@ static const NSString *GL_ITEM_ICONLINK = @"IconLink";
         [_navPin setImage:[UIImage imageNamed:@"navPinIncomplete"] forState:UIControlStateNormal];
         [_navPin setImage:[UIImage imageNamed:@"navPinComplete"] forState:UIControlStateSelected];
         _storeID = [dictionary[GL_ITEM_STOREID] integerValue];
-        _iconLink = [NSURL URLWithString:dictionary[GL_ITEM_ICONLINK]];
+        [self setIconLink:[NSURL URLWithString:dictionary[GL_ITEM_ICONLINK]]];
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark setters & getters
 
 - (NSString *)comments
 {
@@ -52,6 +55,13 @@ static const NSString *GL_ITEM_ICONLINK = @"IconLink";
         return _comments;
     }
     return @"";
+}
+
+- (void)setIconLink:(NSURL *)iconLink
+{
+    _iconLink = iconLink;
+    NSData *data = [NSData dataWithContentsOfURL:iconLink];
+    _image = [[UIImage alloc] initWithData:data];
 }
 
 - (NSDictionary *)objectAsDictionary

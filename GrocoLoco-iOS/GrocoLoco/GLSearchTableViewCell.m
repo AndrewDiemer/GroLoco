@@ -22,6 +22,7 @@
 - (void)setItem:(GLGroceryItem *)item
 {
     self.itemNameLabel.text = item.itemDescription;
+    [self.itemImage setImage:item.image];
 }
 
 @end
