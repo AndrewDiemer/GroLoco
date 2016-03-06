@@ -96,7 +96,7 @@
         }];
 }
 
-+ (void)addToGroceryList:(NSString *)groceryListName items:(NSArray *)items completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
++ (void)addToGroceryList:(NSString *)groceryListName items:(NSArray *)items recommended:(BOOL)recommended completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
@@ -105,7 +105,8 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"text/plain", nil];
 
     NSDictionary *params = @{ @"GroceryListName" : groceryListName,
-        @"List" : items
+        @"List" : items,
+        @"isRecommended" : @(recommended)
     };
 
     [manager POST:@"https://grocolocoapp.herokuapp.com/addtolist"

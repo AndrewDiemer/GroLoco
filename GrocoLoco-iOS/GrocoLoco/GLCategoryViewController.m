@@ -80,7 +80,6 @@
                 [self showError:error.description];
             }
             else {
-                NSLog(@"%@", response);
                 self.items = response.mutableCopy;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData];
@@ -158,6 +157,7 @@
 
     [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName]
                                     items:@[ [item objectAsDictionary] ]
+                              recommended:NO
                                completion:^(NSDictionary *response, NSError *error) {
                                    if (error) {
                                        [self showError:error.description];

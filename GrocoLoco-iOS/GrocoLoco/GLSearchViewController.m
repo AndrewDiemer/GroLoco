@@ -117,6 +117,7 @@
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName]
                                             items:@[ [item objectAsDictionary] ]
+                                      recommended:NO
                                        completion:^(NSDictionary *response, NSError *error) {
                                            if (error) {
                                                [self showError:error.description];
