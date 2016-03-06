@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		156EDF491C5C4F48007FD726 /* GLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EDF481C5C4F48007FD726 /* GLSettingsViewController.m */; };
+		15C83CE41C8CE76100536401 /* GLAccountInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C83CE31C8CE76000536401 /* GLAccountInfoViewController.m */; };
 		69C365CDA95BFBB063953BDE /* Pods_GrocoLoco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E56798601A3537EA89129E5 /* Pods_GrocoLoco.framework */; };
 		A702E9221BBC01C9001F24DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9211BBC01C9001F24DC /* main.m */; };
 		A702E9251BBC01C9001F24DC /* GLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A702E9241BBC01C9001F24DC /* GLAppDelegate.m */; };
@@ -48,6 +49,8 @@
 		0E56798601A3537EA89129E5 /* Pods_GrocoLoco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GrocoLoco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		156EDF471C5C4F48007FD726 /* GLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSettingsViewController.h; sourceTree = "<group>"; };
 		156EDF481C5C4F48007FD726 /* GLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSettingsViewController.m; sourceTree = "<group>"; };
+		15C83CE21C8CE76000536401 /* GLAccountInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLAccountInfoViewController.h; sourceTree = "<group>"; };
+		15C83CE31C8CE76000536401 /* GLAccountInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLAccountInfoViewController.m; sourceTree = "<group>"; };
 		1D1F75F61033C4AF2DCA9A53 /* Pods-GrocoLoco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrocoLoco.release.xcconfig"; path = "Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco.release.xcconfig"; sourceTree = "<group>"; };
 		8C416E4FB11360EE7CBB402D /* Pods-GrocoLoco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrocoLoco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GrocoLoco/Pods-GrocoLoco.debug.xcconfig"; sourceTree = "<group>"; };
 		A702E91D1BBC01C9001F24DC /* GrocoLoco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrocoLoco.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				A702E9291BBC01C9001F24DC /* Main.storyboard */,
+				15C83CE21C8CE76000536401 /* GLAccountInfoViewController.h */,
+				15C83CE31C8CE76000536401 /* GLAccountInfoViewController.m */,
 				156EDF471C5C4F48007FD726 /* GLSettingsViewController.h */,
 				156EDF481C5C4F48007FD726 /* GLSettingsViewController.m */,
 				A702E9231BBC01C9001F24DC /* GLAppDelegate.h */,
@@ -414,6 +419,7 @@
 			files = (
 				A75ABB7B1C5C33B00002B2ED /* GLCategoryTableViewCell.m in Sources */,
 				A7FE71B71BF6C4DC001A0EA2 /* GLSearchTableViewCell.m in Sources */,
+				15C83CE41C8CE76100536401 /* GLAccountInfoViewController.m in Sources */,
 				A7EBD3581C5D2AF900C06ACC /* GLRecommendationsTableViewCell.m in Sources */,
 				A7FFFB371BD53C9F005B5A08 /* GLMapViewController.m in Sources */,
 				A712AD7A1BF80F2E002DC2DD /* GLGrocerySearchedItem.m in Sources */,
