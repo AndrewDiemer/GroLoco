@@ -36,6 +36,7 @@
 @property (nonatomic, strong) NSURL *iconLink;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) GLPromotion *promotion;
+@property (nonatomic, assign) BOOL isPromotion;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSDictionary *)objectAsDictionary;

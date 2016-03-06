@@ -99,12 +99,11 @@ static const NSString *GL_PROMO_END_DATE = @"PromoEndDate";
         [_navPin setImage:[UIImage imageNamed:@"navPinComplete"] forState:UIControlStateSelected];
         _storeID = [dictionary[GL_ITEM_STOREID] integerValue];
         [self setIconLink:[NSURL URLWithString:dictionary[GL_ITEM_ICONLINK]]];
-        NSDictionary *promotionDict = dictionary[GL_ITEM_PROMOTION];
-        NSLog(@"%@", promotionDict);
-        if (promotionDict) {
-            _promotion = [[GLPromotion alloc] initWithDictionary:promotionDict];
+        _isPromotion = [dictionary[GL_ITEM_ISPROMO] boolValue];
+
+        if (_isPromotion) {
+            _promotion = [[GLPromotion alloc] initWithDictionary:dictionary[GL_ITEM_PROMOTION]];
         }
-        NSLog(@"%d", self.promotion.isStillValid);
     }
     return self;
 }
@@ -129,7 +128,7 @@ static const NSString *GL_PROMO_END_DATE = @"PromoEndDate";
 
 - (NSDictionary *)objectAsDictionary
 {
-    return @{
+    NSMutableDictionary *returnDict = @{
         GL_ITEM_BLOCK_NUMBER : @(self.blockNumber),
         GL_ITEM_FACE : self.face,
         GL_ITEM_AISLE : self.aisle,
@@ -142,8 +141,17 @@ static const NSString *GL_PROMO_END_DATE = @"PromoEndDate";
         GL_ITEM_PRICE : @(self.price),
         GL_ITEM_STOREID : @(self.storeID),
         GL_ITEM_ICONLINK : [self.iconLink absoluteString],
-        GL_ITEM_PROMOTION : [self.promotion objectAsDictionary]
-    };
+        GL_ITEM_ISPROMO : @(self.isPromotion)
+    }.mutableCopy;
+
+    if (self.isPromotion) {
+        returnDict[GL_ITEM_PROMOTION] = [self.promotion objectAsDictionary];
+    }
+    else {
+        returnDict[GL_ITEM_PROMOTION] = @{};
+    }
+    NSLog(@"%@", returnDict);
+    return returnDict;
 }
 
 - (NSString *)description
