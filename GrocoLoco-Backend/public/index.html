@@ -1,9 +1,9 @@
 <!-- index.html -->
 <!DOCTYPE html>
-<html lang="en" ng-app="Mean">
+<html lang="en" ng-app="GrocoLoco">
   <head>
 
-    <title>Mean Seed</title>
+    <title>GrocoLoco</title>
 
     <!--SO Meta -__- --> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,8 +15,32 @@
     <meta property='og:description' content=""/>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="./bower_components/materialize/dist/css/materialize.min.css" >
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+<!--     <link rel="stylesheet" type="text/css" href="./bower_components/materialize/dist/css/materialize.min.css" >
+    <link rel="stylesheet" type="text/css" href="./css/style.css"> -->
+
+    <!-- Stylesheets -->
+      <link rel="stylesheet" href="./css/bootstrap.min.css">
+      <link rel="stylesheet" href="./css/bootstrap-extend.min.css">
+      <link rel="stylesheet" href="./css/site.min.css">
+
+      <!-- Plugins -->
+      <link rel="stylesheet" href="./vendor/animsition/animsition.css">
+      <link rel="stylesheet" href="./vendor/asscrollable/asScrollable.css">
+      <link rel="stylesheet" href="./vendor/switchery/switchery.css">
+      <link rel="stylesheet" href="./vendor/intro-js/introjs.css">
+      <link rel="stylesheet" href="./vendor/slidepanel/slidePanel.css">
+      <link rel="stylesheet" href="./vendor/flag-icon-css/flag-icon.css">
+
+      <!-- Page -->
+      <link rel="stylesheet" href="./css/pages/login-v3.css">
+
+      <!-- Fonts -->
+      <link rel="stylesheet" href="./fonts/web-icons/web-icons.min.css">
+      <link rel="stylesheet" href="./fonts/brand-icons/brand-icons.min.css">
+      <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700'>
+
+            <link rel="stylesheet" type="text/css" href="./bower_components/font-awesome/css/font-awesome.min.css">
+
 
     <!-- Load Jquery and Angular with Bower. -->
     <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
@@ -34,8 +58,49 @@
     <script type="text/javascript" src="app.js"></script>
    
     <!-- Controllers -->
-    <script type="text/javascript" src="controllers/addItemController.js"></script>
+    <script type="text/javascript" src="controllers/loginController.js"></script>
+    <script type="text/javascript" src="controllers/registerController.js"></script>
+    <script type="text/javascript" src="controllers/homeController.js"></script>
     <script type="text/javascript" src="controllers/adminController.js"></script>
+    <script type="text/javascript" src="controllers/headerController.js"></script>
+    <script type="text/javascript" src="controllers/analyticsController.js"></script>
+    <script type="text/javascript" src="controllers/promotionsController.js"></script>
+    <script type="text/javascript" src="controllers/storeBuilderController.js"></script>
+    <script type="text/javascript" src="controllers/groceryManagerController.js"></script>
+
+
+    
+    <script src="./vendor/modernizr/modernizr.js"></script>
+    <script src="./vendor/breakpoints/breakpoints.js"></script>
+
+    <script src="./vendor/jquery/jquery.js"></script>
+    <script src="./vendor/bootstrap/bootstrap.js"></script>
+    <script src="./vendor/animsition/jquery.animsition.js"></script>
+    <script src="./vendor/asscroll/jquery-asScroll.js"></script>
+    <script src="./vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="./vendor/asscrollable/jquery.asScrollable.all.js"></script>
+    <script src="./vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+
+    <script src="./vendor/switchery/switchery.min.js"></script>
+    <script src="./vendor/intro-js/intro.js"></script>
+    <script src="./vendor/screenfull/screenfull.js"></script>
+    <script src="./vendor/slidepanel/jquery-slidePanel.js"></script>
+
+
+    <script src="./js/core.js"></script>
+    <script src="./js/site.js"></script>
+
+    <script src="./js/sections/menu.js"></script>
+    <script src="./js/sections/menubar.js"></script>
+    <script src="./js/sections/sidebar.js"></script>
+
+    <script src="./js/configs/config-colors.js"></script>
+    <script src="./js/configs/config-tour.js"></script>
+
+    <script src="./js/components/asscrollable.js"></script>
+    <script src="./js/components/animsition.js"></script>
+    <script src="./js/components/slidepanel.js"></script>
+    <script src="./js/components/switchery.js"></script>
 
   </head>
   <body ng-controller="mainController">
