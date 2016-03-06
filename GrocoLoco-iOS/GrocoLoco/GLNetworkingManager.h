@@ -19,7 +19,8 @@
 
 + (void)createNewGroceryList:(NSString *)groceryListName completion:(void (^)(NSDictionary *response, NSError *error))completionBlock;
 
-+ (void)addToGroceryList:(NSString *)groceryListName items:(NSArray *)items completion:(void (^)(NSDictionary *response, NSError *error))completionBlock;
++ (void)addToGroceryList:(NSString *)groceryListName items:(NSArray *)items recommended:(BOOL)recommended completion:(void (^)(NSDictionary *response, NSError *error))completionBlock;
+
 
 + (void)editGroceryItem:(NSString *)groceryListName item:(NSDictionary *)item itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock;
 

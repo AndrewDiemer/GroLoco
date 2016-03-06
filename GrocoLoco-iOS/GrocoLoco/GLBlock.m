@@ -35,7 +35,7 @@
 #define HEIGHT view.frame.size.height
 #define ITEMSIZE 25
 
-- (void)plotInView:(UIView *)view
+- (void)plotInView:(UIView *)view items:(NSArray *)items
 {
     UIView *blockPlot = [[UIView alloc] initWithFrame:CGRectMake(self.origin.x * WIDTH, self.origin.y * HEIGHT, self.width * WIDTH, self.length * HEIGHT)];
     blockPlot.layer.cornerRadius = 3;
@@ -46,33 +46,53 @@
 
         GLGroceryItem *glItem = [[GLGroceryItem alloc] initWithDictionary:item];
 
-        glItem.navPin.frame = CGRectMake(blockPlot.frame.size.width * glItem.location, blockPlot.frame.size.height - ITEMSIZE / 2, ITEMSIZE, ITEMSIZE);
-        glItem.navPin.userInteractionEnabled = YES;
-        [blockPlot addSubview:glItem.navPin];
+        for (GLGroceryItem *realitem in items) {
+            if ([realitem isEqual:glItem]) {
+                realitem.navPin.frame = CGRectMake(blockPlot.frame.size.width * glItem.location, blockPlot.frame.size.height - ITEMSIZE / 2, ITEMSIZE, ITEMSIZE);
+                realitem.navPin.userInteractionEnabled = YES;
+                [blockPlot addSubview:realitem.navPin];
+                break;
+            }
+        }
     }
     for (NSDictionary *item in self.topItems) {
 
         GLGroceryItem *glItem = [[GLGroceryItem alloc] initWithDictionary:item];
 
-        glItem.navPin.frame = CGRectMake(blockPlot.frame.size.width * glItem.location, -ITEMSIZE, ITEMSIZE, ITEMSIZE);
-        glItem.navPin.userInteractionEnabled = YES;
-        [blockPlot addSubview:glItem.navPin];
+        for (GLGroceryItem *realitem in items) {
+            if ([realitem isEqual:glItem]) {
+                realitem.navPin.frame = CGRectMake(blockPlot.frame.size.width * glItem.location, -ITEMSIZE, ITEMSIZE, ITEMSIZE);
+                realitem.navPin.userInteractionEnabled = YES;
+                [blockPlot addSubview:realitem.navPin];
+                break;
+            }
+        }
     }
     for (NSDictionary *item in self.leftItems) {
 
         GLGroceryItem *glItem = [[GLGroceryItem alloc] initWithDictionary:item];
 
-        glItem.navPin.frame = CGRectMake(-ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location, ITEMSIZE, ITEMSIZE);
-        glItem.navPin.userInteractionEnabled = YES;
-        [blockPlot addSubview:glItem.navPin];
+        for (GLGroceryItem *realitem in items) {
+            if ([realitem isEqual:glItem]) {
+                realitem.navPin.frame = CGRectMake(-ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location, ITEMSIZE, ITEMSIZE);
+                realitem.navPin.userInteractionEnabled = YES;
+                [blockPlot addSubview:realitem.navPin];
+                break;
+            }
+        }
     }
     for (NSDictionary *item in self.rightItems) {
 
         GLGroceryItem *glItem = [[GLGroceryItem alloc] initWithDictionary:item];
-
-        glItem.navPin.frame = CGRectMake(blockPlot.frame.size.width - ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location, ITEMSIZE, ITEMSIZE);
-        glItem.navPin.userInteractionEnabled = YES;
-        [blockPlot addSubview:glItem.navPin];
+        
+        for (GLGroceryItem *realitem in items) {
+            if ([realitem isEqual:glItem]) {
+                realitem.navPin.frame = CGRectMake(blockPlot.frame.size.width - ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location, ITEMSIZE, ITEMSIZE);
+                realitem.navPin.userInteractionEnabled = YES;
+                [blockPlot addSubview:realitem.navPin];
+                break;
+            }
+        }
     }
 }
 

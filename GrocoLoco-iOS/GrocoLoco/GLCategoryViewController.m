@@ -150,6 +150,24 @@
     return [[self.itemsDict objectForKey:sectionTitle] count];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *section = self.itemSectionTitles[indexPath.section];
+    GLGroceryItem *item = self.itemsDict[section][indexPath.row];
+
+    [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName]
+                                    items:@[ [item objectAsDictionary] ]
+                              recommended:NO
+                               completion:^(NSDictionary *response, NSError *error) {
+                                   if (error) {
+                                       [self showError:error.description];
+                                   }
+                                   else {
+                                       [self.navigationController popViewControllerAnimated:YES];
+                                   }
+                               }];
+}
+
 #pragma mark -
 #pragma mark UITableViewDataSource
 

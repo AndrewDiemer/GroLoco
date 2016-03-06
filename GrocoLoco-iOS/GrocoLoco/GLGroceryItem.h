@@ -23,6 +23,7 @@
 @property (nonatomic, assign) CGFloat price;
 @property (nonatomic, assign) NSInteger storeID;
 @property (nonatomic, strong) NSURL *iconLink;
+@property (nonatomic, strong) UIImage *image;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSDictionary *)objectAsDictionary;

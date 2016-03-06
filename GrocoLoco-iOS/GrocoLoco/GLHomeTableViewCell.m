@@ -36,6 +36,7 @@
     self.itemNameLabel.text = item.itemDescription;
     self.notesLabel.text = item.comments;
     self.notesTextField.text = item.comments;
+    [self.itemImage setImage:item.image];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

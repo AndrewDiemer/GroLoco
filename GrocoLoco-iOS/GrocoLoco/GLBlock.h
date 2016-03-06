@@ -26,6 +26,6 @@ typedef struct {
 @property (nonatomic, assign) Coordinates origin;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
-- (void)plotInView:(UIView *)view;
+- (void)plotInView:(UIView *)view items:(NSArray *)items;
 
 @end
