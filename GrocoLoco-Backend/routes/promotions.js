@@ -55,7 +55,20 @@ module.exports = function (app){
 
     app.post('/removePromo', isAuthenticated, function(req,res){
 
-        
+        GroceryItem.findOneAndUpdate({
+            '_id': req.body._id
+        },{
+            Promotion:{},
+            IsPromo: false
+        }, function(err, groceryItem){
+            if(err)
+                res.send(err)
+            if(groceryItem){
+                res.send(groceryItem)
+            }
+            else
+                res.send(404)
+        })
     })
 
 

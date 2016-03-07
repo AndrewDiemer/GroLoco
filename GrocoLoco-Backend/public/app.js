@@ -55,7 +55,6 @@ GrocoLoco.run(function(amMoment) {
 
  GrocoLoco.filter('category', function() {
     return function(category) {
-        console.log(category)
         var categories = {
             0: 'Produce',
             1: 'Dairy',

@@ -226,9 +226,9 @@
                             <td>{{ person.Promotion.PromoStartDate | amDateFormat:'MM-DD-YYYY HH:mm:ss'}}</td>
                             <td>{{ person.Promotion.PromoEndDate | amDateFormat:'MM-DD-YYYY HH:mm:ss'}}</td>
                             <td>{{ person.Promotion.PromoTitle}}</td>
-                            <td ng-if="person.IsPromo == true"><button type="button" class="btn btn-danger btn-raised" data-target=".example-modal-lg" data-toggle="modal">Remove Promo</button></td>
+                            <td ng-if="person.IsPromo == true"><button type="button" class="btn btn-danger btn-raised" ng-click="removePromo(person)">Remove Promo</button></td>
                             <td ng-if="person.IsPromo == false"><i class="fa fa-person"></i>
-                            <button type="button" class="btn btn-primary btn-raised" data-target=".example-modal-lg" data-toggle="modal">Add Promo</button>
+                            <button type="button" class="btn btn-primary btn-raised" data-target=".example-modal-lg" data-toggle="modal" ng-click="addPromoTemp(person)">Add Promo</button>
                             </td>
                           <!--   <td><a ng-href="{{person.CompanyLink}}" target="_blank">{{ person.CompanyLink }}</a></td>
                             <td ng-src='person.NAICSLink'>Indsutry Canada</td>
@@ -264,11 +264,11 @@ role="dialog" tabindex="-1">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="exampleOptionalLarge">Create a Promotion</h4>
+        <h2 class="modal-title" id="exampleOptionalLarge">Create a Promotion for {{promoDescription}}</h2>
+        <h4>Current Price: ${{promoPrice}}</h4>
       </div>
       <div class="modal-body">
         <div class="panel-body">
-
         <h4 class="example-title">Discount Type</h4>
           <div class="radio-custom radio-primary">
             <input type="radio" id="type-percent" name="discount-type">
@@ -324,7 +324,7 @@ role="dialog" tabindex="-1">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" ng-click="savePromo()">Create Promotion</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="savePromo()">Create Promotion</button>
         </div>
       </div>
     </div>

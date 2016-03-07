@@ -1,6 +1,15 @@
 
 GrocoLoco.controller('promotionsController', function($scope, $http, $location) {
 
+
+	$scope.addPromoTemp = function(promo){
+		$scope.promoDescription = promo.Description
+		$scope.promoPrice = promo.Price
+		$scope._id = promo._id
+	}
+
+
+
 	$http.get('/groceries').success(function(data, status){
 		console.log(data)
 		$scope.persons = data
@@ -10,14 +19,18 @@ GrocoLoco.controller('promotionsController', function($scope, $http, $location) 
 		$('.ui-timepicker-wrapper').css('z-index', '100000')
 	}
 
-//description
-//icon
-//price
-//category
-//IsPromo
-//PromoStartDate
-//PromoEndDate
-//DiscountTitle
+
+	$scope.removePromo = function(promo){
+		console.log(promo)
+		$http.post('/removePromo', promo).success(function(data, status){
+			console.log(data)
+			console.log(status)
+			location.reload()
+		}).error(function(data, status){
+			console.log(data)
+			console.log(status)
+		})
+	}
 
 function ISODateString(d){
  function pad(n){return n<10 ? '0'+n : n}
@@ -70,7 +83,7 @@ function ISODateString(d){
 	            Type       		: type,
 	            PromoStartDate  : d1,
 	            PromoEndDate    : d2,
-	            _id				: '56ad684964da9048287ef985'
+	            _id				: $scope._id
 	    	}
 		}else{
 			promotion = {
@@ -80,20 +93,21 @@ function ISODateString(d){
 	            Type       		: type,
 	            PromoStartDate  : d1,
 	            PromoEndDate    : d2,
-	            _id				: '56ad684964da9048287ef985'
+	            _id				: $scope._id
 	    	}
 		}
 
 	    console.log(promotion)
 
-		// $http.post('/addPromo', promotion)
-		// .success(function(data, status){
-		// 	console.log(status)
-		// 	console.log(data)
-		// }).error(function(data, status){
-		// 	console.log(status)
-		// 	console.log(data)
-		// })
+		$http.post('/addPromo', promotion)
+		.success(function(data, status){
+			console.log(status)
+			console.log(data)
+			location.reload()
+		}).error(function(data, status){
+			console.log(status)
+			console.log(data)
+		})
 	}
 	
 })
