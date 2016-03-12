@@ -32,34 +32,17 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
 
   	$http.get("/averageGrocerySizeDistribution").success(function(data, status){
   		
+  		var series = new Array(data.Distrubition.length);
+
+  		for( var i = 0; i<data.Distrubition.length; i++ )
+  		{
+			series[i] = data.Distrubition[i];
+  		}
+
     	var overlappingData = {
     	  labels: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,"21+"],
-    	  series: [
-    	    [
-    	    	data.Distrubition[0],
-    	    	data.Distrubition[1],
-    	    	data.Distrubition[2],
-    	    	data.Distrubition[3],
-    	    	data.Distrubition[4],
-    	    	data.Distrubition[5],
-    	    	data.Distrubition[6],
-    	    	data.Distrubition[7],
-    	    	data.Distrubition[8],
-    	    	data.Distrubition[9],
-    	    	data.Distrubition[10],
-    	    	data.Distrubition[11],
-    	    	data.Distrubition[12],
-    	    	data.Distrubition[13],
-    	    	data.Distrubition[14],
-    	    	data.Distrubition[15],
-    	    	data.Distrubition[16],
-    	    	data.Distrubition[17],
-    	    	data.Distrubition[18],
-    	    	data.Distrubition[19],
-    	    	data.Distrubition[20],
-    	    	data.Distrubition[21],
-    	    ]
-    	  ]
+    	  series: [series]
+    	  // TODO: For some reason series starts at the second bar in the graph rather than the first
     	};
 
     	var overlappingOptions = {
@@ -77,12 +60,8 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
     	  }]
     	];
 	
-    	new Chartist.Bar('#exampleOverlappingBar', overlappingData, overlappingOptions, overlappingResponsiveOptions);
-    	// new Chartist.Bar('#exampleOverlappingBar1', overlappingData, overlappingOptions, overlappingResponsiveOptions);
-    	// new Chartist.Bar('#exampleOverlappingBar2', overlappingData, overlappingOptions, overlappingResponsiveOptions);
-    	// new Chartist.Bar('#exampleOverlappingBar3', overlappingData, overlappingOptions, overlappingResponsiveOptions);
+    	new Chartist.Bar('#allListSizes', overlappingData, overlappingOptions, overlappingResponsiveOptions);
   		
-
 
   	}).error(function(data, status){
   		//something went wrong
@@ -92,21 +71,22 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
 
   	$http.get("/getRecommendationBreakdown").success(function(data, status){
   		
+
     	var overlappingData = {
-    	  labels: [1,2,3,4,5,6,7,8,9,10],
+    	  labels: [.1,.2,.3,.4,.5,.6,.7,.8,.9,1],
     	  series: [
-    	    [
-    	    	data.RecommendationBreakdownList[0],
-    	    	data.RecommendationBreakdownList[1],
-    	    	data.RecommendationBreakdownList[2],
-    	    	data.RecommendationBreakdownList[3],
-    	    	data.RecommendationBreakdownList[4],
-    	    	data.RecommendationBreakdownList[5],
-    	    	data.RecommendationBreakdownList[6],
-    	    	data.RecommendationBreakdownList[7],
-    	    	data.RecommendationBreakdownList[8],
-    	    	data.RecommendationBreakdownList[9]
-    	    ]
+    	  [
+    	  data.RecommendationBreakdownList["0.1"],
+    	  data.RecommendationBreakdownList["0.2"],
+    	  data.RecommendationBreakdownList["0.3"],
+    	  data.RecommendationBreakdownList["0.4"],
+    	  data.RecommendationBreakdownList["0.5"],
+    	  data.RecommendationBreakdownList["0.6"],
+    	  data.RecommendationBreakdownList["0.7"],
+    	  data.RecommendationBreakdownList["0.8"],
+    	  data.RecommendationBreakdownList["0.9"],
+    	  data.RecommendationBreakdownList["1.0"]
+    	  ]
     	  ]
     	};
 
@@ -125,11 +105,7 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
     	  }]
     	];
 	
-    	new Chartist.Bar('#exampleOverlappingBar1', overlappingData, overlappingOptions, overlappingResponsiveOptions);
-    	// new Chartist.Bar('#exampleOverlappingBar1', overlappingData, overlappingOptions, overlappingResponsiveOptions);
-    	// new Chartist.Bar('#exampleOverlappingBar2', overlappingData, overlappingOptions, overlappingResponsiveOptions);
-    	// new Chartist.Bar('#exampleOverlappingBar3', overlappingData, overlappingOptions, overlappingResponsiveOptions);
-  		
+    	new Chartist.Bar('#numItemsFromRecommendations', overlappingData, overlappingOptions, overlappingResponsiveOptions);		
 
 
   	}).error(function(data, status){
@@ -140,7 +116,6 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
   
   	$http.get("/numberPerCategory").success(function(data, status){
   		
-  		console.log(data.Categories.Produce)
     	var overlappingData = {
     	  labels: ["Produce", "Dairy", "Deli", "Frozen", "Grains", "Cans", "PersonalCare", "Bakery", "Other"],
     	  series: [
@@ -173,7 +148,7 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
     	  }]
     	];
 	
-    	new Chartist.Bar('#exampleOverlappingBar2', overlappingData, overlappingOptions, overlappingResponsiveOptions);
+    	new Chartist.Bar('#purchasesPerCategory', overlappingData, overlappingOptions, overlappingResponsiveOptions);
 
   	}).error(function(data, status){
   		//something went wrong
