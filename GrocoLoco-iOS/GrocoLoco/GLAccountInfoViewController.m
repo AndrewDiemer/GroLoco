@@ -9,6 +9,7 @@
 #import "GLAccountInfoViewController.h"
 
 @interface GLAccountInfoViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *backPressed;
 
 @end
 
@@ -23,6 +24,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)backPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 /*
 #pragma mark - Navigation

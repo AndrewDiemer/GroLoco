@@ -591,8 +591,167 @@
                     <view key="view" contentMode="scaleToFill" id="fcC-t1-Ft5">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwQ-gK-jzA">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVb-xZ-V9N">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="OVb-xZ-V9N" secondAttribute="height" multiplier="1:1" id="7iL-SJ-3TY"/>
+                                            <constraint firstAttribute="height" constant="50" id="F33-kZ-tkO"/>
+                                            <constraint firstAttribute="width" constant="50" id="ba5-GO-KDu"/>
+                                        </constraints>
+                                        <state key="normal" image="goBack"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="ba5-GO-KDu"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="backPressed:" destination="mLu-cf-nRd" eventType="touchUpInside" id="q1D-fN-uy1"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sv4-7b-ZCP">
+                                        <rect key="frame" x="50" y="0.0" width="550" height="50"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="600" id="HWA-iX-v8U"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="HWA-iX-v8U"/>
+                                    </mask>
+                                </variation>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="aR1-dc-g74">
+                                <rect key="frame" x="15" y="50" width="585" height="550"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZYU-pV-UBa">
+                                        <rect key="frame" x="0.0" y="0.0" width="585" height="110"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myO-ss-avz">
+                                                <rect key="frame" x="0.0" y="0.0" width="485" height="110"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xLU-ZN-7Fb">
+                                                <rect key="frame" x="485" y="0.0" width="100" height="110"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="292" id="Mek-aA-TmQ"/>
+                                                    <constraint firstAttribute="width" constant="292" id="utY-kl-EAD"/>
+                                                    <constraint firstAttribute="width" constant="100" id="zQd-Q1-84n"/>
+                                                </constraints>
+                                                <state key="normal" title="Change">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="Mek-aA-TmQ"/>
+                                                        <exclude reference="utY-kl-EAD"/>
+                                                    </mask>
+                                                </variation>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="xLU-ZN-7Fb" firstAttribute="leading" secondItem="myO-ss-avz" secondAttribute="trailing" id="asM-HH-r2x"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="asM-HH-r2x"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zVc-Ri-npZ">
+                                        <rect key="frame" x="0.0" y="110" width="585" height="110"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lrL-Ca-9W5">
+                                                <rect key="frame" x="0.0" y="0.0" width="485" height="110"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSQ-dD-wUo">
+                                                <rect key="frame" x="485" y="0.0" width="100" height="110"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="292" id="2UG-Zh-0OJ"/>
+                                                    <constraint firstAttribute="width" constant="292" id="VfX-jf-TZx"/>
+                                                    <constraint firstAttribute="width" constant="100" id="abO-e3-wrD"/>
+                                                </constraints>
+                                                <state key="normal" title="Change">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="2UG-Zh-0OJ"/>
+                                                        <exclude reference="VfX-jf-TZx"/>
+                                                    </mask>
+                                                </variation>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="PSQ-dD-wUo" firstAttribute="leading" secondItem="lrL-Ca-9W5" secondAttribute="trailing" id="ls0-8W-eMf"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="ls0-8W-eMf"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ht3-84-h8x">
+                                        <rect key="frame" x="0.0" y="220" width="585" height="110"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="50e-L4-ADm">
+                                        <rect key="frame" x="0.0" y="330" width="585" height="110"/>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XM9-Cb-FeB">
+                                        <rect key="frame" x="0.0" y="440" width="585" height="110"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="xLU-ZN-7Fb" secondAttribute="trailing" id="ccc-QH-zI6"/>
+                                    <constraint firstAttribute="trailing" secondItem="xLU-ZN-7Fb" secondAttribute="trailing" id="ihk-sI-JTF"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ccc-QH-zI6"/>
+                                    </mask>
+                                </variation>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dwQ-gK-jzA" secondAttribute="trailing" id="BBB-hd-q1c"/>
+                            <constraint firstItem="Tbb-jF-rOi" firstAttribute="top" secondItem="aR1-dc-g74" secondAttribute="bottom" id="Kb9-AO-rAw"/>
+                            <constraint firstItem="dwQ-gK-jzA" firstAttribute="leading" secondItem="fcC-t1-Ft5" secondAttribute="leading" id="M7n-3f-NUK"/>
+                            <constraint firstAttribute="trailing" secondItem="aR1-dc-g74" secondAttribute="trailing" id="NGB-zG-4MY"/>
+                            <constraint firstItem="Tbb-jF-rOi" firstAttribute="top" secondItem="dwQ-gK-jzA" secondAttribute="bottom" constant="550" id="OKY-ig-sqi"/>
+                            <constraint firstItem="aR1-dc-g74" firstAttribute="top" secondItem="dwQ-gK-jzA" secondAttribute="bottom" id="ZKb-In-n5X"/>
+                            <constraint firstItem="dwQ-gK-jzA" firstAttribute="top" secondItem="APs-8r-hmu" secondAttribute="bottom" constant="-20" id="dlQ-pk-Dht"/>
+                            <constraint firstItem="Tbb-jF-rOi" firstAttribute="top" secondItem="dwQ-gK-jzA" secondAttribute="bottom" constant="540" id="eff-Mz-ulj"/>
+                            <constraint firstItem="aR1-dc-g74" firstAttribute="leading" secondItem="fcC-t1-Ft5" secondAttribute="leading" constant="15" id="ej9-8O-oWA"/>
+                            <constraint firstItem="dwQ-gK-jzA" firstAttribute="top" secondItem="fcC-t1-Ft5" secondAttribute="top" id="nUA-4U-OoF"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="dlQ-pk-Dht"/>
+                                <exclude reference="OKY-ig-sqi"/>
+                                <exclude reference="eff-Mz-ulj"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="backPressed" destination="OVb-xZ-V9N" id="Mte-Tz-ZUa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vK1-Y3-s8V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
