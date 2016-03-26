@@ -29,7 +29,7 @@ module.exports = function (app){
         var promotion = {
             PromoTitle      : req.body.PromoTitle, 
             PromoDiscount   : req.body.PromoDiscount,
-            Type            : req.body.PromoType,
+            Type            : req.body.Type,
             PromoStartDate  : req.body.PromoStartDate,
             PromoEndDate    : req.body.PromoEndDate
         }

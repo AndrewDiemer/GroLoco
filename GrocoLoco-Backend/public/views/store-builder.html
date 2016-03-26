@@ -129,14 +129,51 @@
                 <h1>Store Builder</h1>
                 <hr>
                 <div class="example">
-                <!-- <table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="true">
-                    <tr ng-repeat="user in $data">
-                        <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-                            {{user.name}}</td>
-                        <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
-                            {{user.age}}</td>
-                    </tr>
-                </table> -->
+                  <div class="row">
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-block btn-primary" onClick="addShape()">Add Shape</button>
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-block btn-danger" ng-click="clearBlocks()">Delete All</button>
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-block btn-success" ng-click="saveAllBlocks()">Save All</button>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <input type="text" class="form-control round" placeholder="Width" id="width" ng-model='width' ng-change="change()">
+                      <span class="help-block" style="text-align: center">Width</span>
+                    </div>
+                    <div class="1">
+                      <i class="fa fa-times" style="position: absolute; margin-top: 10px; margin-left: -5px;"></i>
+                    </div>
+                    <div class="col-md-2">
+                      <input type="text" class="form-control round" placeholder="Height" id="height" ng-model='height' ng-change="change()">
+                      <span class="help-block" style="text-align: center">Height</span>
+                    </div>
+                  </div>
+                </div>
+<!--                 <div class="click-nav">
+                  <ul class="no-js">
+                    <li>
+                      <ul>
+                        <li><a href="#"><img src="img/i-2.png" alt="Icon">Dashboard</a></li>
+                        <li><a href="#"><img src="img/i-3.png" alt="Icon">Settings</a></li>
+                        <li><a href="#"><img src="img/i-4.png" alt="Icon">Privacy</a></li>
+                        <li><a href="#"><img src="img/i-5.png" alt="Icon">Help</a></li>
+                        <li><a href="#"><img src="img/i-6.png" alt="Icon">Sign out</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div> -->
+                <!-- /Clickable Nav -->
+                
+                <!-- jQuery -->
+
+                <svg>
+                  <rect width="300" height="300" style="x: 40;y: 80;margin-left: 10px;fill: transparent;stroke-width: 6;stroke: rgba(163, 175, 183, 0.66);stroke-linejoin: round;s;stroke-dasharray: 20,4;troke-dasharray: true;"></rect>
+                </svg>
+                
                 </div>
               </div>
             </div>
@@ -147,6 +184,229 @@
   </div>
 </body>
 
+<div class="modal fade example-modal-lg modal-fade-in-scale-up" aria-hidden="true" aria-labelledby="exampleOptionalLarge"
+role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h2 class="modal-title" id="exampleOptionalLarge">Create a Promotion for {{promoDescription}}</h2>
+        <h4>Current Price: ${{promoPrice}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body">
+        <h4 class="example-title">Discount Type</h4>
+          <div class="radio-custom radio-primary">
+            <input type="radio" id="type-percent" name="discount-type">
+            <label for="type-percent">Discount Percent (%)</label>
+          </div>
+          <div class="radio-custom radio-primary">
+            <input type="radio" id="type-value" name="discount-type" checked="">
+            <label for="type-value">Discount Value ($)</label>
+          </div>
+          <hr>
+        <h4 class="example-title">Promotion Discount</h4>
+        <input type="text" class="form-control round" id="promotion-discount">
+          <hr>
+
+        <h4>Promotion Dates</h4>
+          <div class="example-wrap col-md-12" ng-click="dateHack()">
+            <div class="datepair-wrap" data-plugin="datepair">
+              <div class="input-daterange-wrap" >
+                <div class="input-daterange">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="icon wb-calendar" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" id="start-date" class="form-control datepair-date datepair-start" data-plugin="datepicker">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="icon wb-time" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" id="start-time" class="form-control datepair-time datepair-start ui-timepicker-input" data-plugin="timepicker" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+              <div class="input-daterange-to">to</div>
+              <div class="input-daterange-wrap">
+                <div class="input-daterange">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="icon wb-calendar" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" id="end-date" class="form-control datepair-date datepair-end" name="end" data-plugin="datepicker">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="icon wb-time" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" id="end-time" class="form-control datepair-time datepair-end ui-timepicker-input" data-plugin="timepicker" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="savePromo()">Create Promotion</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+  #outer-dropzone {
+  height: 140px;
+}
+
+#inner-dropzone {
+  height: 80px;
+}
+
+.dropzone {
+  background-color: #ccc;
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 10px auto 30px;
+  padding: 10px;
+  width: 80%;
+  transition: background-color 0.3s;
+}
+
+.drop-active {
+  border-color: #aaa;
+}
+
+.drop-target {
+  background-color: #29e;
+  border-color: #fff;
+  border-style: solid;
+}
+
+.drag-drop {
+  display: inline-block;
+  min-width: 40px;
+  padding: 2em 0.5em;
+
+  color: #fff;
+  background-color: #29e;
+  border: solid 2px #fff;
+
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+
+  transition: background-color 0.3s;
+}
+
+.drag-drop.can-drop {
+  color: #000;
+  background-color: #4e4;
+}
+
+</style>
+
+<style type="text/css">
+  #grid-snap {
+    width: 40%;
+    background-color: #29e;
+    color: #fff;
+    font-size: 1.2em;
+    border-radius: 4px;
+    padding: 2%;
+    margin: 5%;
+  }
+  canvas{
+position:absolute;
+  left:0;
+  top:0;
+  z-index:0;
+  border:0px solid #000;
+}
+
+.snap {
+  width: 20%;
+  background-color: #29e;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 4px;
+  padding: 2%;
+  margin: 5%;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  height: 240px;
+  box-sizing: border-box;
+}
+
+svg {
+  width: 100%;
+  height: 800px;
+  /*margin: 80px;*/
+  /*background-color: #2e9;*/
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNjY2MiPjwvcmVjdD4KPC9zdmc+");
+  -ms-touch-action: none;
+      touch-action: none;
+}
+
+.edit-rectangle {
+  /*width: 20%;*/
+  fill: #29e;
+  rx: 5;
+  ry: 5;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 4px;
+  transition: all 0.01s;
+  /*padding: 2%;*/
+  /*margin: 5%;*/
+  /*box-sizing: border-box;*/
+}
+
+.resize-drag {
+  background-color: #29e;
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 30px 20px;
+
+  width: 120px;
+
+  /* This makes things *much* easier */
+  box-sizing: border-box;
+}
+
+.resize-container {
+  width: 100%;
+  height: 240px;
+}
+.edit-rectangle.switch-bg {
+  fill: #ff0000;
+}
+</style>
+
+  <!-- Scripts -->
+  <script src="../js/core.js"></script>
+  <script src="../js/site.js"></script>
+
+  <script src="../js/sections/menu.js"></script>
+  <script src="../js/sections/menubar.js"></script>
+  <script src="../js/sections/sidebar.js"></script>
+  <script src="../vendor/bootstrap/bootstrap.js"></script>
+
+  <!-- Scripts For This Page -->
+  <script src="../js/components/matchheight.js"></script>
+  <script src="../js/components/asscrollable.js"></script>
+  <script src="../examples/js/advanced/scrollable.js"></script>
+
   <!-- Scripts -->
   <script src="../js/core.js"></script>
   <script src="../js/site.js"></script>
@@ -155,7 +415,104 @@
   <script src="../js/sections/menubar.js"></script>
   <script src="../js/sections/sidebar.js"></script>
 
+  <script src="../vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="../vendor/jt-timepicker/jquery.timepicker.min.js"></script>
+  <script src="../vendor/datepair-js/datepair.min.js"></script>
+  <script src="../vendor/datepair-js/jquery.datepair.min.js"></script>
+
   <!-- Scripts For This Page -->
   <script src="../js/components/matchheight.js"></script>
   <script src="../js/components/asscrollable.js"></script>
   <script src="../examples/js/advanced/scrollable.js"></script>
+
+<script src="../js/components/datepair-js.js"></script>
+<script src="../js/components/bootstrap-datepicker.js"></script>
+
+
+
+  <!-- Core  -->
+  <script src="../vendor/jquery/jquery.js"></script>
+  <script src="../vendor/bootstrap/bootstrap.js"></script>
+  <script src="../vendor/animsition/jquery.animsition.js"></script>
+  <script src="../vendor/asscroll/jquery-asScroll.js"></script>
+  <script src="../vendor/mousewheel/jquery.mousewheel.js"></script>
+  <script src="../vendor/asscrollable/jquery.asScrollable.all.js"></script>
+  <script src="../vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+
+  <!-- Plugins -->
+  <script src="../vendor/switchery/switchery.min.js"></script>
+  <script src="../vendor/intro-js/intro.js"></script>
+  <script src="../vendor/screenfull/screenfull.js"></script>
+  <script src="../vendor/slidepanel/jquery-slidePanel.js"></script>
+
+  <!-- Plugins For This Page -->
+  <script src="../vendor/select2/select2.min.js"></script>
+  <script src="../vendor/bootstrap-tokenfield/bootstrap-tokenfield.min.js"></script>
+  <script src="../vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+  <script src="../vendor/bootstrap-select/bootstrap-select.js"></script>
+  <script src="../vendor/icheck/icheck.min.js"></script>
+  <script src="../vendor/switchery/switchery.min.js"></script>
+  <script src="../vendor/asrange/jquery-asRange.min.js"></script>
+  <script src="../vendor/asspinner/jquery-asSpinner.min.js"></script>
+  <script src="../vendor/clockpicker/bootstrap-clockpicker.min.js"></script>
+  <script src="../vendor/ascolor/jquery-asColor.min.js"></script>
+  <script src="../vendor/asgradient/jquery-asGradient.min.js"></script>
+  <script src="../vendor/ascolorpicker/jquery-asColorPicker.min.js"></script>
+  <script src="../vendor/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+  <script src="../vendor/jquery-knob/jquery.knob.js"></script>
+  <script src="../vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+  <script src="../vendor/card/jquery.card.js"></script>
+  <script src="../vendor/jquery-labelauty/jquery-labelauty.js"></script>
+  <script src="../vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="../vendor/jt-timepicker/jquery.timepicker.min.js"></script>
+  <script src="../vendor/datepair-js/datepair.min.js"></script>
+  <script src="../vendor/datepair-js/jquery.datepair.min.js"></script>
+  <script src="../vendor/jquery-strength/jquery-strength.min.js"></script>
+  <script src="../vendor/multi-select/jquery.multi-select.js"></script>
+  <script src="../vendor/typeahead-js/bloodhound.min.js"></script>
+  <script src="../vendor/typeahead-js/typeahead.jquery.min.js"></script>
+  <script src="../vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+  <!-- Scripts -->
+  <script src="../js/core.js"></script>
+  <script src="../js/site.js"></script>
+
+  <script src="../js/sections/menu.js"></script>
+  <script src="../js/sections/menubar.js"></script>
+  <script src="../js/sections/gridmenu.js"></script>
+  <script src="../js/sections/sidebar.js"></script>
+
+  <script src="../js/configs/config-colors.js"></script>
+  <script src="../js/configs/config-tour.js"></script>
+
+  <script src="../js/components/asscrollable.js"></script>
+  <script src="../js/components/animsition.js"></script>
+  <script src="../js/components/slidepanel.js"></script>
+  <script src="../js/components/switchery.js"></script>
+
+  <!-- Scripts For This Page -->
+  <script src="../js/components/select2.js"></script>
+  <script src="../js/components/bootstrap-tokenfield.js"></script>
+  <script src="../js/components/bootstrap-tagsinput.js"></script>
+  <script src="../js/components/bootstrap-select.js"></script>
+  <script src="../js/components/icheck.js"></script>
+  <script src="../js/components/switchery.js"></script>
+  <script src="../js/components/asrange.js"></script>
+  <script src="../js/components/asspinner.js"></script>
+  <script src="../js/components/clockpicker.js"></script>
+  <script src="../js/components/ascolorpicker.js"></script>
+  <script src="../js/components/bootstrap-maxlength.js"></script>
+  <script src="../js/components/jquery-knob.js"></script>
+  <script src="../js/components/bootstrap-touchspin.js"></script>
+  <script src="../js/components/card.js"></script>
+  <script src="../js/components/jquery-labelauty.js"></script>
+  <script src="../js/components/bootstrap-datepicker.js"></script>
+  <script src="../js/components/jt-timepicker.js"></script>
+  <script src="../js/components/datepair-js.js"></script>
+  <script src="../js/components/jquery-strength.js"></script>
+  <script src="../js/components/multi-select.js"></script>
+  <script src="../js/components/jquery-placeholder.js"></script>
+  
+
+<script type="text/javascript" src="../js/index.js"></script>
+

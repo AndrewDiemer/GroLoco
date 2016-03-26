@@ -1,4 +1,5 @@
 
+
 GrocoLoco.controller('promotionsController', function($scope, $http, $location) {
 
 
@@ -67,7 +68,7 @@ function ISODateString(d){
 		console.log(d1)
 
 		var endTime 	= $('#end-time').val()
-		var endDate 	= $('#start-date').val()
+		var endDate 	= $('#end-date').val()
 
 		var d2 = Date.parse(endDate + ', ' + endTime)
 		d2 = ISODateString(d2)
