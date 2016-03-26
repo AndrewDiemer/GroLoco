@@ -24,7 +24,7 @@ module.exports = function (app){
 	//Average Grocerylist size (Number)
 	app.get('/averageGrocerySizeDistribution', isAuthenticated, function (req, res){
 		
-		var distribution = {}
+		var distribution = []
 
 		GroceryList.find({}, function(err, lists){
 			if(err)

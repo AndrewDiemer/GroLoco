@@ -7,7 +7,7 @@
 //
 
 #import "GLGroceryItem.h"
-#import "GLNetworkingManager.h"
+#import "GLNetworkingManager.h" 
 
 @implementation GLNetworkingManager
 
