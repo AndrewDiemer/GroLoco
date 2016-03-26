@@ -2,8 +2,87 @@
 
 module.exports = function (app){
 
-    
-	 
+    app.get('/promoHacks', isAuthenticated, function(req,res){
+        GroceryItem.find({}, function(err, items){
+            for (var i = 0; i < items.length; i++) {
+                if(items[i].IsPromo == false){
+                    GroceryItem.findOneAndUpdate({
+                        '_id': items[i]._id
+                    },{
+                        'Promotion': {}
+                    }, function(err, items){
+                        if(err)
+                            console.log(err)
+                        if(items)
+                            console.log('updated')
+                        else
+                            console.log('could not find')
+                    })
+                }
+            }
+            res.send(200)
+        })
+    })
+
+    app.post('/addPromo', isAuthenticated, function(req, res){
+
+        var promotion = {
+            PromoTitle      : req.body.PromoTitle, 
+            PromoDiscount   : req.body.PromoDiscount,
+            Type            : req.body.PromoType,
+            PromoStartDate  : req.body.PromoStartDate,
+            PromoEndDate    : req.body.PromoEndDate
+        }
+
+        GroceryItem.findOneAndUpdate({
+            '_id' : req.body._id
+        },{
+            'Promotion' : promotion,
+            'IsPromo'   : req.body.IsPromo
+        },{
+            safe:true, upsert:true, new: true
+        }, function(err, groceryItem){
+            if(err)
+                res.send(err)
+            if(groceryItem){
+                res.status(200).send(groceryItem)
+            }else{
+                res.send(404)
+            }
+        })
+
+    })
+
+    app.post('/removePromo', isAuthenticated, function(req,res){
+
+        GroceryItem.findOneAndUpdate({
+            '_id': req.body._id
+        },{
+            Promotion:{},
+            IsPromo: false
+        }, function(err, groceryItem){
+            if(err)
+                res.send(err)
+            if(groceryItem){
+                res.send(groceryItem)
+            }
+            else
+                res.send(404)
+        })
+    })
+
+
+    app.get('/groceries', isAuthenticated, function(req,res){
+        GroceryItem.find({}, function(err, items){
+            if(err)
+                res.send(err)
+            if(items)
+                res.send(items)
+            else
+                res.send([])
+        })
+    })
+
 }
 
 

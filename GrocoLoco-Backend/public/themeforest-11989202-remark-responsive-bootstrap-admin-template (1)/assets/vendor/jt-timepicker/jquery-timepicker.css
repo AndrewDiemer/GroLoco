@@ -1,5 +1,5 @@
 .ui-timepicker-wrapper {
-  z-index: 1200;
+  z-index: 10000;
   width: 6.5em;
   height: 150px;
   margin: 0;

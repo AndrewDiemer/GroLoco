@@ -24,7 +24,7 @@ module.exports = function (app){
 	//Average Grocerylist size (Number)
 	app.get('/averageGrocerySizeDistribution', isAuthenticated, function (req, res){
 		
-		var distribution = {}
+		var distribution = []
 
 		GroceryList.find({}, function(err, lists){
 			if(err)
@@ -169,7 +169,47 @@ module.exports = function (app){
 						recommendationBreakdowns.push(0)
 					}
 				}
-				res.send({RecommendationBreakdownList: recommendationBreakdowns})
+				var ranges = {
+					0.1: 0,
+					0.2: 0,
+					0.3: 0,
+					0.4: 0,
+					0.5: 0,
+					0.6: 0,
+					0.7: 0,
+					0.8: 0,
+					0.9: 0,
+					1.0: 0
+				}
+				console.log(recommendationBreakdowns)
+				for (var i = 0; i < recommendationBreakdowns.length; i++) {
+
+					var dat = recommendationBreakdowns[i]
+
+					if(dat >= 0 && dat <= 0.1){
+						ranges['0.1'] ++
+					}else if(dat > 0.1 && dat <= 0.2){
+						ranges['0.2'] ++
+					}else if(dat > 0.2 && dat <= 0.3){
+						ranges['0.3'] ++
+					}else if(dat > 0.3 && dat <= 0.4){
+						ranges['0.4'] ++
+					}else if(dat > 0.4 && dat <= 0.5){
+						ranges['0.5'] ++
+					}else if(dat > 0.5 && dat <= 0.6){
+						ranges['0.6'] ++
+					}else if(dat > 0.6 && dat <= 0.7){
+						ranges['0.7'] ++
+					}else if(dat > 0.7 && dat <= 0.8){
+						ranges['0.8'] ++
+					}else if(dat > 0.8 && dat <= 0.9){
+						ranges['0.9'] ++
+					}else if(dat > 0.9 && dat <= 1.0){
+						ranges['1.0'] ++
+					}
+				}
+
+				res.send({RecommendationBreakdownList: ranges})
 
 			}else{
 				res.send(404)
