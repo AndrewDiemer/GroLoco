@@ -10,6 +10,10 @@
 
 @interface GLAccountInfoViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *backPressed;
+@property (weak, nonatomic) IBOutlet UILabel *accountName;
+@property (weak, nonatomic) IBOutlet UILabel *accountEmail;
+@property (weak, nonatomic) IBOutlet UILabel *accountPassword;
+@property (weak, nonatomic) IBOutlet UILabel *storeName;
 
 @end
 
@@ -18,6 +22,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.accountName.text = [NSString stringWithFormat: @"%@", [[GLUserManager sharedManager] name]];
+    
+    self.accountEmail.text = [NSString stringWithFormat: @"%@", [[GLUserManager sharedManager] email]];
+    
+    self.accountPassword.text = [NSString stringWithFormat: @"********"];
+    
+    self.storeName.text = [NSString stringWithFormat: @"%@", [[GLUserManager sharedManager] storeName]];
+    
 }
 
 - (void)didReceiveMemoryWarning {
