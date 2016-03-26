@@ -74,7 +74,7 @@
 
         for (GLGroceryItem *realitem in items) {
             if ([realitem isEqual:glItem]) {
-                realitem.navPin.frame = CGRectMake(-ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location, ITEMSIZE, ITEMSIZE);
+                realitem.navPin.frame = CGRectMake(-ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location - ITEMSIZE, ITEMSIZE, ITEMSIZE);
                 realitem.navPin.userInteractionEnabled = YES;
                 [blockPlot addSubview:realitem.navPin];
                 break;
@@ -87,7 +87,7 @@
         
         for (GLGroceryItem *realitem in items) {
             if ([realitem isEqual:glItem]) {
-                realitem.navPin.frame = CGRectMake(blockPlot.frame.size.width - ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location, ITEMSIZE, ITEMSIZE);
+                realitem.navPin.frame = CGRectMake(blockPlot.frame.size.width - ITEMSIZE / 2, blockPlot.frame.size.height * glItem.location - ITEMSIZE, ITEMSIZE, ITEMSIZE);
                 realitem.navPin.userInteractionEnabled = YES;
                 [blockPlot addSubview:realitem.navPin];
                 break;
