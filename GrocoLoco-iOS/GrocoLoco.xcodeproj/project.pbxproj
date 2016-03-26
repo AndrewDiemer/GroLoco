@@ -178,7 +178,6 @@
 				A7FFFB451BD83312005B5A08 /* GLUserManager.m */,
 				A702E92C1BBC01C9001F24DC /* Assets.xcassets */,
 				A702E92E1BBC01C9001F24DC /* LaunchScreen.storyboard */,
-				A702E9311BBC01C9001F24DC /* Info.plist */,
 				A702E93E1BBC5A3A001F24DC /* GLConstants.h */,
 				A7FE71B31BF3BF98001A0EA2 /* GLConstants.m */,
 				A7F68BC61BF7D17500FD7806 /* MHSegmentedControl.h */,
@@ -195,6 +194,7 @@
 		A702E9201BBC01C9001F24DC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A702E9311BBC01C9001F24DC /* Info.plist */,
 				A702E9371BBC4DB0001F24DC /* GrocoLocoPrefix.pch */,
 				A702E9211BBC01C9001F24DC /* main.m */,
 			);

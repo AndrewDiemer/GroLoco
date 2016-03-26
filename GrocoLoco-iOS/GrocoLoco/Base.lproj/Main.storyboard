@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M8o-11-WVv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M8o-11-WVv">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -288,13 +288,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3DV-Ku-0f9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3DV-Ku-0f9">
                                 <rect key="frame" x="279" y="62" width="42" height="23"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ULs-f7-lg9">
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ULs-f7-lg9">
                                 <rect key="frame" x="16" y="106" width="568" height="36"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ya-bR-NvA">
@@ -516,8 +516,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="83"/>
                                 <color key="backgroundColor" red="0.77355587121212122" green="0.75853536885848782" blue="0.75853536885848782" alpha="0.68000000000000005" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1a7-eD-Dva">
-                                <rect key="frame" x="20" y="31" width="560" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1a7-eD-Dva">
+                                <rect key="frame" x="20" y="49.5" width="51.5" height="25.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -769,13 +769,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="lGD-dh-nQM">
-                                                    <rect key="frame" x="81" y="34" width="42" height="23"/>
+                                                    <rect key="frame" x="81" y="34" width="42" height="22.5"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" misplaced="YES" image="sale" translatesAutoresizingMaskIntoConstraints="NO" id="eGB-xW-L8D">
-                                                    <rect key="frame" x="513" y="23" width="80" height="45"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" image="sale" translatesAutoresizingMaskIntoConstraints="NO" id="eGB-xW-L8D">
+                                                    <rect key="frame" x="512" y="23" width="80" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="eGB-xW-L8D" secondAttribute="height" multiplier="16:9" id="48U-aS-JNJ"/>
                                                         <constraint firstAttribute="width" constant="64" id="SyH-2s-90u"/>
@@ -788,8 +788,8 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="5% off" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="QCo-2S-Meb">
-                                                    <rect key="frame" x="545" y="23" width="40" height="45"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5% off" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="QCo-2S-Meb">
+                                                    <rect key="frame" x="544" y="23" width="40" height="45"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -996,13 +996,12 @@
                                                             <action selector="showCategory:" destination="Nd1-sj-1cg" eventType="touchUpInside" id="feo-ek-mbe"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OR1-WC-W4d">
+                                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OR1-WC-W4d">
                                                         <rect key="frame" x="200" y="0.0" width="200" height="120"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="OR1-WC-W4d" secondAttribute="height" multiplier="1:1" id="Cam-VP-T12"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                        <state key="normal" title="Bakery">
+                                                        <state key="normal" title="Bakery" image="bakery">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <variation key="default">
@@ -1014,13 +1013,12 @@
                                                             <action selector="showCategory:" destination="Nd1-sj-1cg" eventType="touchUpInside" id="JRO-hW-tsl"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lY8-Fm-iBb">
+                                                    <button opaque="NO" tag="8" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lY8-Fm-iBb">
                                                         <rect key="frame" x="400" y="0.0" width="200" height="120"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="lY8-Fm-iBb" secondAttribute="height" multiplier="1:1" id="uQM-Ve-7YB"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                        <state key="normal" title="Other">
+                                                        <state key="normal" title="Other" image="other">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <variation key="default">
@@ -1376,6 +1374,7 @@
         <image name="accountInfo" width="80" height="80"/>
         <image name="arrow" width="24" height="24"/>
         <image name="back" width="21" height="21"/>
+        <image name="bakery" width="32" height="32"/>
         <image name="burgerMenu" width="24" height="24"/>
         <image name="cans" width="32" height="32"/>
         <image name="changeStore" width="80" height="80"/>
@@ -1387,6 +1386,7 @@
         <image name="grain" width="32" height="32"/>
         <image name="logOut" width="80" height="80"/>
         <image name="next" width="21" height="21"/>
+        <image name="other" width="32" height="32"/>
         <image name="personalCare" width="32" height="32"/>
         <image name="produce" width="32" height="32"/>
         <image name="sale" width="83" height="45"/>
