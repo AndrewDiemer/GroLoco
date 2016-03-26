@@ -34,15 +34,17 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self showFullScreenHUD];
     [super viewDidAppear:animated];
     [GLNetworkingManager isUserLoggedInCompletion:^(NSDictionary *response, NSError *error) {
+        [self hideFullScreenHUD];
         if (!error) {
             if (response[@"status"] == nil) {
                 [[GLUserManager sharedManager] setPropertiesWithDict:response];
                 [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
             }
             else {
-                [self showError:@"User not logged in"];
+                NSLog(@"%@",@"User not logged in");
             }
         }
         else {

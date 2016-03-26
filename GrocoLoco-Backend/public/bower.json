@@ -16,6 +16,8 @@
     "interact": "interact.js#~1.2.6",
     "jquery": "~2.1.4",
     "materialize": "~0.97.0",
-    "font-awesome": "~4.5.0"
+    "font-awesome": "~4.5.0",
+    "angular-moment": "~0.10.3",
+    "moment": "~2.11.2"
   }
 }

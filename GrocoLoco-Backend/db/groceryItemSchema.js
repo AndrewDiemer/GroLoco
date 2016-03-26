@@ -22,7 +22,15 @@ groceryItemSchema = new db.Schema({
 	Description    : String,  // SOBEYS 
 	Aisle 		   : String,
 	StoreId		   : Number,
-	IconLink	   : String
+	IconLink	   : String,
+	IsPromo		   : Boolean,
+	Promotion 	   :{
+		PromoTitle 		: String, 
+		PromoDiscount 	: Number,
+		Type 			: String,
+		PromoStartDate  : Date,
+		PromoEndDate 	: Date
+	}
 })
 
 

@@ -161,9 +161,4 @@ GrocoLoco.controller('adminController', function($scope, $http, $location) {
 		    // target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
 		  });
 	}
-
-
-
-
-
 })
