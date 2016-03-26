@@ -39,7 +39,7 @@
 {
     UIView *blockPlot = [[UIView alloc] initWithFrame:CGRectMake(self.origin.x * WIDTH, self.origin.y * HEIGHT, self.width * WIDTH, self.length * HEIGHT)];
     blockPlot.layer.cornerRadius = 3;
-    blockPlot.backgroundColor = [UIColor greenColor];
+    blockPlot.backgroundColor = [UIColor colorWithRed:20/256.0 green:70/256.0 blue:204/256.0 alpha:0.8];
     [view addSubview:blockPlot];
 
     for (NSDictionary *item in self.bottomItems) {
