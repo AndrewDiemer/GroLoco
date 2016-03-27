@@ -34,7 +34,8 @@
     [self.gotItemButton setImage:[UIImage imageNamed:@"gotItem"] forState:UIControlStateSelected];
 
     self.backgroundView.layer.cornerRadius = 5;
-    self.backgroundView.backgroundColor = [UIColor GLlightBlue];
+    
+    // self.backgroundView.backgroundColor = [UIColor GLlightBlue];
 }
 - (IBAction)gotItemButtonPressed:(UIButton *)sender {
     sender.selected = !sender.selected;
