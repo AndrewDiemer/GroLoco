@@ -106,6 +106,7 @@ require('./routes/groceryList.js')(app, passport);
 require('./routes/user.js')(app, passport); 
 require('./routes/authentication.js')(app, passport); 
 require('./routes/analytics.js')(app, passport); 
+require('./routes/groceryManager.js')(app, passport); 
 require('./routes/blocks.js')(app, passport); 
 require('./routes/recommendations.js')(app, passport); 
 

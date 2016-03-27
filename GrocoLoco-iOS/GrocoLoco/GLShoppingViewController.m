@@ -76,7 +76,7 @@
         else {
             NSDictionary *storeDimensions = response[@"StoreDimensions"];
             self.subview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2 * self.mapScrollView.frame.size.width, 2 * self.mapScrollView.frame.size.width * [storeDimensions[@"Ratio"][@"Number"] doubleValue])];
-            self.subview.backgroundColor = [UIColor lightGrayColor];
+            self.subview.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
             self.subview.userInteractionEnabled = YES;
 
             [self.mapScrollView setContentSize:self.subview.frame.size];

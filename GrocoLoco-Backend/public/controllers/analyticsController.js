@@ -39,6 +39,7 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
 			series[i] = data.Distrubition[i];
   		}
 
+
     	var overlappingData = {
     	  labels: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,"21+"],
     	  series: [series]
@@ -115,22 +116,22 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
   	})
   
   	$http.get("/numberPerCategory").success(function(data, status){
+
+  		var series = [
+    	    			data.Categories.Produce,
+    	    			data.Categories.Dairy,
+    	    			data.Categories.Deli,
+    	    			data.Categories.Frozen,
+    	    			data.Categories.Grains,
+    	    			data.Categories.Cans,
+    	    			data.Categories.PersonalCare,
+    	    			data.Categories.Bakery,
+    	    			data.Categories.Other
+    	    		];
   		
     	var overlappingData = {
     	  labels: ["Produce", "Dairy", "Deli", "Frozen", "Grains", "Cans", "PersonalCare", "Bakery", "Other"],
-    	  series: [
-    	    [
-    	    	data.Categories.Produce,
-    	    	data.Categories.Dairy,
-    	    	data.Categories.Deli,
-    	    	data.Categories.Frozen,
-    	    	data.Categories.Grains,
-    	    	data.Categories.Cans,
-    	    	data.Categories.PersonalCare,
-    	    	data.Categories.Bakery,
-    	    	data.Categories.Other
-    	    ]
-    	  ]
+    	  series: [series]
     	};
 
     	var overlappingOptions = {
@@ -150,6 +151,67 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
 	
     	new Chartist.Bar('#purchasesPerCategory', overlappingData, overlappingOptions, overlappingResponsiveOptions);
 
+//TODO: Cooler pie chart but getting weird error...Ask Morgan to investigate
+    // var pie_chart = c3.generate({
+    //   bindto: '#purchasesPerCategoryPie',
+    //   data: {
+    //     // iris data from R
+    //     columns: [
+    //       ['data1', 100],
+    //       ['data2', 40],
+    //     ],
+    //     type: 'pie',
+    //   },
+    //   color: {
+    //     pattern: [$.colors("primary", 500), $.colors("blue-grey", 200)]
+    //   },
+    //   legend: {
+    //     position: 'right'
+    //   },
+    //   pie: {
+    //     label: {
+    //       show: false
+    //     },
+    //     onclick: function(d, i) {},
+    //     onmouseover: function(d, i) {},
+    //     onmouseout: function(d, i) {}
+    //   }
+    // });
+
+
+  // Example Chartist Pie Chart Labels
+  // ---------------------------------
+
+    var labelsPieData = {
+      labels: ["Produce", "Dairy", "Deli", "Frozen", "Grains", "Cans", "PersonalCare", "Bakery", "Other"],
+      series: [1,2,1,2,1,2,1,2,1]
+    };
+
+    var labelsPieOptions = {
+      labelInterpolationFnc: function(value) {
+        return value[0];
+      }
+    };
+
+    var labelsPieResponsiveOptions = [
+      ['screen and (min-width: 640px)', {
+        chartPadding: 0,
+        labelOffset: 250,
+        labelDirection: 'explode',
+        labelInterpolationFnc: function(value) {
+          return value;
+        }
+      }],
+      ['screen and (min-width: 1024px)', {
+        labelOffset: 80,
+        chartPadding: 20
+      }]
+    ];
+
+    new Chartist.Pie('#purchasesPerCategoryPie', labelsPieData, labelsPieOptions, labelsPieResponsiveOptions);
+
+   	 
+
   	}).error(function(data, status){
   		//something went wrong
   		console.log(status)
@@ -157,22 +219,6 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
   	})
 
 
-  // Example Chartist Simple Pie
-  // ---------------------------
-
-    var simplePiedata = {
-      series: [5, 3, 4]
-    };
-
-    var simplePieSum = function(a, b) {
-      return a + b;
-    };
-
-    new Chartist.Pie('#exampleSimplePie', simplePiedata, {
-      labelInterpolationFnc: function(value) {
-        return Math.round(value / simplePiedata.series.reduce(simplePieSum) * 100) + '%';
-      }
-    });
 
 })
 
