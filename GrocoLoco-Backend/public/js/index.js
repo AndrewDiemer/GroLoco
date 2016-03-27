@@ -46,10 +46,23 @@ interact('.edit-rectangle')
   .on('doubletap', function(event){
     // console.log(event)
     // console.log('Adding items')
-    event.currentTarget.classList.toggle('switch-bg');
-    event.preventDefault();
-    // console.log(event.currentTarget)
-    blox = event.currentTarget.id
+    if(!lock){
+      if(changing){
+        $('#green-button').text('Add Block')
+        $('#red-button').text('Delete All')
+        changing = !changing
+      }else{
+        $('#green-button').text('Add Grocery Item')
+        $('#red-button').text('Delete Block')
+        event.currentTarget.classList.toggle('switch-bg');
+        event.preventDefault();
+        // console.log(event.currentTarget)
+        blox = event.currentTarget.id
+        changing = !changing
+        lock = true
+      }
+    }
+
     // $("#modal").modal()
     // console.log(this)
   })
@@ -79,24 +92,24 @@ interact('.edit-rectangle')
     //       range: Infinity,
     //       relativePoints: [ { x: 0, y: 0 } ]
     //     },
-    max: Infinity
-    // onmove: function(event) {
-    //   var rectangle = rectangles[event.target.getAttribute('data-index')];
-    //   console.log(rectangle)
-    //   rectangle.x += event.dx;
-    //   rectangle.y += event.dy;
-    //   console.log(rectangle)
+    max: Infinity,
+    onmove: function(event) {
+      var rectangle = rectangles[event.target.getAttribute('data-index')];
+      console.log(rectangle)
+      rectangle.x += event.dx;
+      rectangle.y += event.dy;
+      console.log(rectangle)
 
-    //   rectangle.draw();
-    // }
-  }).on('dragmove', function(event){
-    x += event.dx;
-    y += event.dy;
-
-    event.target.style.webkitTransform =
-    event.target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)';
+      rectangle.draw();
+    }
   })
+  // .on('dragmove', function(event){
+  //   var rectangle = rectangles[event.target.getAttribute('data-index')];
+  //     console.log(rectangle)
+  //     rectangle.x += event.dx;
+  //     rectangle.y += event.dy;
+  //     rectangle.draw();
+  // })
   .resizable({
     max: Infinity,
     onmove: function(event) {
@@ -115,9 +128,74 @@ for ( i = 0; i < 0; i++) {
   new Rectangle(50 + 100 * i, 80, 80, 80, svgCanvas);
 }
 
+function undisableDeleteandSave(){
+    $('#red-button').removeClass('disabled')
+    $('#save-all').removeClass('disabled')
+}
+
+function lockButtons(){
+  $('#width').prop('disabled', true)
+  $('#height').prop('disabled', true)
+}
+
 function addShape(){
-  new Rectangle(50 + 100 * i, 90, 90, 90, svgCanvas);
-  i++
+  console.log('howdie')
+  //first time
+  if(firstTime == 0){
+    if (confirm("Are you sure you're happy with the width and height?")) {
+      lockButtons()
+      firstTime++
+      // Save it!
+      if(changing){
+        // alert('bitch')
+        console.log('modal')
+        $('#myModal').modal()
+        // BootstrapDialog.alert('I want banana!');
+      }else{
+          undisableDeleteandSave()
+          new Rectangle(50 + 50 * i, 50, 50, 50, svgCanvas);
+        i++
+      }
+
+    } 
+  }else if(firstTime>0){
+    if(changing){
+        undisableDeleteandSave()
+        // alert('bitch')
+        console.log('modal')
+        $('#myModal').modal()
+        // BootstrapDialog.alert('I want banana!');
+      }else{
+          new Rectangle(50 + 50 * i, 50, 50, 50, svgCanvas);
+        i++
+        if(i==20)
+          i = 0
+      }
+  }
+
+}
+
+function switchContextToDefault(){
+  $("#"+blox).attr('class','edit-rectangle')
+  lock = false
+  changing = !changing
+  $('#green-button').text('Add Block')
+  $('#red-button').text('Delete All')
+}
+
+function clearBlocks(){
+  if(changing){
+    // console.log(blox)
+    $('#' + blox).remove()
+    // i=0
+    console.log('Removing one!')
+    switchContextToDefault()
+
+  }else{
+    $('.edit-rectangle').remove()
+    i=0
+    console.log('Removing all')
+  }
 }
 
 

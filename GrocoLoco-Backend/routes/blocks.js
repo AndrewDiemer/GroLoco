@@ -228,7 +228,9 @@ module.exports = function (app, passport){
 	})
 
 	app.get('/blocks', function (req,res){
-		Block.find({}, function (err, blocks){res.send(blocks)})
+		Block.find({}, function (err, blocks){
+			res.send(blocks)
+		})
 	})
 
 	app.get('/blocksGroceryList', isAuthenticated, function (req,res){
@@ -261,22 +263,34 @@ module.exports = function (app, passport){
 							if(groceryList){
 								
 								for (var i = 0; i < groceryList.List.length; i++){
-									switch(groceryList.List[i].Face){
-										case 'T':
-											blocks[groceryList.List[i].BlockNumber].TopItems.push(groceryList.List[i])
-											break
-
-										case 'B':
-											blocks[groceryList.List[i].BlockNumber].BottomItems.push(groceryList.List[i])
-											break
-										
-										case 'L':
-											blocks[groceryList.List[i].BlockNumber].LeftItems.push(groceryList.List[i])
-											break
+									// console.log(groceryList.List[i].StoreId)
+									if(req.user.Store != '56b01bf96b0aa47e3b17e9e2'){
+										console.log('oops')
+									}else{
 									
-										case 'R':
-											blocks[groceryList.List[i].BlockNumber].RightItems.push(groceryList.List[i])
-											break
+										switch(groceryList.List[i].Face){
+											case 'T':
+												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
+													blocks[groceryList.List[i].BlockNumber].TopItems.push(groceryList.List[i])
+												break
+
+											case 'B':
+												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
+													blocks[groceryList.List[i].BlockNumber].BottomItems.push(groceryList.List[i])
+												break
+											
+											case 'L':
+												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
+													blocks[groceryList.List[i].BlockNumber].LeftItems.push(groceryList.List[i])
+												break
+										
+											case 'R':
+												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
+													blocks[groceryList.List[i].BlockNumber].RightItems.push(groceryList.List[i])
+												break
+											default:
+												break
+										}
 									}
 								}
 								var map = {
@@ -306,7 +320,7 @@ module.exports = function (app, passport){
 		
 	})
 
-	    app.get('/aisles', function(req,res){
+	app.get('/aisles', function(req,res){
         Aisle.find({}, function(err, aisles){
             if(err)
                 res.send(err)
@@ -323,28 +337,67 @@ module.exports = function (app, passport){
         res.send(200)
     })
 
-    app.post('/aisles', function(req,res){
-        var blocks = req.body.blocks
-        for (var i = 0; i < blocks.length; i++) {
-            var newAisle = new Aisle({
-                x: blocks[i].x,
-                y: blocks[i].y,
-                w: blocks[i].w,
-                h: blocks[i].h
-            })
-            newAisle.save(function(err, aisle){
-                if(err)
+    app.post('/blocks', function(req,res){
+    	var blocks = req.body.blocks
+        var storeId = req.body.storeId
+        
+        console.log(blocks)
+        console.log(storeId)
+
+    	for (var i = 0; i < blocks.length; i++) {
+    		var newBlock = new Block({
+				BlockNumber		: i,
+				Origin: {
+					X 			: blocks[i].x,
+					Y 			: blocks[i].y
+				},
+				width 			: blocks[i].w,
+				Length 			: blocks[i].h
+			})
+
+			newBlock.save(function(err, block){
+				if(err)
                     res.send(err)
-                if(aisle){
-                    // res.send(aisle)
+                if(block){
+
+                    Store.findOneAndUpdate({
+                    	'_id': storeId
+                    },{
+                    	$push:{'Blocks': block}
+                    },function(err, store){
+                    	if(err)
+                    		res.send(err)
+                    	if(store)
+                    		console.log(store)
+                    })
                 }else{
                     res.send(404)
                 }
-            })
-        }
-        console.log('Saved '+ blocks.length + ' blocks!')
-        res.send('Saved '+ blocks.length + ' blocks!')
+			})
+    	}
+
+    	res.send(200)
+
     })
+
+    // app.post('/aisles', function(req,res){
+        
+
+    //     for (var i = 0; i < blocks.length; i++) {
+    //         var newBlock = new Block({
+    //             x: blocks[i].x,
+    //             y: blocks[i].y,
+    //             w: blocks[i].w,
+    //             h: blocks[i].h
+    //         })
+
+    //         newBlock.save(function(err, block){
+                
+    //         })
+    //     }
+    //     console.log('Saved '+ blocks.length + ' blocks!')
+    //     res.send('Saved '+ blocks.length + ' blocks!')
+    // })
 
     app.post('/getIcon', function(req,res){
 

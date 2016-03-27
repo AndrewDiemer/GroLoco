@@ -65,17 +65,17 @@ GrocoLoco.controller('adminController', function($scope, $http, $location) {
 		shapeCount++;
 	}
 
-	$scope.clearBlocks = function(){
-		rectangles = []
-		var length = $('#grid-snap-'+shapeCount).length
+	// $scope.clearBlocks = function(){
+	// 	rectangles = []
+	// 	var length = $('#grid-snap-'+shapeCount).length
 
-		for (var i = 0; i < length; i++) 
-			$('#grid-snap-'+i).remove()
+	// 	for (var i = 0; i < length; i++) 
+	// 		$('#grid-snap-'+i).remove()
 		
-		$('.edit-rectangle').remove()
-		$http.post('/deleteblocks')
-		shapeCount = 1;
-	}
+	// 	$('.edit-rectangle').remove()
+	// 	// $http.post('/deleteblocks')
+	// 	shapeCount = 1;
+	// }
 
 	$scope.saveAllBlocks = function(){
 		var aisles = $('.edit-rectangle')
