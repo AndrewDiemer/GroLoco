@@ -1,7 +1,7 @@
-var svgCanvas = document.querySelector('svg'),
-  svgNS = 'http://www.w3.org/2000/svg',
-  rectangles = [];
-  var x = 0, y = 0;
+svgCanvas = document.querySelector('svg');
+svgNS = 'http://www.w3.org/2000/svg';
+rectangles = [];
+var x = 0, y = 0;
 
 function Rectangle(x, y, w, h, svgCanvas) {
   this.x = x;
@@ -50,10 +50,13 @@ interact('.edit-rectangle')
       if(changing){
         $('#green-button').text('Add Block')
         $('#red-button').text('Delete All')
+        $('#save-all').text('Save All')
         changing = !changing
       }else{
         $('#green-button').text('Add Grocery Item')
         $('#red-button').text('Delete Block')
+        $('#save-all').text('See Grocery Items')
+
         event.currentTarget.classList.toggle('switch-bg');
         event.preventDefault();
         // console.log(event.currentTarget)
@@ -175,12 +178,50 @@ function addShape(){
 
 }
 
+function uploadAll(){
+  console.log($('#select-stores').val())
+  $.get( "/blocks/" + $('#select-stores').val(), function( data, status ) {
+    console.log(data)
+    //create the canvas with the sizing
+
+
+    //resize up the ratios
+
+      for (var i = 0; i < data.Blocks.length; i++) {
+
+
+        console.log(data.Blocks[i].Origin.X)
+        console.log(data.Blocks[i].Origin.Y)
+        console.log(data[i].width)
+        console.log(data[i].Length)
+        // new Rectangle(data[i].Origin.X, data[i].Origin.Y, data[i].width, data[i].Length, svgCanvas);
+        new Rectangle(50 + 50 * i, 50, 50, 50, svgCanvas);
+
+        // var shape = '<div id="grid-snap-'+(i+1)+'" class="snap">'
+        //     +'  Shelf #'+ (i+1) 
+        //     +' </div>'
+
+        // $('.container').append(shape)
+        // initInteract((i+1), data[i].Origin.X, data[i].Origin.Y)
+
+        shapeCount = i
+
+      };
+    // console.log(data)
+    console.log(status)
+  });
+
+}
+
+// function A
+
 function switchContextToDefault(){
   $("#"+blox).attr('class','edit-rectangle')
   lock = false
   changing = !changing
   $('#green-button').text('Add Block')
   $('#red-button').text('Delete All')
+  $('#save-all').text('Save All')
 }
 
 function clearBlocks(){

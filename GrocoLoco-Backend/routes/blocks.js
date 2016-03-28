@@ -1,4 +1,4 @@
-
+var _ = require('lodash')
 
 module.exports = function (app, passport){
 
@@ -230,6 +230,144 @@ module.exports = function (app, passport){
 	app.get('/blocks', function (req,res){
 		Block.find({}, function (err, blocks){
 			res.send(blocks)
+		})
+	})
+
+	app.post('/updateGroceryItem', function(req,res){
+		GroceryItem.findOneAndUpdate({
+			'Description': req.body.Description
+		},{
+			Face: req.body.Side,
+			ItemLocation: req.body.Distance,
+			BlockNumber: req.body.BlockNumber
+		}, function(err, groceryItem){
+			if(err)
+				res.send(err)
+			if(groceryItem){
+				//Update in all the grocery lists
+				GroceryList.find({}, function(err, groceryLists){
+					if(err)
+						res.send(err)
+					if(groceryLists){
+						for (var i = 0; i < groceryLists.length; i++) {
+							for (var j = 0; j< groceryLists[i].List.length; j++) {
+								
+								if(groceryLists[i].List[j].Description == req.body.Description){
+
+									groceryLists[i].List[j].Face = req.body.Side
+									groceryLists[i].List[j].ItemLocation = req.body.Distance
+									groceryLists[i].List[j].BlockNumber = req.body.BlockNumber
+
+									GroceryList.findOneAndUpdate({
+										'_id': groceryLists[i]._id
+									},{
+										List: groceryLists[i].List[j]
+									},function(err, list){
+										if(err)
+											res.send(err)
+										if(list)
+											console.log('Updated')
+										// console.log()
+									})
+								}
+							}
+						}
+					}else{
+						res.send(404)
+					}
+				})
+
+				res.send(groceryItem)
+			}
+			else
+				res.send(404)
+		})
+	})
+
+	app.get('/blockItems/:store/:block', isAuthenticated, function(req,res){
+		// console.log()
+		Block.findOne({
+			'Store': req.params.store,
+			'BlockNumber': req.params.block
+		}, function(err, block){
+			if(err)
+				res.send(err)
+			if(block){
+				GroceryItem.find({
+					'StoreId': 1,
+					'BlockNumber': req.params.block
+				}, function(err, groceries){
+					if(err)
+						res.send(err)
+					if(groceries){
+						for (var i = 0; i < groceries.length; i++){
+							// console.log(groceryList.List[i].StoreId)
+							if(req.user.Store != '56b01bf96b0aa47e3b17e9e2'){
+								console.log('oops')
+							}else{
+								console.log(groceries[i].Face)
+								switch(groceries[i].Face){
+									case 'T':
+										block.TopItems.push(groceries[i])
+										break
+
+									case 'B':
+										block.BottomItems.push(groceries[i])
+										break
+									
+									case 'L':
+										block.LeftItems.push(groceries[i])
+										break
+								
+									case 'R':
+										block.RightItems.push(groceries[i])
+										break
+									default:
+										break
+								}
+							}
+						}
+						// console.log(block)
+						res.send(_.union(block.TopItems, block.BottomItems, block.LeftItems, block.RightItems))
+					}else{
+						res.send(404)
+					}
+						
+
+				})
+				// res.send(block)
+			}else
+				res.send(404)
+
+		})
+	})
+
+
+	app.get('/blocks/:id', function (req,res){
+		console.log(req.params.id)
+		Store.findOne({
+			'_id': req.params.id
+		}, function(err, store){
+			if(err)
+				res.send(err)
+			if(store){
+				console.log(store)
+				Block.find({
+					'Store': store
+				}, function (err, blocks){
+					if(err)
+						res.send(blocks)
+					if(blocks){
+						var package = {
+							Store: store,
+							Blocks: blocks
+						}
+						res.send(package)
+					}
+					else
+						res.send(404)
+				})
+			}
 		})
 	})
 

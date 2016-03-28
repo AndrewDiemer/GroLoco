@@ -254,6 +254,67 @@
   
 </div>
 
+<!-- Display Items -->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myDisplayItemsModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <button type="button" class="close" data-dismiss="modal" ng-click='closeCreateStore()'>&times;</button> -->
+          <h2 class="modal-title">Block Number #{{blockNumber}}</h2>
+          <hr>
+
+        </div>
+        <div class="modal-body">
+             <div class="panel-body container-fluid">
+               <!-- Store Name -->
+                    <table datatable="ng" class="row-border hover">
+                        <thead>
+                        <tr>
+
+                            <th>Category</th>
+                            <th>Item Name</th>
+                            <th>Side</th>
+                            <th>Location</th>
+                            <!-- <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Discount Title</th>
+                            <th>Promo</th> -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="person in persons">
+
+                            <td>{{ person.Category }}</td>
+                            <td>{{ person.Description }}</td>
+                            <td>{{ person.Face }}</td>
+                            <td>{{ person.ItemLocation }}</td>
+<!--                             <td>{{ person.Promotion.PromoEndDate | amDateFormat:'MM-DD-YYYY HH:mm:ss'}}</td>
+                            <td>{{ person.Promotion.PromoTitle}}</td> -->
+                           <!--  <td ng-if="person.IsPromo == true"><button type="button" class="btn btn-danger btn-raised" ng-click="removePromo(person)">Remove Promo</button></td>
+                            <td ng-if="person.IsPromo == false"><i class="fa fa-person"></i>
+                            <button type="button" class="btn btn-primary btn-raised" data-target=".example-modal-lg" data-toggle="modal" ng-click="addPromoTemp(person)">Add Promo</button>
+                            </td> -->
+                        </tr>
+                        </tbody>
+                    </table>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="createStorePost()">Add</button> -->
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeblockItems()">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
 <!-- Upload existing store-->
 
 <div class="container">
