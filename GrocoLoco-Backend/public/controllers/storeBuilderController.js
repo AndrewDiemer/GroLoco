@@ -256,7 +256,8 @@ GrocoLoco.controller('storeBuilderController', function($scope, $http, $location
 
 			$('#green-button').removeClass('disabled')
 			$('#red-button').removeClass('disabled')
-			$('#save-all').removeClass('disabled')
+			if(!uploaded)
+				$('#save-all').removeClass('disabled')
 
 			for (var i = 0; i < data.Blocks.length; i++) {
 
@@ -332,7 +333,7 @@ GrocoLoco.controller('storeBuilderController', function($scope, $http, $location
 			console.log(data)
 			console.log(status)
 		})
-		
+
 		switchContextToDefault()
 
 	}

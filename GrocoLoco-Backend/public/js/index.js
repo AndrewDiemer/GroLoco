@@ -133,7 +133,8 @@ for ( i = 0; i < 0; i++) {
 
 function undisableDeleteandSave(){
     $('#red-button').removeClass('disabled')
-    $('#save-all').removeClass('disabled')
+    if(!uploaded)
+      $('#save-all').removeClass('disabled')
 }
 
 function lockButtons(){

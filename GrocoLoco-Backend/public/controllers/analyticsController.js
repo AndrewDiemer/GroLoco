@@ -1,10 +1,12 @@
 GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
 
+    
+
   	$http.get("/numberOfUsers").success(function(data,status){
 
 		$('#currentNumberOfUsers').text(data.Number);
 
-	}).error(function(data, status){
+	}).error(function(data, status){ 
   		//something went wrong
   		console.log(status)
   		console.log(data)

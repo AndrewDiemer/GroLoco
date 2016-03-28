@@ -482,39 +482,50 @@ module.exports = function (app, passport){
         console.log(blocks)
         console.log(storeId)
 
-    	for (var i = 0; i < blocks.length; i++) {
-    		var newBlock = new Block({
-				BlockNumber		: i,
-				Origin: {
-					X 			: blocks[i].x,
-					Y 			: blocks[i].y
-				},
-				width 			: blocks[i].w,
-				Length 			: blocks[i].h
-			})
+        Store.findOne({
+        	'_id': storeId
+        }, function(err, store){
+        	if(err)
+        		res.send(err)
+        	if(store){
+        		for (var i = 0; i < blocks.length; i++) {
+		    		var newBlock = new Block({
+						BlockNumber		: i,
+						Origin: {
+							X 			: blocks[i].x,
+							Y 			: blocks[i].y
+						},
+						width 			: blocks[i].w,
+						Length 			: blocks[i].h,
+						Store 			: store
+					})
 
-			newBlock.save(function(err, block){
-				if(err)
-                    res.send(err)
-                if(block){
+					newBlock.save(function(err, block){
+						if(err)
+		                    res.send(err)
+		                if(block){
 
-                    Store.findOneAndUpdate({
-                    	'_id': storeId
-                    },{
-                    	$push:{'Blocks': block}
-                    },function(err, store){
-                    	if(err)
-                    		res.send(err)
-                    	if(store)
-                    		console.log(store)
-                    })
-                }else{
-                    res.send(404)
-                }
-			})
-    	}
+		                    Store.findOneAndUpdate({
+		                    	'_id': storeId
+		                    },{
+		                    	$push:{'Blocks': block}
+		                    },function(err, store){
+		                    	if(err)
+		                    		res.send(err)
+		                    	if(store)
+		                    		console.log(store)
+		                    })
+		                }else{
+		                    res.send(404)
+		                }
+					})
+		    	}
 
-    	res.send(200)
+		    	res.send(200)
+        	}
+        })
+
+    	
 
     })
 
