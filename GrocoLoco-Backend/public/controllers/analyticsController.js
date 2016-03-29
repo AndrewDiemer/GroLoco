@@ -13,15 +13,21 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
 
   $http.get("/averageGrocerySizeDistribution").success(function(data, status){
 
-    var series = new Array(data.Distrubition.length);
+    var series = new Array(22);
 
     for( var i = 0; i<data.Distrubition.length; i++ )
     {
       series[i] = data.Distrubition[i];
     }
 
+    var labels = new Array(21);
+
+    for(var i = 0; i< 22; i++){
+      labels[i] = i;
+    }
+
     var overlappingData = {
-     labels: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,"21+"],
+     labels: labels,
      series: [series]
         // TODO: For some reason series starts at the second bar in the graph rather than the first
       };
@@ -158,8 +164,8 @@ $http.get("/frequenciesOfItems").success(function(data,status){
     labels[i] = items[i].Description
     series[i] = items[i].value
   }
-  console.log(labels);
-  console.log(series);
+  // console.log(labels);
+  // console.log(series);
 
   var overlappingData = {
    labels: [labels],
