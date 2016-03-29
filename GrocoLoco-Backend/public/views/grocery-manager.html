@@ -129,6 +129,69 @@
                 <h1>Grocery Manager</h1>
                 <hr>
                 <div class="example">
+                <!-- Example Tabs In The Panel -->
+                  <div class="panel nav-tabs-horizontal">
+                    <ul class="nav nav-tabs nav-tabs-line" data-plugin="nav-tabs" role="tablist">
+                      <li class="active" role="presentation"><a data-toggle="tab" href="#exampleTopHome" aria-controls="exampleTopHome"
+                        role="tab"><i class="icon wb-pugin" aria-hidden="true"></i>Add an Item</a></li>
+                      <li role="presentation"><a data-toggle="tab" href="#exampleTopComponents" aria-controls="exampleTopComponents"
+                        role="tab"><i class="icon wb-user" aria-hidden="true"></i>Delete an Item</a></li>
+                    </ul>
+                    <div class="panel-body">
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="exampleTopHome" role="tabpanel">
+                        <!-- Panel Floating Lables -->
+                        <div class="panel">
+                          <div class="panel-body container-fluid">
+                            <form autocomplete="off">
+                              <div class="form-group form-material floating">
+                                <input type="text" ng-model='Description' class="form-control" name="inputFloatingText" />
+                                <label class="floating-label">Item Description</label>
+                              </div>
+                              <div class="form-group form-material floating">
+                                <select class="form-control" ng-model='Category' id="category">
+                                  <option value="0">Produce</option>
+                                  <option value="1">Dairy</option>
+                                  <option value="2">Deli</option>
+                                  <option value="3">Frozen</option>
+                                  <option value="4">Grains</option>
+                                  <option value="5">Cans</option>
+                                  <option value="6">Personal care</option>
+                                  <option value="7">Bakery</option>
+                                  <option value="8">Other</option>
+                                </select>
+                                <label class="floating-label">Category</label>
+                              </div>
+                              <div class="form-group form-material floating">
+                                <input type="number" step="0.01" min="0" ng-model='Price' class="form-control" name="inputFloatingText" />
+                                <label class="floating-label">Price</label>
+                              </div>
+                              <div class="form-group form-material floating">
+                                <input type="text" ng-model='IconLink' class="form-control" name="inputFloatingText" />
+                                <label class="floating-label">Icon Link</label>
+                              </div>
+                              <div class="form-group form-material">
+                                <button type="button" ng-click="createGroceryItem()" class="btn btn-block btn-primary">Create Item</button>
+                              </div>
+                              
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        <!-- End Panel Floating Lables -->
+                        </div>
+                        <div class="tab-pane" id="exampleTopComponents" role="tabpanel">
+                          Protervi dissensio consuetudine equos publicam ingenia. Voluptatibus legendus initia
+                          confirmare sententiam. Desistunt possint habeatur dediti dubio,
+                          triarium is offendimur reprehenderit exercitus laudabilis motus
+                          celeritas, utrum dissentio renovata, habet partus natus. Iustius
+                          disserunt, quantum ennii admodum divinum mortem elaborare primum
+                          autem.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          <!-- End Example Tabs In The Panel -->
                 <!-- <table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="true">
                     <tr ng-repeat="user in $data">
                         <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
@@ -137,48 +200,6 @@
                             {{user.age}}</td>
                     </tr>
                 </table> -->
-          <!-- Panel Floating Lables -->
-          <div class="panel">
-            <div class="panel-heading">
-              <h3 class="panel-title">Add an Item</h3>
-            </div>
-            <div class="panel-body container-fluid">
-              <form autocomplete="off">
-                <div class="form-group form-material floating">
-                  <input type="text" ng-model='Description' class="form-control" name="inputFloatingText" />
-                  <label class="floating-label">Item Description</label>
-                </div>
-                <div class="form-group form-material floating">
-                  <select class="form-control" ng-model='Category' id="category">
-                    <option value="0">Produce</option>
-                    <option value="1">Dairy</option>
-                    <option value="2">Deli</option>
-                    <option value="3">Frozen</option>
-                    <option value="4">Grains</option>
-                    <option value="5">Cans</option>
-                    <option value="6">Personal care</option>
-                    <option value="7">Bakery</option>
-                    <option value="8">Other</option>
-                  </select>
-                  <label class="floating-label">Category</label>
-                </div>
-                <div class="form-group form-material floating">
-                  <input type="number" step="0.01" min="0" ng-model='Price' class="form-control" name="inputFloatingText" />
-                  <label class="floating-label">Price</label>
-                </div>
-                <div class="form-group form-material floating">
-                  <input type="text" ng-model='IconLink' class="form-control" name="inputFloatingText" />
-                  <label class="floating-label">Icon Link</label>
-                </div>
-                <div class="form-group form-material">
-                  <button type="button" ng-click="createGroceryItem()" class="btn btn-block btn-primary">Create Item</button>
-                </div>
-                
-                </div>
-              </form>
-            </div>
-          </div>
-          <!-- End Panel Floating Lables -->
                 </div>
               </div>
             </div>
