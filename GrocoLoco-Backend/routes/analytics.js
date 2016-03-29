@@ -189,7 +189,7 @@ module.exports = function (app){
 
 					var dat = recommendationBreakdowns[i]
 
-					if(dat >= 0 && dat <= 0.1){
+					if(dat > 0 && dat <= 0.1){
 						ranges['0.1'] ++
 					}else if(dat > 0.1 && dat <= 0.2){
 						ranges['0.2'] ++
