@@ -16,6 +16,20 @@ module.exports = function (app){
         })
     })
 
+    app.get('/items/:category', function(req, res){
+        GroceryItem.find({
+            "Category": req.params.category
+        }, function(err, groceryItems){
+            if(err)
+                res.send(err)
+            if(groceryItems){
+                res.send(groceryItems)
+            }
+            else
+                res.send(404)
+        })
+    })
+
     app.post('/category', isAuthenticated, function(req, res){
         GroceryItem.find({
             "Category": req.body.categoryNumber

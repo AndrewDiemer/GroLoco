@@ -6,8 +6,11 @@
   <meta name="description" content="maple tree capital">
   <meta name="author" content="">
 
-  <title>Data.com | Maple Tree Capital</title>
+  <title></title>
       <!-- <link rel="stylesheet" type="text/css" href="./bower_components/ng-table/dist/ng-table.min.css"> -->
+  <link rel="stylesheet" href="../vendor/intro-js/introjs.css">
+  <!-- <link rel="stylesheet" href="../css/site.min.css"> -->
+
 
   
   <!--[if lt IE 9]>
@@ -24,8 +27,8 @@
     Breakpoints();
   </script>
 </head>
-<body class="dashboard">
-
+<body class="dashboard" >
+<!-- ng-controller='storeBuilderController' -->
   <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -119,25 +122,25 @@
   </div>
 </div>
 </div>
-  <div class="page">
-    <div class="page-content padding-30 container-fluid" style="height: 100vh;">
+  <div class="page" >
+    <div class="page-content padding-30 container-fluid" >
       <div class="row" data-plugin="matchHeight" data-by-row="true">
         <div class="col-md-12">
           <div class="panel" style="margin-top: 60px;">
             <div class="panel-body container-fluid">
               <div class="example-wrap">
-                <h1>Store Builder</h1>
+                <h1>Store Builder: {{currentStore}}</h1>
                 <hr>
                 <div class="example">
                   <div class="row">
                     <div class="col-md-2">
-                      <button type="button" class="btn btn-block btn-primary" onClick="addShape()">Add Shape</button>
+                      <button type="button" class="btn btn-block btn-primary" onClick="addShape()" id='green-button'>Add Shape</button>
                     </div>
                     <div class="col-md-2">
-                      <button type="button" class="btn btn-block btn-danger" ng-click="clearBlocks()">Delete All</button>
+                      <button type="button" class="btn btn-block btn-danger" onClick="clearBlocks()" id='red-button'>Delete All</button>
                     </div>
                     <div class="col-md-2">
-                      <button type="button" class="btn btn-block btn-success" ng-click="saveAllBlocks()">Save All</button>
+                      <button type="button" class="btn btn-block btn-success" ng-click="saveAllBlocks()" id='save-all'>Save All</button>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
@@ -171,8 +174,17 @@
                 <!-- jQuery -->
 
                 <svg>
-                  <rect width="300" height="300" style="x: 40;y: 80;margin-left: 10px;fill: transparent;stroke-width: 6;stroke: rgba(163, 175, 183, 0.66);stroke-linejoin: round;s;stroke-dasharray: 20,4;troke-dasharray: true;"></rect>
+                  <rect id='store-rect' width="0" height="0" style="x: 40;y: 120;margin-left: 10px;fill: transparent;stroke-width: 6;stroke: rgba(163, 175, 183, 0.66);stroke-linejoin: round;s;stroke-dasharray: 20,4;troke-dasharray: true;"></rect>
                 </svg>
+                <div class="pull-right" >
+<!--                 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" data-trigger="hover" data-original-title="Click to tooltip" title="">Click to tooltip</button> -->
+
+
+                  <button ng-click='createStore()' data-toggle="tooltip" data-placement="left" data-trigger="hover" data-original-title="Create New Store" type="button" class="btn btn-floating btn-success" style="position: fixed;bottom: 150px;z-index: 2000;right: 100px;width: 75px;height: 75px;"><i class="icon wb-plus" aria-hidden="true"></i></button>
+
+                  <button ng-click='uploadStore()' data-toggle="tooltip" data-placement="left" data-trigger="hover" data-original-title="Update Existing Store" type="button" class="btn btn-floating btn-danger" style="position: fixed;bottom: 50px;z-index: 2000;right: 100px;width: 75px;height: 75px;"><i class="icon wb-download" aria-hidden="true"></i></button>
+                </div>
+                
                 
                 </div>
               </div>
@@ -184,8 +196,250 @@
   </div>
 </body>
 
+
+<!-- Create a store -->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myCreateStoreModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" ng-click='closeCreateStore()'>&times;</button>
+          <h2 class="modal-title">Create a Store</h2>
+          <hr>
+
+        </div>
+        <div class="modal-body">
+          <h4 class="example-title"></h4>
+             <div class="panel-body container-fluid">
+              <div class="row row-lg">
+               <!-- Store Name -->
+               <form autocomplete="off">
+                 <div class="form-group form-material ">
+                    <input id='store-name'type="text" class="form-control empty" name="store-name">
+                    <label class="control-label">Store Name</label>
+                  </div>
+                  <!-- Address -->
+                  <div class="form-group form-material ">
+                    <input id='address' type="text" class="form-control empty" name="address">
+                    <label class="control-label">Address</label>
+                  </div>
+
+                  <!-- Width -->
+                 <div class="form-group form-material ">
+                    <input id='width-dim'type="text" class="form-control empty" name="width-dim">
+                    <label class="control-label">Width (m)</label>
+                  </div>
+
+                  <!-- Height -->
+                 <div class="form-group form-material ">
+                    <input id='height-dim'type="text" class="form-control empty" name="height-dim">
+                    <label class="control-label">Height (m)</label>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="createStorePost()">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeCreateStore()">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<!-- Display Items -->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myDisplayItemsModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <button type="button" class="close" data-dismiss="modal" ng-click='closeCreateStore()'>&times;</button> -->
+          <h2 class="modal-title">Block Number #{{blockNumber}}</h2>
+          <hr>
+
+        </div>
+        <div class="modal-body">
+             <div class="panel-body container-fluid">
+               <!-- Store Name -->
+                    <table datatable="ng" class="row-border hover">
+                        <thead>
+                        <tr>
+
+                            <th>Category</th>
+                            <th>Item Name</th>
+                            <th>Side</th>
+                            <th>Location</th>
+                            <!-- <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Discount Title</th>
+                            <th>Promo</th> -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="person in persons">
+
+                            <td>{{ person.Category }}</td>
+                            <td>{{ person.Description }}</td>
+                            <td>{{ person.Face }}</td>
+                            <td>{{ person.ItemLocation }}</td>
+<!--                             <td>{{ person.Promotion.PromoEndDate | amDateFormat:'MM-DD-YYYY HH:mm:ss'}}</td>
+                            <td>{{ person.Promotion.PromoTitle}}</td> -->
+                           <!--  <td ng-if="person.IsPromo == true"><button type="button" class="btn btn-danger btn-raised" ng-click="removePromo(person)">Remove Promo</button></td>
+                            <td ng-if="person.IsPromo == false"><i class="fa fa-person"></i>
+                            <button type="button" class="btn btn-primary btn-raised" data-target=".example-modal-lg" data-toggle="modal" ng-click="addPromoTemp(person)">Add Promo</button>
+                            </td> -->
+                        </tr>
+                        </tbody>
+                    </table>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="createStorePost()">Add</button> -->
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeblockItems()">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<!-- Upload existing store-->
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myUplodStoreModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" ng-click='closeCreateStore()'>&times;</button>
+          <h2 class="modal-title">Upload Existing Store</h2>
+          <hr>
+
+        </div>
+        <div class="modal-body">
+          <h4 class="example-title"></h4>
+             <div class="panel-body container-fluid">
+              <div class="row row-lg">
+               <!-- Store Name -->
+               <form autocomplete="off">
+                <div class="form-group form-material">
+                  <label class="control-label" for="select">Select</label>
+                  <select class="form-control" id="select-stores">
+
+                  </select>
+                </div>
+                 
+                </form>
+
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="uploadStoreContents()">Upload</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeCreateStore()">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<div class="container">
+  <!-- <h2>Basic Modal Example</h2> -->
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Block #<span id='block-number'></span></button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <h4 class="example-title"></h4>
+          <div class="radio-custom radio-primary">
+             <div class="panel-body container-fluid">
+              <div class="row row-lg">
+                <div class="col-sm-12 col-lg-12">
+                  <!-- Example Basic -->
+                  <div class="example-wrap">
+                    <div class="example">
+                    <h4>Categories</h4>
+                      <select class="form-control" data-plugin="select2" id="categories">
+                          <option value="">Select Category...</option>
+                          <option value="0">Produce</option>
+                          <option value="1">Dairy</option>
+                          <option value="2">Deli</option>
+                          <option value="3">Frozen</option>
+                          <option value="4">Grains</option>
+                          <option value="5">Cans</option>
+                          <option value="6">Personal Care</option>
+                          <option value="7">Bakery</option>
+                          <option value="8">Other</option>
+                      </select>
+                    </div>
+
+                    <div class="example">
+                    <h4>Items</h4>
+                      <select class="form-control" data-plugin="select2" id="items">
+                          
+                      </select>
+                    </div>
+
+                    <div class="example">
+                    <h4>Side</h4>
+                      <select class="form-control" data-plugin="select2" id="side">
+                          <option value="T">Top</option>
+                          <option value="B">Bottom</option>
+                          <option value="L">Left</option>
+                          <option value="R">Right</option>
+                      </select>
+                    </div>
+
+                    <div class="example">
+                    <h4>Location</h4>
+                      <rzslider rz-slider-model="bedSlider.value" rz-slider-options="bedSlider.options"></rzslider>
+                    </div>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="add()">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
 <div class="modal fade example-modal-lg modal-fade-in-scale-up" aria-hidden="true" aria-labelledby="exampleOptionalLarge"
-role="dialog" tabindex="-1">
+role="dialog" tabindex="-1" data-target="#myModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -396,24 +650,14 @@ svg {
   <!-- Scripts -->
   <script src="../js/core.js"></script>
   <script src="../js/site.js"></script>
+  <script src="../js/index.js"></script>
+  <script src="../js/hack.js"></script>
 
   <script src="../js/sections/menu.js"></script>
   <script src="../js/sections/menubar.js"></script>
   <script src="../js/sections/sidebar.js"></script>
   <script src="../vendor/bootstrap/bootstrap.js"></script>
 
-  <!-- Scripts For This Page -->
-  <script src="../js/components/matchheight.js"></script>
-  <script src="../js/components/asscrollable.js"></script>
-  <script src="../examples/js/advanced/scrollable.js"></script>
-
-  <!-- Scripts -->
-  <script src="../js/core.js"></script>
-  <script src="../js/site.js"></script>
-
-  <script src="../js/sections/menu.js"></script>
-  <script src="../js/sections/menubar.js"></script>
-  <script src="../js/sections/sidebar.js"></script>
 
   <script src="../vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
   <script src="../vendor/jt-timepicker/jquery.timepicker.min.js"></script>
@@ -428,91 +672,12 @@ svg {
 <script src="../js/components/datepair-js.js"></script>
 <script src="../js/components/bootstrap-datepicker.js"></script>
 
-
-
-  <!-- Core  -->
-  <script src="../vendor/jquery/jquery.js"></script>
-  <script src="../vendor/bootstrap/bootstrap.js"></script>
-  <script src="../vendor/animsition/jquery.animsition.js"></script>
-  <script src="../vendor/asscroll/jquery-asScroll.js"></script>
-  <script src="../vendor/mousewheel/jquery.mousewheel.js"></script>
-  <script src="../vendor/asscrollable/jquery.asScrollable.all.js"></script>
-  <script src="../vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
-
-  <!-- Plugins -->
-  <script src="../vendor/switchery/switchery.min.js"></script>
-  <script src="../vendor/intro-js/intro.js"></script>
-  <script src="../vendor/screenfull/screenfull.js"></script>
-  <script src="../vendor/slidepanel/jquery-slidePanel.js"></script>
-
-  <!-- Plugins For This Page -->
-  <script src="../vendor/select2/select2.min.js"></script>
-  <script src="../vendor/bootstrap-tokenfield/bootstrap-tokenfield.min.js"></script>
-  <script src="../vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-  <script src="../vendor/bootstrap-select/bootstrap-select.js"></script>
-  <script src="../vendor/icheck/icheck.min.js"></script>
-  <script src="../vendor/switchery/switchery.min.js"></script>
-  <script src="../vendor/asrange/jquery-asRange.min.js"></script>
-  <script src="../vendor/asspinner/jquery-asSpinner.min.js"></script>
-  <script src="../vendor/clockpicker/bootstrap-clockpicker.min.js"></script>
-  <script src="../vendor/ascolor/jquery-asColor.min.js"></script>
-  <script src="../vendor/asgradient/jquery-asGradient.min.js"></script>
-  <script src="../vendor/ascolorpicker/jquery-asColorPicker.min.js"></script>
-  <script src="../vendor/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-  <script src="../vendor/jquery-knob/jquery.knob.js"></script>
-  <script src="../vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
-  <script src="../vendor/card/jquery.card.js"></script>
-  <script src="../vendor/jquery-labelauty/jquery-labelauty.js"></script>
-  <script src="../vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-  <script src="../vendor/jt-timepicker/jquery.timepicker.min.js"></script>
-  <script src="../vendor/datepair-js/datepair.min.js"></script>
-  <script src="../vendor/datepair-js/jquery.datepair.min.js"></script>
-  <script src="../vendor/jquery-strength/jquery-strength.min.js"></script>
-  <script src="../vendor/multi-select/jquery.multi-select.js"></script>
-  <script src="../vendor/typeahead-js/bloodhound.min.js"></script>
-  <script src="../vendor/typeahead-js/typeahead.jquery.min.js"></script>
-  <script src="../vendor/jquery-placeholder/jquery.placeholder.js"></script>
-
-  <!-- Scripts -->
-  <script src="../js/core.js"></script>
-  <script src="../js/site.js"></script>
-
-  <script src="../js/sections/menu.js"></script>
-  <script src="../js/sections/menubar.js"></script>
-  <script src="../js/sections/gridmenu.js"></script>
-  <script src="../js/sections/sidebar.js"></script>
-
-  <script src="../js/configs/config-colors.js"></script>
+  <!-- <script src="../vendor/intro-js/intro.js"></script> -->
   <script src="../js/configs/config-tour.js"></script>
 
-  <script src="../js/components/asscrollable.js"></script>
-  <script src="../js/components/animsition.js"></script>
-  <script src="../js/components/slidepanel.js"></script>
-  <script src="../js/components/switchery.js"></script>
-
-  <!-- Scripts For This Page -->
-  <script src="../js/components/select2.js"></script>
-  <script src="../js/components/bootstrap-tokenfield.js"></script>
-  <script src="../js/components/bootstrap-tagsinput.js"></script>
-  <script src="../js/components/bootstrap-select.js"></script>
-  <script src="../js/components/icheck.js"></script>
-  <script src="../js/components/switchery.js"></script>
-  <script src="../js/components/asrange.js"></script>
-  <script src="../js/components/asspinner.js"></script>
-  <script src="../js/components/clockpicker.js"></script>
-  <script src="../js/components/ascolorpicker.js"></script>
-  <script src="../js/components/bootstrap-maxlength.js"></script>
-  <script src="../js/components/jquery-knob.js"></script>
-  <script src="../js/components/bootstrap-touchspin.js"></script>
-  <script src="../js/components/card.js"></script>
-  <script src="../js/components/jquery-labelauty.js"></script>
-  <script src="../js/components/bootstrap-datepicker.js"></script>
-  <script src="../js/components/jt-timepicker.js"></script>
-  <script src="../js/components/datepair-js.js"></script>
-  <script src="../js/components/jquery-strength.js"></script>
-  <script src="../js/components/multi-select.js"></script>
-  <script src="../js/components/jquery-placeholder.js"></script>
-  
+<script src="../js/components/select2.js"></script>
 
 <script type="text/javascript" src="../js/index.js"></script>
+  <script src="../js/components/jquery-placeholder.js"></script>
 
+<script src="../js/components/material.js"></script>

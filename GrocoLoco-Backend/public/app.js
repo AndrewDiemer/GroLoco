@@ -1,5 +1,5 @@
  
- var GrocoLoco = angular.module('GrocoLoco', ['ngRoute', 'datatables', 'angularMoment']);
+ var GrocoLoco = angular.module('GrocoLoco', ['ngRoute', 'datatables', 'angularMoment', 'rzModule']);
 
  // configure our routes
  GrocoLoco.config(function($routeProvider) {
@@ -69,3 +69,23 @@ GrocoLoco.run(function(amMoment) {
         return categories[category];
     };
 });
+
+  GrocoLoco.controller('mainController', function($scope, $rootScope, $location, $http) {
+    $scope.$on('$routeChangeStart', function(event, currRoute, prevRoute){
+        if(currRoute.$$route.templateUrl === 'views/analytics.html' || currRoute.$$route.templateUrl ==='views/grocery-manager.html' || currRoute.$$route.templateUrl ==='views/home.html' || currRoute.$$route.templateUrl ==='views/promotions.html' || currRoute.$$route.templateUrl ==='views/store-builder.html') {
+            console.log('Check')
+            $http.get('/loggedin').success(function(data,status){
+                if(data.status == false)
+                    $location.path('/login')
+                else
+                    console.log('proceed mister')
+            }).error(function(data, status){
+                console.log('YOUU SHALLL NOTTT PASSSS!!')
+                $location.path('/login')
+            })
+        }else{
+            console.log('No Check')
+            console.log(currRoute.$$route.templateUrl)
+        }
+    })
+ });

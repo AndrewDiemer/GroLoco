@@ -18,6 +18,8 @@
     "materialize": "~0.97.0",
     "font-awesome": "~4.5.0",
     "angular-moment": "~0.10.3",
-    "moment": "~2.11.2"
+    "moment": "~2.11.2",
+    "angularjs-slider": "^2.10.4",
+    "angular-intro.js": "^2.0.0"
   }
 }

@@ -239,15 +239,16 @@
 
         this.tour.setOptions(tourOptions);
         $('[data-slug="advanced-tour"]').on('click', function() {
+          alert('bitch!')
           self.tour.start();
         });
       }
-      // if (window.localStorage && window.localStorage.getItem('startTour') && (flag !== true)) {
-      //   return;
-      // } else {
-      //   this.tour.start();
-      //   window.localStorage.setItem('startTour', true);
-      // }
+      if (window.localStorage && window.localStorage.getItem('startTour') && (flag !== true)) {
+        return;
+      } else {
+        this.tour.start();
+        window.localStorage.setItem('startTour', true);
+      }
     }
   });
 
