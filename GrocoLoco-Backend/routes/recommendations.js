@@ -17,7 +17,7 @@ raccoon.config.nearestNeighbors = 5;
 raccoon.config.className = 'groceryitem';  // prefix for your items (used for redis) 
 raccoon.config.numOfRecsStore = 30;  // number of recommendations to store per user 
 raccoon.config.factorLeastSimilarLeastLiked = false; 
-raccoon.connect('8589', 'ec2-54-83-202-143.compute-1.amazonaws.com', 'paonqf6qoa86pv3gs30jg35a3s7') // auth is optional, but required for remote redis instances 
+raccoon.connect('12999', 'ec2-54-225-195-114.compute-1.amazonaws.com', 'ptbc0r5lerem2cfuvsnc06b0bc') // auth is optional, but required for remote redis instances 
 
 module.exports = function (app){
 

@@ -75,34 +75,36 @@ module.exports = function (app){
 				}
 
 				for (var i = 0; i < lists.length; i++){
-					console.log(lists[i])
-					switch(lists[i].Category) {
-					    case 0:
-					        categories.Produce++
-					        break;
-					    case 1:
-					        categories.Dairy++
-					        break;
-					    case 2:
-					        categories.Deli++
-					        break;
-					    case 3:
-					        categories.Frozen++
-					        break;
-					    case 4:
-					        categories.Grains++
-					        break;
-					    case 5:
-					        categories.Cans++
-					        break;
-					    case 6:
-					        categories.PersonalCare++
-					        break;
-					    case 7:
-					        categories.Bakery++
-					        break;
-					    default:
-					        categories.Other++
+					for (var j = 0; j < lists[i].List.length; j++) {
+						console.log(lists[i].List[j].Category)
+						switch(lists[i].List[j].Category) {
+						    case 0:
+						        categories.Produce++
+						        break;
+						    case 1:
+						        categories.Dairy++
+						        break;
+						    case 2:
+						        categories.Deli++
+						        break;
+						    case 3:
+						        categories.Frozen++
+						        break;
+						    case 4:
+						        categories.Grains++
+						        break;
+						    case 5:
+						        categories.Cans++
+						        break;
+						    case 6:
+						        categories.PersonalCare++
+						        break;
+						    case 7:
+						        categories.Bakery++
+						        break;
+						    default:
+						        categories.Other++
+						}
 					}
 				}
 				res.send({
@@ -187,7 +189,7 @@ module.exports = function (app){
 
 					var dat = recommendationBreakdowns[i]
 
-					if(dat >= 0 && dat <= 0.1){
+					if(dat > 0 && dat <= 0.1){
 						ranges['0.1'] ++
 					}else if(dat > 0.1 && dat <= 0.2){
 						ranges['0.2'] ++
