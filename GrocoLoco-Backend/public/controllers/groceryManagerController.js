@@ -1,9 +1,30 @@
 
 GrocoLoco.controller('groceryManagerController', function($scope, $http, $location) {
 
-	$scope.list = function(){
-		$('#grocery-list').addClass('active')
+	$scope.switchToDelete = function(){
+		$('#delete').addClass('active')
 		$('#add').removeClass('active')
+	}
+
+	$scope.switchToAdd = function(){
+		$('#add').addClass('active')
+		$('#delete').removeClass('active')
+	}
+
+	$http.get('/groceries').success(function(data, status){
+		$scope.persons = data
+	})
+
+	$scope.deleteGroceryItem = function(item){
+		console.log(item)
+		$http.post('/deleteGroceryItem', item).success(function(data, status){
+			console.log("success" + data)
+			console.log(status)
+			location.reload()
+		}).error(function(data, status){
+			console.log("Error" + data)
+			console.log(status)
+		})
 	}
 
 	$scope.createGroceryItem = function(){
@@ -34,11 +55,7 @@ GrocoLoco.controller('groceryManagerController', function($scope, $http, $locati
 				
 			$http.post("/createGroceryItem", item).success(function(data,status){
 			
-				$scope.Price = ""; 
-				$scope.Description = "";
-				$scope.IconLink = "";
-				$scope.Category = "";
-
+				location.reload();
 				console.log(data);
 
 

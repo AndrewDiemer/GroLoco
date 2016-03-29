@@ -3,7 +3,7 @@ module.exports = function (app){
 
     app.post('/createGroceryItem', isAuthenticated, function (req, res){
 
-//TODO: Figure out my Promotions is not being saved in the DB.
+		//TODO: Figure out my Promotions is not being saved in the DB.
 		var newItem = new GroceryItem({
 
 			Category       : req.body.Category,
@@ -26,6 +26,21 @@ module.exports = function (app){
 		}) 
 
 	})
+
+	app.post('/deleteGroceryItem', isAuthenticated, function(req,res){
+
+        GroceryItem.findOneAndRemove({
+            '_id': req.body._id
+        }, function(err, groceryItem){
+            if(err)
+                res.send(err)
+            if(groceryItem){
+                res.send(groceryItem)
+            }
+            else
+                res.send(404)
+        })
+    })
 
 }
 
