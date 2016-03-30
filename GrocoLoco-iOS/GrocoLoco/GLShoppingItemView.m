@@ -13,7 +13,7 @@
 @interface GLShoppingItemView ()
 
 @property (weak, nonatomic) IBOutlet UILabel *itemNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *itemAisleNumber;
+@property (weak, nonatomic) IBOutlet UIImageView *itemImageView;
 @property (weak, nonatomic) IBOutlet UILabel *itemNotes;
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
@@ -25,10 +25,10 @@
 - (void)setItem:(GLGroceryItem *)item
 {
     _item = item;
-
+    
     self.itemNameLabel.text = self.item.itemDescription;
     self.itemNotes.text = self.item.comments;
-    self.itemAisleNumber.text = self.item.aisle;
+    [self.itemImageView setImage:self.item.image];
 
     [self.gotItemButton setTitle:@"" forState:UIControlStateNormal];
     [self.gotItemButton setImage:[UIImage imageNamed:@"gotItem"] forState:UIControlStateSelected];

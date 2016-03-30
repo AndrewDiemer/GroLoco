@@ -3,7 +3,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -21,12 +20,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjQ-lx-b0C">
                     <rect key="frame" x="35" y="48" width="203" height="103"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aisle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slO-Im-XaZ">
-                            <rect key="frame" x="11" y="8" width="37" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="e8U-L7-XzF">
                             <rect key="frame" x="111" y="8" width="84" height="87"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -48,33 +41,42 @@
                                 </mask>
                             </variation>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzy-rl-91a">
-                            <rect key="frame" x="0.0" y="37" width="101" height="48"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EOv-40-CGM">
+                            <rect key="frame" x="8" y="8" width="85" height="87"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="EOv-40-CGM" secondAttribute="height" multiplier="1:1" id="BJh-DE-CQ3"/>
+                                <constraint firstAttribute="height" constant="80" id="hMu-6r-bIq"/>
+                                <constraint firstAttribute="width" constant="80" id="n9e-ku-KDU"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="BJh-DE-CQ3"/>
+                                    <exclude reference="hMu-6r-bIq"/>
+                                    <exclude reference="n9e-ku-KDU"/>
+                                </mask>
+                            </variation>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.50856218434343436" green="0.50856218434343436" blue="0.50856218434343436" alpha="0.25" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="e8U-L7-XzF" firstAttribute="leading" secondItem="Dqm-YW-ohT" secondAttribute="trailing" constant="8" id="2P3-4V-lH2"/>
-                        <constraint firstItem="Dqm-YW-ohT" firstAttribute="leading" secondItem="mzy-rl-91a" secondAttribute="trailing" id="6oc-Jh-0ix"/>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mzy-rl-91a" secondAttribute="bottom" id="98S-aE-Mqd"/>
-                        <constraint firstItem="slO-Im-XaZ" firstAttribute="leading" secondItem="hjQ-lx-b0C" secondAttribute="leadingMargin" constant="3" id="Abp-jy-ZTx"/>
                         <constraint firstItem="Dqm-YW-ohT" firstAttribute="centerX" secondItem="hjQ-lx-b0C" secondAttribute="centerX" id="DM5-wC-fDw"/>
+                        <constraint firstItem="Dqm-YW-ohT" firstAttribute="leading" secondItem="EOv-40-CGM" secondAttribute="trailing" constant="8" id="ERD-s8-R2w"/>
                         <constraint firstItem="Dqm-YW-ohT" firstAttribute="top" secondItem="hjQ-lx-b0C" secondAttribute="top" constant="15" id="Kh6-S9-sDO"/>
-                        <constraint firstItem="mzy-rl-91a" firstAttribute="leading" secondItem="hjQ-lx-b0C" secondAttribute="leading" id="TeL-42-cWy"/>
+                        <constraint firstAttribute="bottom" secondItem="EOv-40-CGM" secondAttribute="bottom" constant="8" id="Ob2-Hc-2aE"/>
                         <constraint firstAttribute="width" constant="250" id="UBi-fn-8Pr"/>
                         <constraint firstItem="e8U-L7-XzF" firstAttribute="top" secondItem="hjQ-lx-b0C" secondAttribute="top" constant="8" id="V85-EW-2qP"/>
                         <constraint firstAttribute="bottom" secondItem="Dqm-YW-ohT" secondAttribute="bottom" constant="15" id="Yex-kc-ZCO"/>
-                        <constraint firstItem="mzy-rl-91a" firstAttribute="top" secondItem="slO-Im-XaZ" secondAttribute="bottom" constant="8" id="auJ-zo-Cmj"/>
-                        <constraint firstItem="slO-Im-XaZ" firstAttribute="top" secondItem="hjQ-lx-b0C" secondAttribute="topMargin" id="hCa-Fn-BVP"/>
+                        <constraint firstItem="EOv-40-CGM" firstAttribute="top" secondItem="hjQ-lx-b0C" secondAttribute="top" constant="8" id="l2Y-ku-cLT"/>
+                        <constraint firstItem="EOv-40-CGM" firstAttribute="leading" secondItem="hjQ-lx-b0C" secondAttribute="leading" constant="8" id="lQR-JU-Yh2"/>
                         <constraint firstAttribute="trailing" secondItem="e8U-L7-XzF" secondAttribute="trailing" constant="8" id="wyt-Yn-HqF"/>
                         <constraint firstAttribute="bottom" secondItem="e8U-L7-XzF" secondAttribute="bottom" constant="8" id="xr1-P9-oYG"/>
+                        <constraint firstItem="EOv-40-CGM" firstAttribute="centerY" secondItem="hjQ-lx-b0C" secondAttribute="centerY" id="yoX-WH-Ewu"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="UBi-fn-8Pr"/>
+                            <exclude reference="yoX-WH-Ewu"/>
                         </mask>
                     </variation>
                 </view>
@@ -115,11 +117,11 @@
             <connections>
                 <outlet property="backgroundView" destination="hjQ-lx-b0C" id="eLZ-u6-nBa"/>
                 <outlet property="gotItemButton" destination="msx-mf-yq9" id="vmr-y1-jCe"/>
-                <outlet property="itemAisleNumber" destination="mzy-rl-91a" id="TMe-Cr-Drj"/>
+                <outlet property="itemImageView" destination="EOv-40-CGM" id="FKM-SP-gn6"/>
                 <outlet property="itemNameLabel" destination="UtM-4m-gRi" id="e9F-xB-Oao"/>
                 <outlet property="itemNotes" destination="e8U-L7-XzF" id="WMs-F1-92Z"/>
             </connections>
-            <point key="canvasLocation" x="422.25" y="412"/>
+            <point key="canvasLocation" x="421.5" y="412"/>
         </view>
     </objects>
     <resources>

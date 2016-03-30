@@ -16,5 +16,6 @@
 @property (nonatomic, copy) NSString *subTitle;
 @property (nonatomic, retain) NSURL *url;
 @property (nonatomic, strong) NSString *_id;
+@property (nonatomic, assign) NSInteger tag;
 
 @end

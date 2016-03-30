@@ -150,7 +150,6 @@ static const NSString *GL_PROMO_END_DATE = @"PromoEndDate";
     else {
         returnDict[GL_ITEM_PROMOTION] = @{};
     }
-    NSLog(@"%@", returnDict);
     return returnDict;
 }
 
