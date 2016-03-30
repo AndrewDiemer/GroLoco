@@ -70,8 +70,20 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
     data.Categories.Other
     ];
 
+    var labels = new Array(9);
+
+    labels[0] = "Produce";
+    labels[1] = "Dairy";
+    labels[2] = "Deli";
+    labels[3] = "Frozen";
+    labels[4] = "Grains";
+    labels[5] = "Cans";
+    labels[6] = "PersonalCare";
+    labels[7] = "Bakery";
+    labels[8] = "Other";
+
     var overlappingData = {
-     labels: ["Produce", "Dairy", "Deli", "Frozen", "Grains", "Cans", "PersonalCare", "Bakery", "Other"],
+     labels: labels,
      series: [series]
    };
 
@@ -95,20 +107,17 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
 
   // Example Chartist Pie Chart Labels
   // ---------------------------------
+  for(var i = 0; i< series.length; i++){
+    if(series[i] == 0){
+      series.splice(i, 1);
+      labels.splice(i, 1);
+    }
+  }
+
 
   var labelsPieData = {
-    labels: ["Produce", "Dairy", "Deli", "Frozen", "Grains", "Cans", "PersonalCare", "Bakery", "Other"],
-    series: [
-    data.Categories.Produce,
-    data.Categories.Dairy,
-    data.Categories.Deli,
-    data.Categories.Frozen,
-    data.Categories.Grains,
-    data.Categories.Cans,
-    data.Categories.PersonalCare,
-    data.Categories.Bakery,
-    data.Categories.Other
-    ]
+    labels: labels,
+    series: series
   };
 
   var labelsPieOptions = {
@@ -164,11 +173,11 @@ $http.get("/frequenciesOfItems").success(function(data,status){
     labels[i] = items[i].Description
     series[i] = items[i].value
   }
-  // console.log(labels);
-  // console.log(series);
+   console.log(labels);
+   console.log(series);
 
   var overlappingData = {
-   labels: [labels],
+   labels: labels,
    series: [series]
  };
 
