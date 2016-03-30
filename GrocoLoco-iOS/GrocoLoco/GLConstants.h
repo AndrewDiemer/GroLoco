@@ -17,6 +17,8 @@ static NSString *GL_SHOW_HOME = @"GLShowHome";
 static NSString *GL_SHOW_HOME_MAP = @"GLShowHomeFromMap";
 static NSString *GL_START_SHOPPING_SEGUE = @"GLStartShoppingSegue";
 static NSString *GL_SHOW_CATEGORY_SEGUE = @"GLShowCategorySegue";
+static NSString *GL_SHOW_ACCOUT_INFO_SEGUE = @"ShowAccountInfo";
+static NSString *GL_CHANGE_STROE_SEGUE = @"GLChangeStoreSegue";
 
 //****************************************//
 //          TABLEVIEW CELLS

@@ -15,5 +15,6 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subTitle;
 @property (nonatomic, retain) NSURL *url;
+@property (nonatomic, strong) NSString *_id;
 
 @end

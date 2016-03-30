@@ -51,6 +51,29 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [GLNetworkingManager getListOFGroceryStores:^(NSDictionary *response, NSError *error) {
+        if (error){
+            NSLog(@"%@",error.localizedDescription);
+        }
+        else{
+            for (NSDictionary *store in response){
+                GLMapAnnotation* annotation = [[GLMapAnnotation alloc] init];
+                annotation.title = store[@"StoreName"];
+                annotation._id = store[@"_id"];
+                NSLog(@"%@",annotation.title);
+                NSLog(@"%@",annotation._id);
+                CLLocationCoordinate2D myCoordinate;
+                myCoordinate.latitude = [store[@"Latitude"] doubleValue];
+                myCoordinate.longitude = [store[@"Longitude"] doubleValue];
+                annotation.coordinate = myCoordinate;
+                [self.mapView addAnnotation:annotation];
+            }
+        }
+    }];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -128,17 +151,23 @@
 - (void)buttonMethod:(UIButton *)sender
 {
     sender.selected = !sender.selected;
+    NSLog(@"%ld",(long)sender.tag);
     GLMapAnnotation *annotation = [self.mapView.annotations objectAtIndex:sender.tag];
-
     [GLNetworkingManager setUserLocation:annotation.title
-                               longitude:@(annotation.coordinate.longitude)
-                                latitude:@(annotation.coordinate.latitude)
+                               id:annotation._id
                               completion:^(NSDictionary *response, NSError *error) {
                                   if (error) {
                                       [self showError:error.localizedDescription];
                                   }
                                   else {
-                                      [self performSegueWithIdentifier:GL_SHOW_HOME_MAP sender:self];
+                                      [[GLUserManager sharedManager] setStoreName:annotation.title];
+                                      [[GLUserManager sharedManager] setStoreCoordinate:CLLocationCoordinate2DMake(annotation.coordinate.latitude, annotation.coordinate.longitude)];
+                                      if (self.isChangingStore){
+                                          [self dismissViewControllerAnimated:YES completion:nil];
+                                      }
+                                      else{
+                                          [self performSegueWithIdentifier:GL_SHOW_HOME_MAP sender:self];
+                                      }
                                   }
                               }];
 }

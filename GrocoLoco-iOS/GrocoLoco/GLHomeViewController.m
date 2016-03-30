@@ -14,6 +14,7 @@
 #import "GLShoppingViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
+#import "GLMapViewController.h"
 
 @interface GLHomeViewController () <UITextFieldDelegate>
 
@@ -317,6 +318,10 @@
     if ([segue.identifier isEqualToString:GL_START_SHOPPING_SEGUE]) {
         GLShoppingViewController *shoppingVC = segue.destinationViewController;
         shoppingVC.items = [self.data firstObject][@"List"];
+    }
+    else if ([segue.identifier isEqualToString:GL_CHANGE_STROE_SEGUE]){
+        GLMapViewController *mapVC = segue.destinationViewController;
+        mapVC.isChangingStore = YES;
     }
 }
 

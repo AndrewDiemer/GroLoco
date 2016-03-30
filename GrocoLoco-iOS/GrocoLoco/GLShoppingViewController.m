@@ -71,7 +71,7 @@
 
     [GLNetworkingManager getBlocksGroceryListWithCompletion:^(NSDictionary *response, NSError *error) {
         if (error) {
-            [self showError:error.description];
+            [self showError:error.localizedDescription];
         }
         else {
             NSDictionary *storeDimensions = response[@"StoreDimensions"];
