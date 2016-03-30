@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIScrollView *topScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *noPromoLabel;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @end
 
@@ -44,6 +45,7 @@
     self.searchController.searchBar.placeholder = [NSString stringWithFormat:@"Search %@", [self categoryName]];
 
     self.navigationItem.titleView = self.searchController.searchBar;
+
 }
 
 - (NSString *)categoryName
@@ -93,6 +95,13 @@
             else {
                 self.items = response.mutableCopy;
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    NSInteger count = 0;
+                    for (GLGroceryItem *item in self.items){
+                        if (item.isPromotion){
+                            count++;
+                        }
+                    }
+                    [self.pageControl setNumberOfPages:count];
                     [self.tableView reloadData];
                 });
             }
@@ -237,6 +246,16 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     [self filterContentForSearchText:searchController.searchBar.text scope:@"ALL"];
+}
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
+{
+    CGFloat width = scrollView.frame.size.width;
+    NSInteger page = (scrollView.contentOffset.x + (0.5f * width)) / width;
+    [self.pageControl setCurrentPage:page];
 }
 
 @end

@@ -55,30 +55,66 @@ module.exports = function (app){
 
         var isRecommended = req.body.isRecommended
 
+        console.log('Vagina Discharge')
+        console.log(isRecommended)
+        console.log(req.body.List)
+
         for(var i = 0; i < req.body.List.length;i++){
 
             //set if recommended
             req.body.List[i].Recommended = isRecommended
 
+            console.log('Penis')
+            console.log(isRecommended)
+            console.log(req.body.List[i].Recommended)
+
+            console.log(req.user._id)
+            console.log(req.body.List[i]._id)
+
             //Add a liked item to the Recommendation Engine
-            raccoon.liked(req.user._id, req.body.List[i]._id.$oid)
+            raccoon.liked(req.user._id, req.body.List[i]._id)
+
+            console.log(req.body.GroceryListName)
+            console.log(req.user)
+            console.log(req.user._id)
 
             //Find the Add all items to the list
              GroceryList.findOneAndUpdate({
-                    'User': req.user,
+                    'User': req.user._id,
                     'GroceryListName': req.body.GroceryListName
                 },{
                     $push:{'List': req.body.List[i]}
-                },{
-                    safe:true, upsert:true, new: true
                 },
                 function(err, groceryList){
                     if(err)
                         res.send(err)
-                    if(groceryList)
+                    if(groceryList){
                         res.send(200)
+                    }
+                    else{
+                        console.log('could not find grocery List')
+                        res.send(404)
+                    }
                 })
         }
+    })
+
+    app.post('/waseem', function(req,res){
+        GroceryList.findOne({
+            'User': req.body._id,
+            'GroceryListName': req.body.GroceryListName
+        },
+        function(err, groceryList){
+            if(err)
+                res.send(err)
+            if(groceryList){
+                res.send(200)
+            }
+            else{
+                console.log('could not find grocery List')
+                res.send(404)
+            }
+        })
     })
       
 
@@ -98,6 +134,8 @@ module.exports = function (app){
             function(callback){
                 console.log('getting recommended')
                 raccoon.recommendFor(req.user._id, 3, function(results){
+                    console.log(results)
+
                     callback(null, results);
                 })
             },
@@ -119,6 +157,7 @@ module.exports = function (app){
                                     newList.push(results[i])
                                 }
                             }
+                            console.log(newList)
                             callback(null, newList)
                         }else{
                             callback(null);
@@ -145,10 +184,13 @@ module.exports = function (app){
                         console.log(items)
                         res.send(items)
                     }
-                    else
+                    else{
+                        console.log('404')
                         res.send(404)
+                    }
                 })
             }else{
+                console.log('south branch')
                 res.send([])
 
             }

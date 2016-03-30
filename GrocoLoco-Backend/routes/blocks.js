@@ -402,10 +402,10 @@ module.exports = function (app, passport){
 								
 								for (var i = 0; i < groceryList.List.length; i++){
 									// console.log(groceryList.List[i].StoreId)
-									if(req.user.Store != '56b01bf96b0aa47e3b17e9e2'){
-										console.log('oops')
-									}else{
-									
+									// if(req.user.Store != '56b01bf96b0aa47e3b17e9e2'){
+									// 	console.log('oops')
+									// }else{
+										console.log(groceryList.List[i].Face)
 										switch(groceryList.List[i].Face){
 											case 'T':
 												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
@@ -429,12 +429,13 @@ module.exports = function (app, passport){
 											default:
 												break
 										}
-									}
+									// }
 								}
 								var map = {
 									StoreDimensions: store.StoreDimensions,
 									Blocks: blocks
 								}
+								console.log(map)
 								res.send(map)
 							}else{
 								res.send({

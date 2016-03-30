@@ -26,7 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *startShoppingButton;
 @property (weak, nonatomic) IBOutlet UIButton *clearListButton;
 
-@property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) NSMutableArray *expandedPaths;
 @property (strong, nonatomic) NSIndexPath *oldIndex;
 
@@ -60,8 +59,6 @@
     
     self.startShoppingButton.layer.cornerRadius = 5;
     self.clearListButton.layer.cornerRadius = 5;
-    self.usernameLabel.text = [[GLUserManager sharedManager] name];
-    self.storeNameLabel.text = [[GLUserManager sharedManager] storeName];
     
     self.expandedPaths = @[].mutableCopy;
     
@@ -71,6 +68,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.usernameLabel.text = [[GLUserManager sharedManager] name];
+    self.storeNameLabel.text = [[GLUserManager sharedManager] storeName];
     [self loadGroceryLists:nil];
 }
 
