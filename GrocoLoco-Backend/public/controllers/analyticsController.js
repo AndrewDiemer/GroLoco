@@ -249,7 +249,7 @@ $http.get("/getRecommendationBreakdown").success(function(data, status){
 
 $http.get("/getRecommendationTotal").success(function(data,status){
 
-  $('#recommendedItemsPerList').text(data.TotalBreakdown.toPrecision(3));
+  $('#recommendedItemsPerList').text(data.TotalBreakdown.toPrecision(3)*100 + '%');
 
 }).error(function(data, status){
   		//something went wrong

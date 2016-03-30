@@ -233,6 +233,7 @@ module.exports = function (app){
 				for (var i = 0; i < grocerylists.length; i++) {
 					if(grocerylists[i].List.length > 0){
 						for (var j = 0; j < grocerylists[i].List.length; j++) {
+							console.log(grocerylists[i].List[j])
 							if(grocerylists[i].List[j].Recommended)
 								reccommendCount++
 							groceryItemCount++
