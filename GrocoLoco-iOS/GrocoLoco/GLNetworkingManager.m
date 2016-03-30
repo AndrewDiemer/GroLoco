@@ -382,4 +382,9 @@
 
 }
 
++ (void)shareListWithFriends:(NSString *)groceryListName message:(NSString *)message fromEmail:(NSString *)fromEmail emails:(NSArray *)emails items:(NSArray *)items completion:(void (^)(NSDictionary *, NSError *))completionBlock
+{
+    // Doing werk
+}
+
 @end

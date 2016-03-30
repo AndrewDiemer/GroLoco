@@ -43,6 +43,37 @@
         [nav performSegueWithIdentifier:GL_CHANGE_STROE_SEGUE sender:self];
     }];
 }
+- (IBAction)shareListPressed:(id)sender {
+    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+        UIAlertController *alert= [UIAlertController
+                                   alertControllerWithTitle:@"Share Your List!"
+                                   message:@"Separate emails with commas"
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            //Do things
+            UITextField *textField = alert.textFields[0];
+            NSLog(@"To Emails: %@", textField.text);
+            NSLog(@"From: %@", [[GLUserManager sharedManager] email]);
+            NSLog(@"%@ wants to share his GrocoLoco shopping list with you!", [[GLUserManager sharedManager] name]);
+            
+        }];
+        
+        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        [alert addAction:ok];
+        [alert addAction:cancel];
+        
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Emails...";
+            textField.keyboardType = UIKeyboardTypeDefault;
+        }];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
