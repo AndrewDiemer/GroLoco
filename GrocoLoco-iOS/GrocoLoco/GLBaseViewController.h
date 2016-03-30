@@ -10,7 +10,7 @@
 
 @interface GLBaseViewController : UIViewController
 
-- (void)showError:(NSString *)errorMessage;
+- (void)showError:(NSError *)errorMessage;
 - (void)showFullScreenHUD;
 - (void)hideFullScreenHUD;
 

@@ -51,6 +51,30 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [GLNetworkingManager getListOFGroceryStores:^(NSDictionary *response, NSError *error) {
+        if (error){
+            NSLog(@"%@",error.localizedDescription);
+        }
+        else{
+            NSInteger tag = 0;
+            for (NSDictionary *store in response){
+                GLMapAnnotation* annotation = [[GLMapAnnotation alloc] init];
+                annotation.title = store[@"StoreName"];
+                annotation._id = store[@"_id"];
+                annotation.tag = tag;
+                CLLocationCoordinate2D myCoordinate;
+                myCoordinate.latitude = [store[@"Latitude"] doubleValue];
+                myCoordinate.longitude = [store[@"Longitude"] doubleValue];
+                annotation.coordinate = myCoordinate;
+                [self.mapView addAnnotation:annotation];
+                tag++;
+            }
+        }
+    }];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -92,7 +116,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    [self showError:error.localizedDescription];
+    [self showError:error];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -114,11 +138,11 @@
     [rightButton addTarget:self
                     action:@selector(buttonMethod:)
           forControlEvents:UIControlEventTouchUpInside];
-    rightButton.tag = [self.mapView.annotations indexOfObject:annotation];
-    ;
+    GLMapAnnotation *customAnnotation = (GLMapAnnotation *)annotation;
+    rightButton.tag = customAnnotation.tag;
     pinView.rightCalloutAccessoryView = rightButton;
 
-    if ([self CLLocationCoordinateEqualC1:annotation.coordinate C2:[[GLUserManager sharedManager] storeCoordinate]]) {
+    if ([self CLLocationCoordinateEqualC1:customAnnotation.coordinate C2:[[GLUserManager sharedManager] storeCoordinate]]) {
         rightButton.selected = YES;
     }
 
@@ -128,17 +152,41 @@
 - (void)buttonMethod:(UIButton *)sender
 {
     sender.selected = !sender.selected;
-    GLMapAnnotation *annotation = [self.mapView.annotations objectAtIndex:sender.tag];
-
-    [GLNetworkingManager setUserLocation:annotation.title
-                               longitude:@(annotation.coordinate.longitude)
-                                latitude:@(annotation.coordinate.latitude)
+    
+    
+    GLMapAnnotation *selectedAnnotation;
+    
+    for (GLMapAnnotation *annotation in self.mapView.annotations){
+        if ([annotation isKindOfClass:[MKUserLocation class]]) {
+            continue;
+        }
+        if (annotation.tag == sender.tag){
+            selectedAnnotation = annotation;
+        }
+    }
+    
+    [GLNetworkingManager setUserLocation:selectedAnnotation.title
+                               id:selectedAnnotation._id
                               completion:^(NSDictionary *response, NSError *error) {
                                   if (error) {
-                                      [self showError:error.localizedDescription];
+                                      [self showError:error];
                                   }
                                   else {
-                                      [self performSegueWithIdentifier:GL_SHOW_HOME_MAP sender:self];
+                                      [[GLUserManager sharedManager] setStoreName:selectedAnnotation.title];
+                                      [[GLUserManager sharedManager] setStoreCoordinate:CLLocationCoordinate2DMake(selectedAnnotation.coordinate.latitude, selectedAnnotation.coordinate.longitude)];
+                                      if (self.isChangingStore){
+                                          [self dismissViewControllerAnimated:YES completion:nil];
+                                      }
+                                      else{
+                                          [GLNetworkingManager createNewGroceryList:[[GLUserManager sharedManager] storeName] completion:^(NSDictionary *response, NSError *error) {
+                                              if (error){
+                                                  NSLog(@"%@",error.localizedDescription);
+                                              }
+                                              else{
+                                                  [self performSegueWithIdentifier:GL_SHOW_HOME_MAP sender:self];
+                                              }
+                                          }];
+                                      }
                                   }
                               }];
 }
@@ -171,8 +219,7 @@
 
     MKLocalSearchCompletionHandler completionHandler = ^(MKLocalSearchResponse *response, NSError *error) {
         if (error != nil) {
-            NSString *errorStr = [[error userInfo] valueForKey:NSLocalizedDescriptionKey];
-            [self showError:errorStr];
+            [self showError:error];
         }
         else {
             self.places = [response mapItems];

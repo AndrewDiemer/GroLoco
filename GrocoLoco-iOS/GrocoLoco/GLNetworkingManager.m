@@ -102,8 +102,8 @@
 
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"text/plain", nil];
-
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"text/plain", nil];
+    
     NSDictionary *params = @{ @"GroceryListName" : groceryListName,
         @"List" : items,
         @"isRecommended" : @(recommended)
@@ -202,7 +202,7 @@
         }];
 }
 
-+ (void)setUserLocation:(NSString *)storeName longitude:(NSNumber *)longitude latitude:(NSNumber *)latitude completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
++ (void)setUserLocation:(NSString *)storeName id:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -211,8 +211,7 @@
 
     NSDictionary *params = @{
         @"StoreName" : storeName,
-        @"Longitude" : longitude,
-        @"Latitude" : latitude
+        @"_id" : ID
     };
 
     [manager POST:@"https://grocolocoapp.herokuapp.com/setuserlocation"
@@ -369,6 +368,18 @@
         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
             completionBlock(nil, error);
         }];
+}
+
++ (void)getListOFGroceryStores:(void (^)(NSDictionary *response, NSError *error))completionBlock
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:@"https://grocolocoapp.herokuapp.com/stores" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
+        completionBlock(responseObject, nil);
+    }
+         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+             completionBlock(nil, error);
+         }];
+
 }
 
 @end

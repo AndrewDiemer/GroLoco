@@ -36,6 +36,8 @@ module.exports = function (app){
 					}else{
 						distribution[lists[i].List.length] = 1
 					}
+					
+
 				}
 
 				var keys = Object.keys(distribution)
@@ -130,7 +132,7 @@ module.exports = function (app){
 						if(dict.hasOwnProperty(list[j].List[i].Description)){
 							dict[list[j].List[i].Description]++
 						}else{
-							dict[list[j].List[i].Description] = 0
+							dict[list[j].List[i].Description] = 1
 						}
 					}
 				}

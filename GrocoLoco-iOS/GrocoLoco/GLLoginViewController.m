@@ -48,7 +48,7 @@
             }
         }
         else {
-            [self showError:error.description];
+            [self showError:error];
         }
     }];
 }
@@ -107,7 +107,7 @@
                                              [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
                                          }
                                          else {
-                                             [self showError:error.description];
+                                             [self showError:error];
                                          }
                                      }];
     }
@@ -122,7 +122,7 @@
                                                 [self performSegueWithIdentifier:GL_SHOW_MAP_LOGIN sender:self];
                                             }
                                             else {
-                                                [self showError:error.description];
+                                                [self showError:error];
                                             }
                                         }];
     }
@@ -134,7 +134,7 @@
             NSLog(@"Logout Successful");
         }
         else {
-            [self showError:error.description];
+            [self showError:error];
         }
     }];
 }

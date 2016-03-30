@@ -10,4 +10,6 @@
 
 @interface GLMapViewController : GLBaseViewController
 
+@property (nonatomic, assign) BOOL isChangingStore;
+
 @end
