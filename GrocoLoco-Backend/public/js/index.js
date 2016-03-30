@@ -57,6 +57,10 @@ interact('.edit-rectangle')
         $('#red-button').text('Delete Block')
         $('#save-all').text('See Grocery Items')
 
+        if(uploaded)
+          $('#save-all').removeClass('disabled')
+
+
         event.currentTarget.classList.toggle('switch-bg');
         event.preventDefault();
         // console.log(event.currentTarget)
@@ -133,8 +137,10 @@ for ( i = 0; i < 0; i++) {
 
 function undisableDeleteandSave(){
     $('#red-button').removeClass('disabled')
-    if(!uploaded)
+    if(!uploaded){
+      console.log('call on me')
       $('#save-all').removeClass('disabled')
+    }
 }
 
 function lockButtons(){
@@ -233,10 +239,15 @@ function clearBlocks(){
     console.log('Removing one!')
     switchContextToDefault()
 
+    if(uploaded)
+          $('#save-all').addClass('disabled')
+
   }else{
     $('.edit-rectangle').remove()
     i=0
     console.log('Removing all')
+    if(uploaded)
+          $('#save-all').addClass('disabled')
   }
 }
 

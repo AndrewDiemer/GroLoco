@@ -71,6 +71,8 @@ GrocoLoco.controller('storeBuilderController', function($scope, $http, $location
 
 	$scope.closeCreateStore = function(){
 		working = !working
+		if(uploaded)
+          $('#save-all').addClass('disabled')
 	}
 
 	$scope.createStorePost = function(){
@@ -123,84 +125,87 @@ GrocoLoco.controller('storeBuilderController', function($scope, $http, $location
         $('#save-all').text('Save All')
     	$("#"+blox).attr('class','edit-rectangle')
         lock = false
+        if(uploaded)
+          $('#save-all').addClass('disabled')
 	}
 
 
 	$scope.saveAllBlocks = function(){
+			if(changing){
+	        	$('#myDisplayItemsModal').modal()
 
-		if(changing){
-        	$('#myDisplayItemsModal').modal()
+				console.log($scope.storeId)
+				console.log(blox)
+				console.log('checking out these blocks!')
 
-			console.log($scope.storeId)
-			console.log(blox)
-			console.log('checking out these blocks!')
+				$http.get('/blockItems/' +$scope.storeId + '/' + blox).success(function(data,status){
+					console.log(status)
+					console.log(data)
+					$scope.persons = data
+					$scope.blockNumber = blox
+				}).error(function(data, status){
 
-			$http.get('/blockItems/' +$scope.storeId + '/' + blox).success(function(data,status){
-				console.log(status)
-				console.log(data)
-				$scope.persons = data
-				$scope.blockNumber = blox
-			}).error(function(data, status){
+				})
+				// changing
 
-			})
-			// changing
+			}else if(!uploaded){
+				var aisles = $('.edit-rectangle')
+				var blocks = []
+				var checkForBlocks = true;
 
-		}else{
-			var aisles = $('.edit-rectangle')
-			var blocks = []
-			var checkForBlocks = true;
+				//get canvas and legths of pixels
+				var canvas = $('#store-rect')
+				var lengthX = canvas.css('x').length 
+				var lengthY = canvas.css('y').length 
 
-			//get canvas and legths of pixels
-			var canvas = $('#store-rect')
-			var lengthX = canvas.css('x').length 
-			var lengthY = canvas.css('y').length 
-
-			var C = {
-				x: Number(canvas.css('x').substring(0, lengthX - 2)),
-				y: Number(canvas.css('y').substring(0, lengthY - 2)), 
-				w: Number(canvas.attr('width')),
-				h: Number(canvas.attr('height'))
-			}
-
-			for (var i = 0; i < aisles.length; i++) {
-
-				var B ={
-					x: aisles[i].x.animVal.value,
-					y: aisles[i].y.animVal.value,
-					w: aisles[i].width.animVal.value,
-					h: aisles[i].height.animVal.value
+				var C = {
+					x: Number(canvas.css('x').substring(0, lengthX - 2)),
+					y: Number(canvas.css('y').substring(0, lengthY - 2)), 
+					w: Number(canvas.attr('width')),
+					h: Number(canvas.attr('height'))
 				}
-				console.log(C)
-				console.log(B)
-				if($scope.detectBounds(C.x,C.y,C.w,C.h, B.x, B.y, B.w, B.h)){
-					// console.log()
-					blocks.push($scope.convertAbsoluteToRelativePositionBlock(C, B))
+
+				for (var i = 0; i < aisles.length; i++) {
+
+					var B ={
+						x: aisles[i].x.animVal.value,
+						y: aisles[i].y.animVal.value,
+						w: aisles[i].width.animVal.value,
+						h: aisles[i].height.animVal.value
+					}
+					console.log(C)
+					console.log(B)
+					if($scope.detectBounds(C.x,C.y,C.w,C.h, B.x, B.y, B.w, B.h)){
+						// console.log()
+						blocks.push($scope.convertAbsoluteToRelativePositionBlock(C, B))
+					}else{
+						alert('There are blocks that are outside the canvas area! Please fix before continuing.')
+						checkForBlocks = false;
+						break;
+					}
+				}
+
+				if(checkForBlocks){
+					var blockPackage = {
+						'blocks': blocks,
+						'storeId': $scope.storeId
+					}
+					console.log(blockPackage)
+				}
+
+				if(uploaded){
+					console.log('Putting in the database!')
 				}else{
-					alert('There are blocks that are outside the canvas area! Please fix before continuing.')
-					checkForBlocks = false;
-					break;
+					console.log('Adding new in the database!')
 				}
-			}
 
-			if(checkForBlocks){
-				var blockPackage = {
-					'blocks': blocks,
-					'storeId': $scope.storeId
-				}
-				console.log(blockPackage)
-			}
 
-			if(uploaded){
-				console.log('Putting in the database!')
-			}else{
-				console.log('Adding new in the database!')
+				$http.post('/blocks', blockPackage).success(function(data,status){
+					console.log(data)
+					console.log(status)
+					alert('Successfully saved!')
+				})
 			}
-
-			$http.post('/blocks', blockPackage).success(function(data,status){
-				console.log(data)
-				console.log(status)
-			})
-		}
 	}
 
 	$scope.createStore = function(){
@@ -329,6 +334,8 @@ GrocoLoco.controller('storeBuilderController', function($scope, $http, $location
 		$http.post('/updateGroceryItem', rel).success(function(data, status){
 			console.log(data)
 			console.log(status)
+			alert('Successfully Added item!')
+
 		}).error(function(data, status){
 			console.log(data)
 			console.log(status)
@@ -374,6 +381,8 @@ GrocoLoco.controller('storeBuilderController', function($scope, $http, $location
     	changing = !changing
     	$('#green-button').text('Add Block')
         $('#red-button').text('Delete All')
+        if(uploaded)
+          $('#save-all').addClass('disabled')
     }
 
 	var shapeCount = 1 ;

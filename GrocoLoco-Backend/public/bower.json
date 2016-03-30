@@ -20,6 +20,10 @@
     "angular-moment": "~0.10.3",
     "moment": "~2.11.2",
     "angularjs-slider": "^2.10.4",
-    "angular-intro.js": "^2.0.0"
+    "angular-intro.js": "^2.0.0",
+    "json3": "^3.3.2",
+    "angular-resource": "^1.5.3",
+    "highlightjs": "^9.2.0",
+    "angular-highlightjs": "^0.6.0"
   }
 }
