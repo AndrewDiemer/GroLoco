@@ -9,9 +9,7 @@ module.exports = function (app){
                 res.send(err)
             if(user){
                 var location = {
-                    StoreName   : user.StoreName,
-                    Latitude    : user.Latitude,
-                    Longitude   : user.Longitude
+                    StoreName   : user.StoreName
                 }
 
                 res.send(location)
@@ -22,19 +20,29 @@ module.exports = function (app){
     })
 
     app.post('/setuserlocation', isAuthenticated, function(req,res){
-        User.findOneAndUpdate({
-            'Email': req.user.Email
-        },{
-            StoreName   : req.body.StoreName,
-            Latitude    : req.body.Latitude,
-            Longitude   : req.body.Longitude
-        }, function(err, user){
+        Store.findOne({
+            '_id': req.body._id
+        }, function(err, store){
             if(err)
                 res.send(err)
-            if(user)
-                res.send(user)
-            else
+            if(store){
+                User.findOneAndUpdate({
+                    'Email': req.user.Email
+                },{
+                    StoreName   : req.body.StoreName,
+                    Store       : store
+                }, function(err, user){
+                    if(err)
+                        res.send(err)
+                    if(user)
+                        res.send(user)
+                    else
+                        res.send(404)
+                })
+            }else{
                 res.send(404)
+            }
+
         })
     })
 }
