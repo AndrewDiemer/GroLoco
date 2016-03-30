@@ -59,7 +59,11 @@ GrocoLoco.controller('headerController', function($scope, $http, $location) {
 	}
 	$scope.logout = function(){
 		//Need to send request to logout
-		$location.path('/')
-		$http.post('/logout')
+		$scope.logout = function(){
+	      console.log('logging out')
+	      $http.post('/logout').success(function(data,status){
+	        $location.path('/login')
+	      })
+	    }
 	}
 })

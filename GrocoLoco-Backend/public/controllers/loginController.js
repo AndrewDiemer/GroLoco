@@ -1,7 +1,6 @@
 //angular
 GrocoLoco.controller('loginController', function($scope, $http, $location) {
-    var Site = window.Site;
-    Site.run();
+    
 
     deleteAllNotifications = function(){
         if($("#alert-warning-fields").length > 0)

@@ -2,8 +2,46 @@
 
 module.exports = function (app){
 
+	app.get('/stores', function(req,res){
+		Store.find({},function(err,stores){
+			if(err)
+				res.send(err)
+			if(stores)
+				res.send(stores)
+			else
+				res.status(404).send([])
+		})
+	})
+
+	app.get('/updateStores', function(req, res){
+		Store.findOne({
+			StoreName: 'Sobeys'
+		}, function(err, store){
+			Block.find({}, function(err, blocks){
+				for (var i = 0; i < blocks.length; i++) {
+					Block.findOneAndUpdate({
+						'_id': blocks[i]._id
+					},{
+						'Store': store
+					}, function(err, store){
+						if(err)
+							res.send(err)
+						if(store){
+							// res.send(store)
+						}else{
+							res.send(404)
+						}
+						// else
+							// 
+					})
+				}
+				res.send(200)
+			})
+		})
+	})
+
 	//Create a store and set the dimension
-	app.post('/createstore', isAuthenticated, function (req,res){
+	app.post('/createstore', function (req,res){
 		var newStore = new Store({
 			StoreName 		: req.body.StoreName,
 			Longitude		: req.body.Longitude,
@@ -23,8 +61,10 @@ module.exports = function (app){
 		newStore.save(function(err, store){
 			if(err)
 				res.send(err)
-			if(store)
+			if(store){
+				console.log(store)
 				res.send(store)
+			}
 		})
 	})
 

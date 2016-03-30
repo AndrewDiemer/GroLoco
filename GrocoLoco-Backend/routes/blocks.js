@@ -1,4 +1,4 @@
-
+var _ = require('lodash')
 
 module.exports = function (app, passport){
 
@@ -228,7 +228,147 @@ module.exports = function (app, passport){
 	})
 
 	app.get('/blocks', function (req,res){
-		Block.find({}, function (err, blocks){res.send(blocks)})
+		Block.find({}, function (err, blocks){
+			res.send(blocks)
+		})
+	})
+
+	app.post('/updateGroceryItem', function(req,res){
+		GroceryItem.findOneAndUpdate({
+			'Description': req.body.Description
+		},{
+			Face: req.body.Side,
+			ItemLocation: req.body.Distance,
+			BlockNumber: req.body.BlockNumber
+		}, function(err, groceryItem){
+			if(err)
+				res.send(err)
+			if(groceryItem){
+				//Update in all the grocery lists
+				GroceryList.find({}, function(err, groceryLists){
+					if(err)
+						res.send(err)
+					if(groceryLists){
+						for (var i = 0; i < groceryLists.length; i++) {
+							for (var j = 0; j< groceryLists[i].List.length; j++) {
+								
+								if(groceryLists[i].List[j].Description == req.body.Description){
+
+									groceryLists[i].List[j].Face = req.body.Side
+									groceryLists[i].List[j].ItemLocation = req.body.Distance
+									groceryLists[i].List[j].BlockNumber = req.body.BlockNumber
+
+									GroceryList.findOneAndUpdate({
+										'_id': groceryLists[i]._id
+									},{
+										List: groceryLists[i].List[j]
+									},function(err, list){
+										if(err)
+											res.send(err)
+										if(list)
+											console.log('Updated')
+										// console.log()
+									})
+								}
+							}
+						}
+					}else{
+						res.send(404)
+					}
+				})
+
+				res.send(groceryItem)
+			}
+			else
+				res.send(404)
+		})
+	})
+
+	app.get('/blockItems/:store/:block', isAuthenticated, function(req,res){
+		// console.log()
+		Block.findOne({
+			'Store': req.params.store,
+			'BlockNumber': req.params.block
+		}, function(err, block){
+			if(err)
+				res.send(err)
+			if(block){
+				GroceryItem.find({
+					'StoreId': 1,
+					'BlockNumber': req.params.block
+				}, function(err, groceries){
+					if(err)
+						res.send(err)
+					if(groceries){
+						for (var i = 0; i < groceries.length; i++){
+							// console.log(groceryList.List[i].StoreId)
+							if(req.user.Store != '56b01bf96b0aa47e3b17e9e2'){
+								console.log('oops')
+							}else{
+								console.log(groceries[i].Face)
+								switch(groceries[i].Face){
+									case 'T':
+										block.TopItems.push(groceries[i])
+										break
+
+									case 'B':
+										block.BottomItems.push(groceries[i])
+										break
+									
+									case 'L':
+										block.LeftItems.push(groceries[i])
+										break
+								
+									case 'R':
+										block.RightItems.push(groceries[i])
+										break
+									default:
+										break
+								}
+							}
+						}
+						// console.log(block)
+						res.send(_.union(block.TopItems, block.BottomItems, block.LeftItems, block.RightItems))
+					}else{
+						res.send(404)
+					}
+						
+
+				})
+				// res.send(block)
+			}else
+				res.send(404)
+
+		})
+	})
+
+
+	app.get('/blocks/:id', function (req,res){
+		console.log(req.params.id)
+		Store.findOne({
+			'_id': req.params.id
+		}, function(err, store){
+			if(err)
+				res.send(err)
+			if(store){
+				console.log(store)
+				Block.find({
+					'Store': store
+				}, function (err, blocks){
+					if(err)
+						res.send(blocks)
+					if(blocks){
+						var package = {
+							Store: store,
+							Blocks: blocks
+						}
+						res.send(package)
+					}
+					else
+						res.send(404)
+				})
+			}
+		})
 	})
 
 	app.get('/blocksGroceryList', isAuthenticated, function (req,res){
@@ -261,22 +401,34 @@ module.exports = function (app, passport){
 							if(groceryList){
 								
 								for (var i = 0; i < groceryList.List.length; i++){
-									switch(groceryList.List[i].Face){
-										case 'T':
-											blocks[groceryList.List[i].BlockNumber].TopItems.push(groceryList.List[i])
-											break
-
-										case 'B':
-											blocks[groceryList.List[i].BlockNumber].BottomItems.push(groceryList.List[i])
-											break
-										
-										case 'L':
-											blocks[groceryList.List[i].BlockNumber].LeftItems.push(groceryList.List[i])
-											break
+									// console.log(groceryList.List[i].StoreId)
+									if(req.user.Store != '56b01bf96b0aa47e3b17e9e2'){
+										console.log('oops')
+									}else{
 									
-										case 'R':
-											blocks[groceryList.List[i].BlockNumber].RightItems.push(groceryList.List[i])
-											break
+										switch(groceryList.List[i].Face){
+											case 'T':
+												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
+													blocks[groceryList.List[i].BlockNumber].TopItems.push(groceryList.List[i])
+												break
+
+											case 'B':
+												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
+													blocks[groceryList.List[i].BlockNumber].BottomItems.push(groceryList.List[i])
+												break
+											
+											case 'L':
+												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
+													blocks[groceryList.List[i].BlockNumber].LeftItems.push(groceryList.List[i])
+												break
+										
+											case 'R':
+												if(typeof blocks[groceryList.List[i].BlockNumber] != 'undefined')
+													blocks[groceryList.List[i].BlockNumber].RightItems.push(groceryList.List[i])
+												break
+											default:
+												break
+										}
 									}
 								}
 								var map = {
@@ -306,7 +458,7 @@ module.exports = function (app, passport){
 		
 	})
 
-	    app.get('/aisles', function(req,res){
+	app.get('/aisles', function(req,res){
         Aisle.find({}, function(err, aisles){
             if(err)
                 res.send(err)
@@ -323,28 +475,78 @@ module.exports = function (app, passport){
         res.send(200)
     })
 
-    app.post('/aisles', function(req,res){
-        var blocks = req.body.blocks
-        for (var i = 0; i < blocks.length; i++) {
-            var newAisle = new Aisle({
-                x: blocks[i].x,
-                y: blocks[i].y,
-                w: blocks[i].w,
-                h: blocks[i].h
-            })
-            newAisle.save(function(err, aisle){
-                if(err)
-                    res.send(err)
-                if(aisle){
-                    // res.send(aisle)
-                }else{
-                    res.send(404)
-                }
-            })
-        }
-        console.log('Saved '+ blocks.length + ' blocks!')
-        res.send('Saved '+ blocks.length + ' blocks!')
+    app.post('/blocks', function(req,res){
+    	var blocks = req.body.blocks
+        var storeId = req.body.storeId
+        
+        console.log(blocks)
+        console.log(storeId)
+
+        Store.findOne({
+        	'_id': storeId
+        }, function(err, store){
+        	if(err)
+        		res.send(err)
+        	if(store){
+        		for (var i = 0; i < blocks.length; i++) {
+		    		var newBlock = new Block({
+						BlockNumber		: i,
+						Origin: {
+							X 			: blocks[i].x,
+							Y 			: blocks[i].y
+						},
+						width 			: blocks[i].w,
+						Length 			: blocks[i].h,
+						Store 			: store
+					})
+
+					newBlock.save(function(err, block){
+						if(err)
+		                    res.send(err)
+		                if(block){
+
+		                    Store.findOneAndUpdate({
+		                    	'_id': storeId
+		                    },{
+		                    	$push:{'Blocks': block}
+		                    },function(err, store){
+		                    	if(err)
+		                    		res.send(err)
+		                    	if(store)
+		                    		console.log(store)
+		                    })
+		                }else{
+		                    res.send(404)
+		                }
+					})
+		    	}
+
+		    	res.send(200)
+        	}
+        })
+
+    	
+
     })
+
+    // app.post('/aisles', function(req,res){
+        
+
+    //     for (var i = 0; i < blocks.length; i++) {
+    //         var newBlock = new Block({
+    //             x: blocks[i].x,
+    //             y: blocks[i].y,
+    //             w: blocks[i].w,
+    //             h: blocks[i].h
+    //         })
+
+    //         newBlock.save(function(err, block){
+                
+    //         })
+    //     }
+    //     console.log('Saved '+ blocks.length + ' blocks!')
+    //     res.send('Saved '+ blocks.length + ' blocks!')
+    // })
 
     app.post('/getIcon', function(req,res){
 

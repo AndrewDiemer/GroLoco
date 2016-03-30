@@ -7,7 +7,7 @@
   <meta name="author" content="">
 
   <title>Data.com | Maple Tree Capital</title>
-      <!-- <link rel="stylesheet" type="text/css" href="./bower_components/ng-table/dist/ng-table.min.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="./bower_components/ng-table/dist/ng-table.min.css"> -->
 
   
   <!--[if lt IE 9]>
@@ -19,69 +19,69 @@
     <script src="../vendor/respond/respond.min.js"></script>
     <![endif]-->
 
-  <!-- Scripts -->
-  <script>
-    Breakpoints();
-  </script>
-</head>
-<body class="dashboard">
+    <!-- Scripts -->
+    <script>
+      Breakpoints();
+    </script>
+  </head>
+  <body class="dashboard">
 
   <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+        <![endif]-->
 
-  <div ng-controller='headerController'>
-<nav class="site-navbar  navbar navbar-default navbar-fixed-top navbar-mega " role="navigation" >
-  <div class="navbar-header site-menubar-light">
-    <button type="button" class="navbar-toggle hamburger hamburger-close navbar-toggle-left hided"
-    data-toggle="menubar">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="hamburger-bar"></span>
-    </button>
-    <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-      <div style="text-align: center;">
-        <span class="navbar-brand-text"> GrocoLoco</span>
-      </div>
-    </div>
-  </div>
-  <div class="navbar-container container-fluid">
-    <ul class="nav navbar-toolbar">
-      <li class="hidden-float" id="toggleMenubar">
-        <a id='hamburger' data-toggle="menubar">
-          <i class="icon hamburger hamburger-arrow-left">
-              <span class="sr-only">Toggle menubar</span>
+        <div ng-controller='headerController'>
+          <nav class="site-navbar  navbar navbar-default navbar-fixed-top navbar-mega " role="navigation" >
+            <div class="navbar-header site-menubar-light">
+              <button type="button" class="navbar-toggle hamburger hamburger-close navbar-toggle-left hided"
+              data-toggle="menubar">
+              <span class="sr-only">Toggle navigation</span>
               <span class="hamburger-bar"></span>
-            </i>
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
+            </button>
+            <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+              <div style="text-align: center;">
+                <span class="navbar-brand-text"> GrocoLoco</span>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-container container-fluid">
+            <ul class="nav navbar-toolbar">
+              <li class="hidden-float" id="toggleMenubar">
+                <a id='hamburger' data-toggle="menubar">
+                  <i class="icon hamburger hamburger-arrow-left">
+                    <span class="sr-only">Toggle menubar</span>
+                    <span class="hamburger-bar"></span>
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
 
-<div class="site-menubar">
-  <div class="site-menubar-body">
-    <div>
-      <ul class="site-menu">
-        <li class="site-menu-category">Navigation</li>
-        <br>
-        <li id='analytics-tab' class="site-menu-item" ng-click="analytics()" >
-          <a   >
-            <i class="site-menu-icon fa fa-line-chart fa-2x" ></i>
-            <span class="site-menu-title">Analytics</span>
-          </a>
-        </li>
-        <li id='store-builder-tab' class="site-menu-item" ng-click="storeBuilder()">
-          <a   >
-            <i class="site-menu-icon fa fa-arrows fa-2x" aria-hidden="true"></i>
-            <span class="site-menu-title">Store Builder</span>
-          </a>
-        </li>
-        <li id='grocery-manager-tab' class="site-menu-item" ng-click="groceryManager()" >
-          <a >
-            <i class="site-menu-icon fa fa-cart-plus fa-2x" aria-hidden="true"></i>
-            <span class="site-menu-title">Grocery Manager</span>
-          </a>
-        </li>
+        <div class="site-menubar">
+          <div class="site-menubar-body">
+            <div>
+              <ul class="site-menu">
+                <li class="site-menu-category">Navigation</li>
+                <br>
+                <li id='analytics-tab' class="site-menu-item" ng-click="analytics()" >
+                  <a   >
+                    <i class="site-menu-icon fa fa-line-chart fa-2x" ></i>
+                    <span class="site-menu-title">Analytics</span>
+                  </a>
+                </li>
+                <li id='store-builder-tab' class="site-menu-item" ng-click="storeBuilder()">
+                  <a   >
+                    <i class="site-menu-icon fa fa-arrows fa-2x" aria-hidden="true"></i>
+                    <span class="site-menu-title">Store Builder</span>
+                  </a>
+                </li>
+                <li id='grocery-manager-tab' class="site-menu-item" ng-click="groceryManager()" >
+                  <a >
+                    <i class="site-menu-icon fa fa-cart-plus fa-2x" aria-hidden="true"></i>
+                    <span class="site-menu-title">Grocery Manager</span>
+                  </a>
+                </li>
        <!--  <li id='industry-main-tab' class="site-menu-item has-sub">
               <a href="javascript:void(0)" data-slug="layout">
                 <i class="site-menu-icon fa fa-industry" aria-hidden="true"></i>
@@ -102,25 +102,25 @@
                   </a>
                 </li>
               </ul>
-        </li> -->
-        <li id='promotions-tab' class="site-menu-item" ng-click="promotions()" >
-          <a >
-            <i class="site-menu-icon fa fa-gift fa-2x" aria-hidden="true"></i>
-            <span class="site-menu-title">Promotions</span>
-          </a>
-        </li>
-      </ul>
+            </li> -->
+            <li id='promotions-tab' class="site-menu-item" ng-click="promotions()" >
+              <a >
+                <i class="site-menu-icon fa fa-gift fa-2x" aria-hidden="true"></i>
+                <span class="site-menu-title">Promotions</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-menubar-footer" >
+        <a href="" ng-click="logout()" style="width: 100%;">
+          <span class="fa fa-external-link"> Logout</span>
+        </a>
+      </div>
     </div>
   </div>
-  <div class="site-menubar-footer" >
-  <a href="" ng-click="logout()" style="width: 100%;">
-    <span class="fa fa-external-link"> Logout</span>
-  </a>
-  </div>
-</div>
-</div>
   <div class="page">
-    <div class="page-content padding-30 container-fluid" style="height: 100vh;">
+    <div class="page-content padding-30 container-fluid" >
       <div class="row" data-plugin="matchHeight" data-by-row="true">
         <div class="col-md-12">
           <div class="panel" style="margin-top: 60px;">
@@ -166,8 +166,9 @@
                     <!-- Example Overlapping Bars -->
                     <div class="example-wrap">
                       <div class="example">
-                        <div class="counter-label text-uppercase">All List Sizes</div>
+                        <div class="counter-label text-uppercase">Number of Grocery Lists vs Items per List</div>
                         <div class="ct-chart" id="allListSizes"></div>
+                        <div class="counter-label" id="legendXAxis">Number of Items</div>
                       </div>
                     </div>
                     <!-- End Example Overlapping Bars -->
@@ -176,50 +177,51 @@
                     <!-- Example Overlapping Bars -->
                     <div class="example-wrap">
                       <div class="example">
-                        <div class="counter-label text-uppercase">Number of Items Comming from Recommendations</div>
+                        <div class="counter-label text-uppercase">Grocery List's with Recommended Item Percentages</div>
                         <div class="ct-chart" id="numItemsFromRecommendations"></div>
                       </div>
                     </div>
                     <!-- End Example Overlapping Bars -->
                   </div>
                   <!-- End Example Overlapping Bars -->
-                  </div>
-                  <div class="col-md-12">
-                    <!-- Example Overlapping Bars -->
-                    <div class="example-wrap">
-                      <div class="example">
-                        <div class="counter-label text-uppercase">Purchases per Category</div>
-                        <div class="ct-chart" id="purchasesPerCategory"></div>
-                      </div>
+                </div>
+                <div class="col-md-12">
+                  <!-- Example Overlapping Bars -->
+                  <div class="example-wrap">
+                    <div class="example">
+                      <div class="counter-label text-uppercase">Purchases per Category</div>
+                      <div class="ct-chart" id="purchasesPerCategory"></div>
                     </div>
-                    <!-- End Example Overlapping Bars -->
                   </div>
-                  <div class="col-md-6">
+                  <!-- End Example Overlapping Bars -->
+                </div>
+                <div class="col-md-12">
                   <!-- Example Simple Pie Chart Labels -->
                   <div class="example-wrap margin-md-0">
-                    <div class="example">
-                      <div class="waseemIsCool" id="purchasesPerCategoryPie"></div>
+                      <div class="example">
+                        <div class="ct-chart" id="purchasesPerCategoryPie"></div>
+                      </div>
                     </div>
-                  </div>
-                  <!-- End Example Simple Pie Chart Labels -->
-                  </div>
+                    <!-- End Example Simple Pie Chart Labels -->
+                   </div>
                   <div class="col-md-4">
                     <!-- Example Overlapping Bars -->
                     <div class="example-wrap">
                       <div class="example">
-                        <div class="ct-chart" id="exampleOverlappingBar3"></div>
+                      <div class="counter-label text-uppercase">Most Popular Items</div>
+                        <div class="ct-chart" id="frequencyOfItems"></div>
                       </div>
-                    </div>
+                    </div> 
                     <!-- End Example Overlapping Bars -->
                   </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 
   <!-- Scripts -->
   <script src="../js/core.js"></script>
@@ -242,5 +244,5 @@
   <script src="../css/c3.min.js"></script>
 
 
-  <script src="../controllers/analyticsControllerjs"></script>
+  <!-- <script src="../controllers/analyticsControllerjs"></script> -->
 

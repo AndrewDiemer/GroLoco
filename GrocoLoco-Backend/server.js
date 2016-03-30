@@ -20,7 +20,7 @@ var express 		= require('express'),
 var redisPort = 6379
 var redisHost = '127.0.0.1'
 
-client = redis.createClient('redis://h:paonqf6qoa86pv3gs30jg35a3s7@ec2-54-83-202-143.compute-1.amazonaws.com:8589')
+client = redis.createClient('redis://h:ptbc0r5lerem2cfuvsnc06b0bc@ec2-54-225-195-114.compute-1.amazonaws.com:12999')
 // client = redis.createClient(redisPort, redisHost)
 
 client.on('connect', function() {
@@ -106,6 +106,7 @@ require('./routes/groceryList.js')(app, passport);
 require('./routes/user.js')(app, passport); 
 require('./routes/authentication.js')(app, passport); 
 require('./routes/analytics.js')(app, passport); 
+require('./routes/groceryManager.js')(app, passport); 
 require('./routes/blocks.js')(app, passport); 
 require('./routes/recommendations.js')(app, passport); 
 
