@@ -35,6 +35,8 @@
 
     self.backgroundView.layer.cornerRadius = 5;
     
+    self.backgroundView.backgroundColor = [UIColor GLlightGreen];
+    
 }
 - (IBAction)gotItemButtonPressed:(UIButton *)sender {
     sender.selected = !sender.selected;

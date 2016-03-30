@@ -10,4 +10,6 @@
 
 @interface GLHomeViewController : GLBaseViewController
 
+@property (strong, nonatomic) NSMutableArray *data;
+
 @end
