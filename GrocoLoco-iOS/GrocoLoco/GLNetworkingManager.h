@@ -50,6 +50,4 @@
 
 + (void)getListOFGroceryStores:(void (^)(NSDictionary *response, NSError *error))completionBlock;
 
-+ (void)shareListWithFriends:(NSString *)groceryListName message:(NSString *)message fromEmail:(NSString *)fromEmail emails:(NSArray *)emails items:(NSArray *)items completion:(void (^)(NSDictionary *response, NSError *error))completionBlock;
-
 @end

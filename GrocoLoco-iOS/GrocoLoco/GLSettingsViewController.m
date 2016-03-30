@@ -10,8 +10,11 @@
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "GLSettingsViewController.h"
+#import "GLHomeViewController.h"
+#import "GLGroceryItem.h"
+#import <MessageUI/MessageUI.h>
 
-@interface GLSettingsViewController ()
+@interface GLSettingsViewController () <MFMessageComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *settingsLabel;
 
@@ -45,34 +48,48 @@
 }
 - (IBAction)shareListPressed:(id)sender {
     [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
-        UIAlertController *alert= [UIAlertController
-                                   alertControllerWithTitle:@"Share Your List!"
-                                   message:@"Separate emails with commas"
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            //Do things
-            UITextField *textField = alert.textFields[0];
-            NSLog(@"To Emails: %@", textField.text);
-            NSLog(@"From: %@", [[GLUserManager sharedManager] email]);
-            NSLog(@"%@ wants to share his GrocoLoco shopping list with you!", [[GLUserManager sharedManager] name]);
-            
-        }];
-        
-        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            [alert dismissViewControllerAnimated:YES completion:nil];
-        }];
-        
-        [alert addAction:ok];
-        [alert addAction:cancel];
-        
-        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = @"Emails...";
-            textField.keyboardType = UIKeyboardTypeDefault;
-        }];
-        
-        [self presentViewController:alert animated:YES completion:nil];
+        [self showSMS:@"123"];
     }];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result
+{
+    switch (result) {
+        case MessageComposeResultCancelled:
+            break;
+            
+        case MessageComposeResultFailed:
+        {
+            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Failed to send SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [warningAlert show];
+            break;
+        }
+            
+        case MessageComposeResultSent:
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)showSMS:(NSString*)file {
+    
+    if(![MFMessageComposeViewController canSendText]) {
+        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device doesn't support SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [warningAlert show];
+        return;
+    }
+    
+    NSString *message = [NSString stringWithFormat:@"Just sent the %@ file to your email. Please check!", file];
+    
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.messageComposeDelegate = self;
+    [messageController setBody:message];
+    
+    // Present message view controller on screen
+    [self presentViewController:messageController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

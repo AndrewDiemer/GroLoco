@@ -26,7 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *startShoppingButton;
 @property (weak, nonatomic) IBOutlet UIButton *clearListButton;
 
-@property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) NSMutableArray *expandedPaths;
 @property (strong, nonatomic) NSIndexPath *oldIndex;
 
