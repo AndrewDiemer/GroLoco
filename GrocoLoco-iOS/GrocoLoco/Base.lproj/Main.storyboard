@@ -60,12 +60,12 @@
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="golfguru@icloud.com" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z6y-fw-x2H">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z6y-fw-x2H">
                                                 <rect key="frame" x="0.0" y="48" width="460" height="36"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xf0-EV-RXv">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xf0-EV-RXv">
                                                 <rect key="frame" x="0.0" y="96" width="460" height="36"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -315,7 +315,6 @@
                                         <state key="normal" title="Start Shopping"/>
                                         <connections>
                                             <action selector="startShoppingPressed:" destination="9eX-0U-AmJ" eventType="touchUpInside" id="Yf1-Pj-lix"/>
-                                            <segue destination="Xdt-6L-pH4" kind="presentation" identifier="GLStartShoppingSegue" id="00b-WJ-xD3"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -366,6 +365,7 @@
                         <outlet property="usernameLabel" destination="gz1-TU-bam" id="yoQ-IP-ZDS"/>
                         <segue destination="mLu-cf-nRd" kind="presentation" identifier="ShowAccountInfo" id="Zgb-qD-csc"/>
                         <segue destination="IZL-nr-q48" kind="presentation" identifier="GLChangeStoreSegue" id="3DS-xU-DdP"/>
+                        <segue destination="Xdt-6L-pH4" kind="presentation" identifier="GLStartShoppingSegue" id="A0L-AO-UgC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPX-1e-Hld" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1373,7 +1373,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="5209" y="1364"/>
+            <point key="canvasLocation" x="5851" y="1462"/>
         </scene>
         <!--Category View Controller-->
         <scene sceneID="iPb-1W-RZS">
@@ -1490,7 +1490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tl6-Xy-zK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5944" y="1492"/>
+            <point key="canvasLocation" x="6568" y="1462"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="Ti4-Iq-aGx">
@@ -1590,7 +1590,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BCi-HY-cOz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5209" y="2186"/>
+            <point key="canvasLocation" x="5081" y="1462"/>
         </scene>
     </scenes>
     <resources>
@@ -1618,7 +1618,7 @@
         <image name="storeBG" width="531" height="199"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SFg-sM-uFX"/>
-        <segue reference="3DS-xU-DdP"/>
+        <segue reference="3Hx-k2-IWW"/>
+        <segue reference="pOy-MG-hfe"/>
     </inferredMetricsTieBreakers>
 </document>

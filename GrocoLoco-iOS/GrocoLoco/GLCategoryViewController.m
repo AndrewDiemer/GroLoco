@@ -88,7 +88,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [GLNetworkingManager getCategory:self.category withCompletion:^(NSArray *response, NSError *error) {
             if (error) {
-                [self showError:error.description];
+                [self showError:error];
             }
             else {
                 self.items = response.mutableCopy;
@@ -196,7 +196,7 @@
                               recommended:NO
                                completion:^(NSDictionary *response, NSError *error) {
                                    if (error) {
-                                       [self showError:error.description];
+                                       [self showError:error];
                                    }
                                    else {
                                        [self.navigationController popViewControllerAnimated:YES];

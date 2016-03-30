@@ -40,7 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [self.navigationItem setHidesBackButton:YES];
     
     // Begin Drawer Controller
@@ -48,23 +48,23 @@
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModePanningCenterView | MMCloseDrawerGestureModeTapCenterView;
     
     
-
+    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(loadGroceryLists:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
-
+    
     self.addItemButton.layer.cornerRadius = self.addItemButton.frame.size.width / 2;
-
+    
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, self.addItemButton.frame.size.height, 0)];
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, self.addItemButton.frame.size.height, 0)];
-
+    
     self.startShoppingButton.layer.cornerRadius = 5;
     self.clearListButton.layer.cornerRadius = 5;
     self.usernameLabel.text = [[GLUserManager sharedManager] name];
     self.storeNameLabel.text = [[GLUserManager sharedManager] storeName];
-
+    
     self.expandedPaths = @[].mutableCopy;
-
+    
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
 }
 
@@ -80,14 +80,14 @@
 - (UITableViewCell *_Nonnull)tableView:(UITableView *_Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath *_Nonnull)indexPath
 {
     NSDictionary *groceryListDict = self.data[indexPath.section];
-
+    
     GLHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GL_HOME_TABLEVIEW_CELL forIndexPath:indexPath];
     GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
     NSInteger tag = (indexPath.row + 1) + (indexPath.section * 100);
-
+    
     cell.expandButton.tag = tag;
     cell.notesTextField.tag = tag;
-
+    
     [cell.expandButton addTarget:self action:@selector(expandCell:) forControlEvents:UIControlEventTouchUpInside];
     if ([self.expandedPaths containsObject:[self getIndexPathFromTag:tag]]) {
         [UIView animateWithDuration:0.5
@@ -107,11 +107,11 @@
         cell.notesLabel.hidden = NO;
         [cell setSeparatorInset:UIEdgeInsetsMake(0, 81, 0, 0)];
     }
-
+    
     cell.item = item;
-
+    
     cell.notesTextField.delegate = self;
-
+    
     return cell;
 }
 
@@ -143,7 +143,7 @@
 - (NSInteger)tableView:(UITableView *_Nonnull)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSDictionary *groceryListDict = self.data[section];
-
+    
     return [groceryListDict[@"List"] count];
 }
 
@@ -156,12 +156,12 @@
 {
     if (self.tableView.editing) {
         NSDictionary *groceryListDict = self.data[indexPath.section];
-
+        
         if (indexPath.row != [groceryListDict[@"List"] count]) {
             return YES;
         }
     }
-
+    
     return NO;
 }
 
@@ -169,12 +169,12 @@
 {
     if (self.tableView.editing) {
         NSDictionary *groceryListDict = self.data[indexPath.section];
-
+        
         if (indexPath.row != [groceryListDict[@"List"] count]) {
             return UITableViewCellEditingStyleDelete;
         }
     }
-
+    
     return UITableViewCellEditingStyleDelete;
 }
 
@@ -187,7 +187,7 @@
                                         itemID:item.ID
                                     completion:^(NSDictionary *response, NSError *error) {
                                         if (error) {
-                                            [self showError:error.localizedDescription];
+                                            [self showError:error];
                                         }
                                         else {
                                             [groceryListDict[@"List"] removeObject:item];
@@ -208,13 +208,13 @@
     NSIndexPath *indexPath = [self getIndexPathFromTag:textField.tag];
     NSDictionary *groceryListDict = self.data[indexPath.section];
     GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
-
+    
     [GLNetworkingManager editGroceryItemComment:[GLUserManager sharedManager].storeName
                                          itemID:item.ID
                                         comment:textField.text
                                      completion:^(NSDictionary *response, NSError *error) {
                                          if (error) {
-                                             [self showError:error.description];
+                                             [self showError:error];
                                          }
                                      }];
 }
@@ -234,17 +234,22 @@
 
 - (IBAction)startShoppingPressed:(id)sender
 {
+    if ([self.data[0][@"List"] count] > 0){
+        [self performSegueWithIdentifier:GL_START_SHOPPING_SEGUE sender:self];
+    }
 }
 - (IBAction)clearListPressed:(id)sender
 {
-    [GLNetworkingManager deleteGroceryItems:[GLUserManager sharedManager].storeName
-                                 completion:^(NSDictionary *response, NSError *error) {
-                                     if (error) {
-                                         [self showError:error.description];
-                                     }
-                                 }];
-
-    [self loadGroceryLists:nil];
+    if ([self.data[0][@"List"] count] > 0){
+        [GLNetworkingManager deleteGroceryItems:[GLUserManager sharedManager].storeName
+                                     completion:^(NSDictionary *response, NSError *error) {
+                                         if (error) {
+                                             [self showError:error];
+                                         }
+                                     }];
+        
+        [self loadGroceryLists:nil];
+    }
 }
 
 #pragma mark -
@@ -263,7 +268,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
             });
-
+            
         }];
     });
 }
@@ -285,9 +290,9 @@
 - (void)expandCell:(UIButton *)sender
 {
     self.oldIndex = [self.expandedPaths firstObject];
-
+    
     NSIndexPath *expandedPath = [self getIndexPathFromTag:sender.tag];
-
+    
     if (!sender.selected) {
         [self.expandedPaths removeAllObjects];
         [self.expandedPaths addObject:expandedPath];
@@ -302,7 +307,7 @@
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:reload withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
-
+    
     sender.selected = !sender.selected;
 }
 

@@ -64,7 +64,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [GLNetworkingManager getRecommendationsCompletion:^(NSArray *response, NSError *error) {
             if (error) {
-                //                [self showError:error.description];
+                [self showError:error];
             }
             else {
                 self.filertedItems = response.mutableCopy;
@@ -117,11 +117,12 @@
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName]
                                             items:@[ [item objectAsDictionary] ]
-                                      recommended:NO
+                                      recommended:[self.recommendedItems containsObject:item]
                                        completion:^(NSDictionary *response, NSError *error) {
                                            if (error) {
-                                               [self showError:error.description];
+                                               [self showError:error];
                                            }
+                                           
                                        }];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -179,8 +180,7 @@
 
     dispatch_async(
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [GLNetworkingManager
-                getListOfGroceriesForString:searchText
+            [GLNetworkingManager getListOfGroceriesForString:searchText
                                  completion:^(NSArray *response, NSError *error) {
                                      dispatch_async(dispatch_get_main_queue(), ^{
                                          if (!error) {
@@ -188,7 +188,7 @@
                                              [self.tableView reloadData];
                                          }
                                          else {
-                                             [self showError:error.description];
+                                             [self showError:error];
                                          }
                                      });
                                  }];
