@@ -53,7 +53,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [GLNetworkingManager getListOFGroceryStores:^(NSDictionary *response, NSError *error) {
+    [[GLNetworkingManager sharedManager] getListOFGroceryStores:^(NSDictionary *response, NSError *error) {
         if (error){
             NSLog(@"%@",error.localizedDescription);
         }
@@ -165,7 +165,7 @@
         }
     }
     
-    [GLNetworkingManager setUserLocation:selectedAnnotation.title
+    [[GLNetworkingManager sharedManager] setUserLocation:selectedAnnotation.title
                                id:selectedAnnotation._id
                               completion:^(NSDictionary *response, NSError *error) {
                                   if (error) {
@@ -178,7 +178,7 @@
                                           [self dismissViewControllerAnimated:YES completion:nil];
                                       }
                                       else{
-                                          [GLNetworkingManager createNewGroceryList:[[GLUserManager sharedManager] storeName] completion:^(NSDictionary *response, NSError *error) {
+                                          [[GLNetworkingManager sharedManager] createNewGroceryList:[[GLUserManager sharedManager] storeName] completion:^(NSDictionary *response, NSError *error) {
                                               if (error){
                                                   NSLog(@"%@",error.localizedDescription);
                                               }

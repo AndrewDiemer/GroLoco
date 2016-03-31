@@ -68,7 +68,7 @@
 - (void)getRecommendations
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [GLNetworkingManager getRecommendationsCompletion:^(NSArray *response, NSError *error) {
+        [[GLNetworkingManager sharedManager] getRecommendationsCompletion:^(NSArray *response, NSError *error) {
             if (error) {
                 [self showError:error];
             }
@@ -121,7 +121,7 @@
 
     dispatch_async(
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName]
+            [[GLNetworkingManager sharedManager] addToGroceryList:[[GLUserManager sharedManager] storeName]
                                             items:@[ [item objectAsDictionary] ]
                                       recommended:[self.recommendedItems containsObject:item]
                                        completion:^(NSDictionary *response, NSError *error) {
@@ -186,7 +186,7 @@
 
     dispatch_async(
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [GLNetworkingManager getListOfGroceriesForString:searchText
+            [[GLNetworkingManager sharedManager] getListOfGroceriesForString:searchText
                                                   completion:^(NSArray *response, NSError *error) {
                                                       dispatch_async(dispatch_get_main_queue(), ^{
                                                           if (!error) {

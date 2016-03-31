@@ -36,18 +36,13 @@
 {
     [self showFullScreenHUD];
     [super viewDidAppear:animated];
-    [GLNetworkingManager isUserLoggedInCompletion:^(NSDictionary *response, NSError *error) {
+    [[GLNetworkingManager sharedManager] isUserLoggedInCompletion:^(NSDictionary *response, NSError *error) {
         [self hideFullScreenHUD];
-        if (!error) {
-            if (response[@"status"] == nil) {
-                [[GLUserManager sharedManager] setPropertiesWithDict:response];
-                [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
-            }
-            else {
-                NSLog(@"%@",@"User not logged in");
-            }
+        if (!error && response != nil) {
+            [[GLUserManager sharedManager] setPropertiesWithDict:response];
+            [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
         }
-        else {
+        else if (error) {
             [self showError:error];
         }
     }];
@@ -98,40 +93,50 @@
 {
     [self showFullScreenHUD];
     if ([sender.titleLabel.text isEqualToString:@"Login"]) {
-        [GLNetworkingManager loginUserWithEmail:self.emailField.text
-                                       Password:self.passwordField.text
-                                     completion:^(NSDictionary *response, NSError *error) {
-                                         [self hideFullScreenHUD];
-                                         if (!error) {
-                                             [[GLUserManager sharedManager] setPropertiesWithDict:response];
-                                             [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
-                                         }
-                                         else {
-                                             [self showError:error];
-                                         }
-                                     }];
+        [[GLNetworkingManager sharedManager] loginUserWithEmail:self.emailField.text
+                                                       Password:self.passwordField.text
+                                                     completion:^(NSDictionary *response, NSError *error) {
+                                                         [self hideFullScreenHUD];
+                                                         if (!error) {
+                                                             [[GLUserManager sharedManager] setPropertiesWithDict:response];
+                                                             [self performSegueWithIdentifier:GL_SHOW_HOME sender:self];
+                                                         }
+                                                         else {
+                                                             [self showError:error];
+                                                         }
+                                                     }];
     }
     else {
-        [GLNetworkingManager createNewUserWithName:self.nameField.text
-                                          Password:self.passwordField.text
-                                             Email:self.emailField.text
-                                        completion:^(NSDictionary *response, NSError *error) {
-                                            [self hideFullScreenHUD];
-                                            if (!error) {
-                                                [[GLUserManager sharedManager] setPropertiesWithDict:response];
-                                                [self performSegueWithIdentifier:GL_SHOW_MAP_LOGIN sender:self];
-                                            }
-                                            else {
-                                                [self showError:error];
-                                            }
-                                        }];
+        [[GLNetworkingManager sharedManager] createNewUserWithName:self.nameField.text
+                                                          Password:self.passwordField.text
+                                                             Email:self.emailField.text
+                                                        completion:^(NSDictionary *response, NSError *error) {
+                                                            [self hideFullScreenHUD];
+                                                            if (!error) {
+                                                                [[GLUserManager sharedManager] setPropertiesWithDict:response];
+                                                                [self performSegueWithIdentifier:GL_SHOW_MAP_LOGIN sender:self];
+                                                            }
+                                                            else {
+                                                                [self showError:error];
+                                                            }
+                                                        }];
     }
 }
 
-- (IBAction) prepareForUnwind:(UIStoryboardSegue *)segue {
-    [GLNetworkingManager logoutUserCompletion:^(NSDictionary *response, NSError *error) {
+- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue
+{
+    [[GLNetworkingManager sharedManager] logoutUserCompletion:^(NSDictionary *response, NSError *error) {
         if (!error) {
-            NSLog(@"Logout Successful");
+            if ([segue.identifier isEqualToString:GL_UNWIND_LOGOUT_SEGUE]) {
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"User is not authenticated" preferredStyle:UIAlertControllerStyleAlert];
+//                UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Ok"
+//                                                             style:UIAlertActionStyleCancel
+//                                                           handler:^(UIAlertAction *_Nonnull action) {
+//                                                               [self dismissViewControllerAnimated:YES completion:nil];
+//                                                           }];
+//                [alert addAction:ok];
+//                [self presentViewController:alert animated:YES completion:nil];
+            }
         }
         else {
             [self showError:error];

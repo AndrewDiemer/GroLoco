@@ -9,58 +9,93 @@
 #import "GLGroceryItem.h"
 #import "GLNetworkingManager.h"
 
+@interface GLNetworkingManager ()
+
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+
+@end
+
 @implementation GLNetworkingManager
 
-+ (void)createNewUserWithName:(NSString *)name Password:(NSString *)password Email:(NSString *)email completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
++ (id)sharedManager
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    static GLNetworkingManager *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedMyManager = [[self alloc] init];
+    });
+    return sharedMyManager;
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        _manager = [AFHTTPRequestOperationManager manager];
+        _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        _manager.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:@[ [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments]]];
+        _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"text/plain", nil];
+    }
+    return self;
+}
+
+- (void)createNewUserWithName:(NSString *)name Password:(NSString *)password Email:(NSString *)email completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+{
     NSDictionary *params = @{ @"Name" : name,
         @"Password" : password,
         @"Email" : email
     };
-    [manager POST:@"https://grocolocoapp.herokuapp.com/createuser"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/createuser"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
 
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)loginUserWithEmail:(NSString *)email Password:(NSString *)password completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)loginUserWithEmail:(NSString *)email Password:(NSString *)password completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
     NSDictionary *params = @{ @"Email" : email,
         @"Password" : password
     };
-    [manager POST:@"https://grocolocoapp.herokuapp.com/login"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/login"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)getGroceryListsForCurrentUserCompletion:(void (^)(NSArray *response, NSError *error))completionBlock
+- (void)getGroceryListsForCurrentUserCompletion:(void (^)(NSArray *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
-    [manager GET:@"https://grocolocoapp.herokuapp.com/grocerylists"
+    [self.manager GET:@"https://grocolocoapp.herokuapp.com/grocerylists"
         parameters:nil
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
-            completionBlock([GLNetworkingManager parseGroceryListResults:responseObject], nil);
+            completionBlock([self parseGroceryListResults:responseObject], nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (NSArray *)parseGroceryListResults:(NSDictionary *)response
+- (NSArray *)parseGroceryListResults:(NSDictionary *)response
 {
     NSMutableArray *array = @[].mutableCopy;
 
@@ -80,196 +115,190 @@
     return array;
 }
 
-+ (void)createNewGroceryList:(NSString *)groceryListName completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)createNewGroceryList:(NSString *)groceryListName completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
     NSDictionary *params = @{ @"GroceryListName" : groceryListName };
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/newgrocerylist"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/newgrocerylist"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)addToGroceryList:(NSString *)groceryListName items:(NSArray *)items recommended:(BOOL)recommended completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)addToGroceryList:(NSString *)groceryListName items:(NSArray *)items recommended:(BOOL)recommended completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"text/plain", nil];
-
     NSDictionary *params = @{ @"GroceryListName" : groceryListName,
         @"List" : items,
         @"isRecommended" : @(recommended)
     };
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/addtolist"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/addtolist"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)editGroceryItem:(NSString *)groceryListName item:(NSDictionary *)item itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)editGroceryItem:(NSString *)groceryListName item:(NSDictionary *)item itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     NSMutableDictionary *params = item.mutableCopy;
     params[@"_id"] = ID;
     params[@"GroceryListName"] = groceryListName;
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitem"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitem"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)crossOutGroceryItem:(NSString *)groceryListName isCrossedOut:(BOOL)isCrossedOut itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)crossOutGroceryItem:(NSString *)groceryListName isCrossedOut:(BOOL)isCrossedOut itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-
     NSMutableDictionary *params = @{}.mutableCopy;
     params[@"_id"] = ID;
     params[@"GroceryListName"] = groceryListName;
     params[@"CrossedOut"] = @(isCrossedOut);
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/crossoutitem"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/crossoutitem"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)deleteGroceryItem:(NSString *)groceryListName itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)deleteGroceryItem:(NSString *)groceryListName itemID:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
     NSMutableDictionary *params = @{}.mutableCopy;
     params[@"_id"] = ID;
     params[@"GroceryListName"] = groceryListName;
 
-    [manager DELETE:@"https://grocolocoapp.herokuapp.com/groceryitem"
+    [self.manager DELETE:@"https://grocolocoapp.herokuapp.com/groceryitem"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)deleteGroceryItems:(NSString *)groceryListName completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)deleteGroceryItems:(NSString *)groceryListName completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
     NSMutableDictionary *params = @{}.mutableCopy;
     params[@"GroceryListName"] = groceryListName;
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/groceryitems"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/groceryitems"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)setUserLocation:(NSString *)storeName id:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)setUserLocation:(NSString *)storeName id:(NSString *)ID completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-
     NSDictionary *params = @{
         @"StoreName" : storeName,
         @"_id" : ID
     };
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/setuserlocation"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/setuserlocation"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)editGroceryItemComment:(NSString *)groceryListName itemID:(NSString *)ID comment:(NSString *)comment completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)editGroceryItemComment:(NSString *)groceryListName itemID:(NSString *)ID comment:(NSString *)comment completion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
     NSDictionary *params = @{ @"GroceryListName" : groceryListName,
         @"_id" : ID,
         @"Comment" : comment
     };
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitemcomment"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/editgroceryitemcomment"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)getUserLocationCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)getUserLocationCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    [manager GET:@"https://grocolocoapp.herokuapp.com/userlocation"
+    [self.manager GET:@"https://grocolocoapp.herokuapp.com/userlocation"
         parameters:nil
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)getListOfGroceriesForString:(NSString *)itemString completion:(void (^)(NSArray *response, NSError *error))completionBlock
+- (void)getListOfGroceriesForString:(NSString *)itemString completion:(void (^)(NSArray *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-
     NSDictionary *params = @{ @"subsearch" : itemString };
 
-    [manager POST:[NSString stringWithFormat:@"https://grocolocoapp.herokuapp.com/findItems"]
+    [self.manager POST:[NSString stringWithFormat:@"https://grocolocoapp.herokuapp.com/findItems"]
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             NSMutableArray *response = @[].mutableCopy;
@@ -279,52 +308,49 @@
             completionBlock(response, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nonnull operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)isUserLoggedInCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)isUserLoggedInCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-
-    [manager GET:@"https://grocolocoapp.herokuapp.com/loggedin"
+    [self.manager GET:@"https://grocolocoapp.herokuapp.com/loggedin"
         parameters:nil
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, nil);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)logoutUserCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)logoutUserCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-
-    [manager POST:@"https://grocolocoapp.herokuapp.com/logout"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/logout"
         parameters:nil
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             completionBlock(responseObject, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)getRecommendationsCompletion:(void (^)(NSArray *response, NSError *error))completionBlock
+- (void)getRecommendationsCompletion:(void (^)(NSArray *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-
-    [manager GET:@"https://grocolocoapp.herokuapp.com/getrecommendations" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
+    [self.manager GET:@"https://grocolocoapp.herokuapp.com/getrecommendations" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
         NSMutableArray *response = @[].mutableCopy;
         for (NSDictionary *item in responseObject) {
             [response addObject:[[GLGroceryItem alloc] initWithDictionary:item]];
@@ -332,20 +358,20 @@
         completionBlock(response, nil);
     }
         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)getCategory:(GLCategory)category withCompletion:(void (^)(NSArray *response, NSError *error))completionBlock
+- (void)getCategory:(GLCategory)category withCompletion:(void (^)(NSArray *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
     NSDictionary *params = @{ @"categoryNumber" : [NSNumber numberWithInt:category] };
 
-    [manager POST:@"https://grocolocoapp.herokuapp.com/category"
+    [self.manager POST:@"https://grocolocoapp.herokuapp.com/category"
         parameters:params
         success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
             NSMutableArray *response = @[].mutableCopy;
@@ -355,30 +381,50 @@
             completionBlock(response, nil);
         }
         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
+
             completionBlock(nil, error);
         }];
 }
 
-+ (void)getBlocksGroceryListWithCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)getBlocksGroceryListWithCompletion:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:@"https://grocolocoapp.herokuapp.com/blocksGroceryList" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
+    [self.manager GET:@"https://grocolocoapp.herokuapp.com/blocksGroceryList" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
         completionBlock(responseObject, nil);
     }
         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
 }
 
-+ (void)getListOFGroceryStores:(void (^)(NSDictionary *response, NSError *error))completionBlock
+- (void)getListOFGroceryStores:(void (^)(NSDictionary *response, NSError *error))completionBlock
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:@"https://grocolocoapp.herokuapp.com/stores" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
+    [self.manager GET:@"https://grocolocoapp.herokuapp.com/stores" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
         completionBlock(responseObject, nil);
     }
         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            NSInteger statusCode = operation.response.statusCode;
+            if (statusCode == 511) {
+                completionBlock(nil, [self isNotAuthenticatedError]);
+            }
             completionBlock(nil, error);
         }];
+}
+
+- (NSError *)isNotAuthenticatedError
+{
+    NSDictionary *userInfo = @{
+        NSLocalizedDescriptionKey : NSLocalizedString(@"User session has expired.", nil)
+    };
+    NSError *sessionError = [NSError errorWithDomain:@"com.grocoloco.error" code:511 userInfo:userInfo];
+    return sessionError;
 }
 
 @end

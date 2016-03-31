@@ -69,7 +69,7 @@
 {
     [super viewDidAppear:animated];
 
-    [GLNetworkingManager getBlocksGroceryListWithCompletion:^(NSDictionary *response, NSError *error) {
+    [[GLNetworkingManager sharedManager] getBlocksGroceryListWithCompletion:^(NSDictionary *response, NSError *error) {
         if (error) {
             [self showError:error];
         }
