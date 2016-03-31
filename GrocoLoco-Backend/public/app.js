@@ -1,5 +1,5 @@
  
- var GrocoLoco = angular.module('GrocoLoco', ['ngRoute', 'datatables', 'angularMoment', 'rzModule']);
+ var GrocoLoco = angular.module('GrocoLoco', ['ngRoute', 'datatables', 'angularMoment', 'rzModule', 'ngCsvImport', 'hljs','ngResource']);
 
  // configure our routes
  GrocoLoco.config(function($routeProvider) {

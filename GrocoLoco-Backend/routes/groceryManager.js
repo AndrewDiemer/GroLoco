@@ -27,6 +27,34 @@ module.exports = function (app){
 
 	})
 
+    app.post('/massUpload', isAuthenticated, function(req,res){
+        var Things = req.body.List
+
+        for (var i = 0; i < Things.length; i++) {
+            var temp = {}
+            
+            var newItem = new GroceryItem({
+                Category       : Things[i].Category,
+                Price          : Things[i].Price,   
+                Description    : Things[i].Description,   
+                IconLink       : Things[i].IconLink,
+                Promotion      : temp,
+                IsPromo        : false
+            });
+
+            newItem.save(function (err, item) {
+                 if (err){ 
+                    console.log(err);
+                    res.send(err);
+                 } 
+                 if(item){
+                    console.log(item)
+                 }
+            }) 
+            res.send(200)
+        }
+    })
+
 	app.post('/deleteGroceryItem', isAuthenticated, function(req,res){
 
         GroceryItem.findOneAndRemove({

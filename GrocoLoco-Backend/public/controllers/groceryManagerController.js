@@ -1,14 +1,71 @@
 
-GrocoLoco.controller('groceryManagerController', function($scope, $http, $location) {
+GrocoLoco.controller('groceryManagerController', function($scope, $http, $location, $parse) {
+	$scope.importData = ''
+
+	 $scope.csv = {
+    	content: null,
+    	header: true,
+    	headerVisible: true,
+    	separator: ',',
+    	separatorVisible: true,
+    	result: null,
+    	encoding: 'ISO-8859-1',
+    	encodingVisible: true,
+    };
+
+    $('.label').css('color','black')
+
+    $scope.importCSV = function(){
+    	// console.log($scope.csv)
+    	console.log($scope.importData)
+    	console.log($scope.importData.length)
+    	var List = {
+    		List: $scope.importData
+    	}
+
+    	$http.post('/massUpload', List).success(function(data,status){
+    		console.log(data)
+    		console.log(status)
+    		alert('Successfully Uploaded ' + $scope.importData.length +' items!')
+    		location.reload()
+    	})
+    	// console.log(toPrettyJSON)
+    }
+
+    var _lastGoodResult = '';
+    $scope.toPrettyJSON = function (json, tabWidth) {
+			var objStr = JSON.stringify(json);
+			var obj = null;
+			try {
+				obj = $parse(objStr)({});
+			} catch(e){
+				// eat $parse error
+				return _lastGoodResult;
+			}
+
+			var result = JSON.stringify(obj, null, Number(tabWidth));
+			_lastGoodResult = result;
+			$scope.importData = obj
+			return result;
+    };
+
 
 	$scope.switchToDelete = function(){
 		$('#delete').addClass('active')
 		$('#add').removeClass('active')
+		$('#upload').removeClass('active')
 	}
 
 	$scope.switchToAdd = function(){
 		$('#add').addClass('active')
 		$('#delete').removeClass('active')
+		$('#upload').removeClass('active')
+	}
+
+	$scope.switchToUpload = function(){
+		$('#add').removeClass('active')
+		$('#delete').removeClass('active')
+		$('#upload').addClass('active')
 	}
 
 	$http.get('/groceries').success(function(data, status){

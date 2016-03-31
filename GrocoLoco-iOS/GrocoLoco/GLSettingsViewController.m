@@ -48,7 +48,7 @@
 }
 - (IBAction)shareListPressed:(id)sender {
     [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
-        [self showSMS:@"123"];
+        [self showSMS];
     }];
 }
 
@@ -59,11 +59,8 @@
             break;
             
         case MessageComposeResultFailed:
-        {
-            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Failed to send SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [warningAlert show];
+            NSLog(@"%@",@"SMS error");
             break;
-        }
             
         case MessageComposeResultSent:
             break;
@@ -74,37 +71,25 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-- (void)showSMS:(NSString*)file {
+- (void)showSMS {
     
-    if(![MFMessageComposeViewController canSendText]) {
-        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device doesn't support SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [warningAlert show];
-        return;
+    GLHomeViewController *home = (GLHomeViewController *)self.mm_drawerController.centerViewController;
+    
+    NSMutableString *sendString = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"%@ wants to share their grocery list with you. \nStore: %@\n\n", [[GLUserManager sharedManager] name], [[GLUserManager sharedManager] storeName]]];
+    
+    NSInteger count=1;
+    for(GLGroceryItem *item in home.data[0][@"List"]){
+        [sendString appendString:[NSString stringWithFormat:@"%ld: %@",(long)count,item.itemDescription]];
+        [sendString appendString:@"\n"];
+        count++;
     }
     
-    NSString *message = [NSString stringWithFormat:@"Just sent the %@ file to your email. Please check!", file];
     
     MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
     messageController.messageComposeDelegate = self;
-    [messageController setBody:message];
+    [messageController setBody:sendString];
     
-    // Present message view controller on screen
-    [self presentViewController:messageController animated:YES completion:nil];
+    [home presentViewController:messageController animated:YES completion:nil];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

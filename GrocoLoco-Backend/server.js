@@ -62,7 +62,7 @@ app.use(expressSession({
         secure: true
     },
     cookie: { 
-        maxAge : 3600000 
+        maxAge : 3600000*3 
     }
 }));
 
@@ -100,6 +100,7 @@ BlockCoordinates = db.model('BlockCoordinates', blockCoordinatesSchema)
 
 //ROUTES ==============================================
 require('./routes/routes.js')(app, passport); 
+require('./routes/twilio.js')(app); 
 require('./routes/store.js')(app, passport); 
 require('./routes/promotions.js')(app, passport); 
 require('./routes/groceryList.js')(app, passport); 
