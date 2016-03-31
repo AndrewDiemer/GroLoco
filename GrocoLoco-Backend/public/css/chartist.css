@@ -173,6 +173,7 @@ font-size: 12px;
 .ct-chart .ct-bar {
   fill: none;
   stroke-width: 25px;
+  color: #FFF;
 }
 .ct-chart .ct-slice-donut {
   fill: none;
