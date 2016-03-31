@@ -104,20 +104,21 @@ GrocoLoco.controller('analyticsController', function($scope, $http, $location) {
 
    new Chartist.Bar('#purchasesPerCategory', overlappingData, overlappingOptions, overlappingResponsiveOptions);
 
-
+   var pieSeries = series;
+   var pieLabels = labels;
   // Example Chartist Pie Chart Labels
   // ---------------------------------
-  for(var i = 0; i< series.length; i++){
-    if(series[i] == 0){
-      series.splice(i, 1);
-      labels.splice(i, 1);
+  for(var i = pieSeries.length -1; i>=0; i--){
+    if(pieSeries[i] == 0){
+      pieSeries.splice(i, 1);
+      pieLabels.splice(i, 1);
     }
   }
 
 
   var labelsPieData = {
-    labels: labels,
-    series: series
+    labels: pieLabels,
+    series: pieSeries
   };
 
   var labelsPieOptions = {
@@ -173,8 +174,6 @@ $http.get("/frequenciesOfItems").success(function(data,status){
     labels[i] = items[i].Description
     series[i] = items[i].value
   }
-   console.log(labels);
-   console.log(series);
 
   var overlappingData = {
    labels: labels,
