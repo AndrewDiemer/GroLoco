@@ -22,11 +22,12 @@ GrocoLoco.controller('groceryManagerController', function($scope, $http, $locati
     	var List = {
     		List: $scope.importData
     	}
-    	
+
     	$http.post('/massUpload', List).success(function(data,status){
     		console.log(data)
     		console.log(status)
     		alert('Successfully Uploaded ' + $scope.importData.length +' items!')
+    		location.reload()
     	})
     	// console.log(toPrettyJSON)
     }

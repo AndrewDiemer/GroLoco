@@ -215,7 +215,7 @@ GrocoLoco.controller('storeBuilderController', function($scope, $http, $location
 		}else{
 			if (confirm('Are you sure you want destroy your masterpeice?')) {
 			    // Save it!
-			    alert('suit yourself!')
+			    // alert('suit yourself!')
 			    location.reload()
 
 			} else {
@@ -306,7 +306,7 @@ GrocoLoco.controller('storeBuilderController', function($scope, $http, $location
 		}else{
 			if (confirm('Are you sure you want destroy your masterpeice?')) {
 			    // Save it!
-			    alert('suit yourself!')
+			    // alert('suit yourself!')
 			    location.reload()
 
 			} else {

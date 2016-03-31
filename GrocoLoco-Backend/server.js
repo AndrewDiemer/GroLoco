@@ -62,7 +62,7 @@ app.use(expressSession({
         secure: true
     },
     cookie: { 
-        maxAge : 3600000 
+        maxAge : 3600000*3 
     }
 }));
 
