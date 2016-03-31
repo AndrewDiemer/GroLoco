@@ -7,7 +7,7 @@
 //
 
 #import "GLGroceryItem.h"
-#import "GLNetworkingManager.h" 
+#import "GLNetworkingManager.h"
 
 @implementation GLNetworkingManager
 
@@ -103,7 +103,7 @@
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"text/plain", nil];
-    
+
     NSDictionary *params = @{ @"GroceryListName" : groceryListName,
         @"List" : items,
         @"isRecommended" : @(recommended)
@@ -376,10 +376,9 @@
     [manager GET:@"https://grocolocoapp.herokuapp.com/stores" parameters:nil success:^(AFHTTPRequestOperation *_Nonnull operation, id _Nonnull responseObject) {
         completionBlock(responseObject, nil);
     }
-         failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
-             completionBlock(nil, error);
-         }];
-
+        failure:^(AFHTTPRequestOperation *_Nullable operation, NSError *_Nonnull error) {
+            completionBlock(nil, error);
+        }];
 }
 
 @end
