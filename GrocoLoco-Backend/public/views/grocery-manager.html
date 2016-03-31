@@ -108,10 +108,13 @@
                     <ul class="nav nav-tabs nav-tabs-line" data-plugin="nav-tabs" role="tablist">
                       <li ng-click="switchToDelete()" role="presentation" class="active"><a data-toggle="tab" href="" aria-controls="exampleTopComponents" role="tab" aria-expanded="false"><i class="icon wb-user" aria-hidden="true"></i>Inventory</a></li>
                       <li ng-click="switchToAdd()" class="" role="presentation"><a data-toggle="tab" href="" aria-controls="exampleTopHome" role="tab" aria-expanded="true"><i class="icon wb-pugin" aria-hidden="true"></i>Add an Item</a></li>
+                      <li ng-click="switchToUpload()" class="" role="presentation"><a data-toggle="tab" href="" aria-controls="exampleTopHome" role="tab" aria-expanded="true"><i class="icon wb-pugin" aria-hidden="true"></i>Upload CSV</a></li>
                     </ul>
                     <div class="panel-body">
                       <div class="tab-content">
                       <div id='delete' class="tab-pane active" role="tabpanel">
+                       
+                        <br>
                           <div>
                             <table datatable="ng" class="row-border hover">
                               <thead>
@@ -136,6 +139,8 @@
                               </tbody>
                             </table>
                           </div>
+                          <br>
+                           <button type="button" class="btn btn-success pull-right btn-raised" data-target=".example-modal-lg" data-toggle="modal" onClick="exportCSV()"><i class="icon wb-download" aria-hidden="true"></i>Export to CSV</button>
                         </div>
 
                         <div id='add' class="tab-pane" role="tabpanel">
@@ -175,6 +180,34 @@
                               </form>
                             </div>
                           </div>
+                        </div> 
+
+                        <div id='upload' class="tab-pane" role="tabpanel">
+                          <!-- Panel Floating Lables -->
+                          <div class="panel">
+                            <div class="panel-body container-fluid">
+                                <div class="block row">
+                                  <div class="title"><h4>Select your CSV file: </h4></div>
+                                  <div class="block right">
+                                    <ng-csv-import 
+                                      class="import"
+                                      content="csv.content"
+                                      header="csv.header" 
+                                      header-visible="csv.headerVisible" 
+                                      separator="csv.separator"
+                                      separator-visible="csv.separatorVisible"
+                                      result="csv.result"
+                                      encoding="csv.encoding"
+                                      encoding-visible="csv.encodingVisible"></ng-csv-import>
+                                  </div>
+                                </div> 
+
+                                <div class="block row"  ng-if="csv.result">
+                                  <div class="content" hljs source="toPrettyJSON(csv.result, 2)"></div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success pull-right btn-raised" data-target=".example-modal-lg" data-toggle="modal" ng-click="importCSV()"><i class="icon wb-download" aria-hidden="true"></i>Import from CSV</button>
+                          </div>
                         </div>
                         <!-- End Panel Floating Lables -->
                       </div>
@@ -189,6 +222,52 @@
     </div>
   </div>
 </body>
+
+<script type="text/javascript">
+  
+      function exportCSV(){
+        $.ajax({
+         type: 'GET',
+         url:'/getitems',
+         // dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+         success:function(data){
+            console.log("data")
+            console.log(data)
+            // var data = [["name1", "city1", "some other info"], ["name2", "city2", "more info"]];
+            
+            // data.forEach(function(infoArray, index){
+
+            //    dataString = infoArray.join(",");
+            //    csvContent += index < data.length ? dataString+ "\n" : dataString;
+
+            // }); 
+            var csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Description,Price,Category,HasPromotion\n"
+
+            for(var i = 0; i < data.length; i++){
+                var infoArray = [data[i].Description, data[i].Price, data[i].Category, data[i].IsPromo]
+                var dataString = infoArray.join(',')
+                console.log("dataString")
+                console.log(dataString)
+                csvContent += dataString + "\n";
+            }
+            // console.log("csvContent")
+            // console.log(csvContent)
+
+            
+            var encodedUri = encodeURI(csvContent);
+            // var link = document.createElement("a");
+            // link.setAttribute("href", encodedUri);
+            // link.setAttribute("download", "my_data.csv");
+            window.open(encodedUri);
+         },
+         error:function(err){
+            console.log(err)
+             alert("Error");
+         }      
+});
+    }
+</script>
 
 <!-- Scripts -->
 <script src="../js/core.js"></script>
