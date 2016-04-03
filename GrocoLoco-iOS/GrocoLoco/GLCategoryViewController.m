@@ -88,7 +88,7 @@
 {
     [super viewDidAppear:animated];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [GLNetworkingManager getCategory:self.category withCompletion:^(NSArray *response, NSError *error) {
+        [[GLNetworkingManager sharedManager] getCategory:self.category withCompletion:^(NSArray *response, NSError *error) {
             if (error) {
                 [self showError:error];
             }
@@ -200,7 +200,7 @@
     NSString *section = self.itemSectionTitles[indexPath.section];
     GLGroceryItem *item = self.itemsDict[section][indexPath.row];
 
-    [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName]
+    [[GLNetworkingManager sharedManager] addToGroceryList:[[GLUserManager sharedManager] storeName]
                                     items:@[ [item objectAsDictionary] ]
                               recommended:NO
                                completion:^(NSDictionary *response, NSError *error) {

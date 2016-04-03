@@ -19,6 +19,8 @@ static NSString *GL_START_SHOPPING_SEGUE = @"GLStartShoppingSegue";
 static NSString *GL_SHOW_CATEGORY_SEGUE = @"GLShowCategorySegue";
 static NSString *GL_SHOW_ACCOUT_INFO_SEGUE = @"ShowAccountInfo";
 static NSString *GL_CHANGE_STROE_SEGUE = @"GLChangeStoreSegue";
+static NSString *GL_UNWIND_LOGOUT_SEGUE = @"GLUnwindLogoutSegue";
+static NSString *GL_LOGOUT_SEGUE = @"GLLogoutSegue";
 
 //****************************************//
 //          TABLEVIEW CELLS

@@ -31,6 +31,9 @@
 
 @implementation GLSearchViewController
 
+#pragma mark -
+#pragma mark View Lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -59,10 +62,13 @@
     }
 }
 
+#pragma mark -
+#pragma mark Networking
+
 - (void)getRecommendations
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [GLNetworkingManager getRecommendationsCompletion:^(NSArray *response, NSError *error) {
+        [[GLNetworkingManager sharedManager] getRecommendationsCompletion:^(NSArray *response, NSError *error) {
             if (error) {
                 [self showError:error];
             }
@@ -115,14 +121,14 @@
 
     dispatch_async(
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName]
+            [[GLNetworkingManager sharedManager] addToGroceryList:[[GLUserManager sharedManager] storeName]
                                             items:@[ [item objectAsDictionary] ]
                                       recommended:[self.recommendedItems containsObject:item]
                                        completion:^(NSDictionary *response, NSError *error) {
                                            if (error) {
                                                [self showError:error];
                                            }
-                                           
+
                                        }];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -180,18 +186,18 @@
 
     dispatch_async(
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [GLNetworkingManager getListOfGroceriesForString:searchText
-                                 completion:^(NSArray *response, NSError *error) {
-                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                         if (!error) {
-                                             self.filertedItems = response.mutableCopy;
-                                             [self.tableView reloadData];
-                                         }
-                                         else {
-                                             [self showError:error];
-                                         }
-                                     });
-                                 }];
+            [[GLNetworkingManager sharedManager] getListOfGroceriesForString:searchText
+                                                  completion:^(NSArray *response, NSError *error) {
+                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                          if (!error) {
+                                                              self.filertedItems = response.mutableCopy;
+                                                              [self.tableView reloadData];
+                                                          }
+                                                          else {
+                                                              [self showError:error];
+                                                          }
+                                                      });
+                                                  }];
         });
 }
 
@@ -217,6 +223,10 @@
 
         if ([sender velocityInView:self.view].y < -1000) {
             [self showCategoryPage];
+            break;
+        }
+        else if ([sender velocityInView:self.view].y > 1000) {
+            [self hideCategoryPage];
             break;
         }
 
@@ -246,8 +256,10 @@
 {
     [self.tableView setContentInset:UIEdgeInsetsMake([self.topLayoutGuide length], 0, self.categoriesView.frame.size.height, 0)];
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake([self.topLayoutGuide length], 0, self.categoriesView.frame.size.height, 0)];
+
     [UIView animateWithDuration:0.5 animations:^{
-        [self.categoriesLabelView setCenter:CGPointMake(self.categoriesLabelView.center.x, self.view.frame.size.height - 360)];
+        [self.categoriesLabelView setCenter:CGPointMake(self.categoriesLabelView.center.x, self.view.frame.size.height - 380)];
+
         CGRect frame = self.categoriesView.frame;
         frame.origin.y = self.view.frame.size.height - 360;
         self.categoriesView.frame = frame;
@@ -258,8 +270,10 @@
 {
     [self.tableView setContentInset:UIEdgeInsetsMake([self.topLayoutGuide length], 0, 0, 0)];
     [self.tableView setScrollIndicatorInsets:UIEdgeInsetsMake([self.topLayoutGuide length], 0, 0, 0)];
+
     [UIView animateWithDuration:0.5 animations:^{
-        [self.categoriesLabelView setCenter:CGPointMake(self.categoriesLabelView.center.x, self.view.frame.size.height)];
+        [self.categoriesLabelView setCenter:CGPointMake(self.categoriesLabelView.center.x, self.view.frame.size.height - 10)];
+
         CGRect frame = self.categoriesView.frame;
         frame.origin.y = self.view.frame.size.height;
         self.categoriesView.frame = frame;

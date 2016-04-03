@@ -366,9 +366,11 @@
                         <segue destination="mLu-cf-nRd" kind="presentation" identifier="ShowAccountInfo" id="Zgb-qD-csc"/>
                         <segue destination="IZL-nr-q48" kind="presentation" identifier="GLChangeStoreSegue" id="3DS-xU-DdP"/>
                         <segue destination="Xdt-6L-pH4" kind="presentation" identifier="GLStartShoppingSegue" id="A0L-AO-UgC"/>
+                        <segue destination="nCE-94-4UR" kind="unwind" identifier="GLUnwindLogoutSegue" unwindAction="prepareForUnwind:" id="a3W-YJ-nYg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPX-1e-Hld" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="nCE-94-4UR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4438" y="626"/>
         </scene>
@@ -494,9 +496,6 @@
                                                     <constraint firstAttribute="width" secondItem="Sz8-6v-rKA" secondAttribute="height" multiplier="1:1" id="Uft-NJ-UBk"/>
                                                 </constraints>
                                                 <state key="normal" image="logOut"/>
-                                                <connections>
-                                                    <segue destination="Ybt-Eb-hQJ" kind="unwind" unwindAction="prepareForUnwind:" id="aJg-bM-CJg"/>
-                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7On-R8-VLZ">
                                                 <rect key="frame" x="45" y="0.0" width="153" height="30"/>
@@ -504,7 +503,7 @@
                                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="Ybt-Eb-hQJ" kind="unwind" unwindAction="prepareForUnwind:" id="O1X-lG-bwO"/>
+                                                    <segue destination="Ybt-Eb-hQJ" kind="unwind" identifier="GLLogoutSegue" unwindAction="prepareForUnwind:" id="O1X-lG-bwO"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -822,9 +821,11 @@
                         <outlet property="accountPassword" destination="lrL-Ca-9W5" id="xQO-bV-ISE"/>
                         <outlet property="backPressed" destination="OVb-xZ-V9N" id="Mte-Tz-ZUa"/>
                         <outlet property="storeName" destination="x7d-w3-p42" id="Kxk-xu-IXI"/>
+                        <segue destination="68M-hf-AAN" kind="unwind" identifier="GLUnwindLogoutSegue" unwindAction="prepareForUnwind:" id="v1a-JQ-qsk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vK1-Y3-s8V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="68M-hf-AAN" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4438" y="2215"/>
         </scene>
@@ -962,9 +963,11 @@
                         <outlet property="prevPressed" destination="wYj-ZG-HbR" id="w6O-pC-o0j"/>
                         <outlet property="tableView" destination="XBf-dq-c9T" id="Y8q-se-8fi"/>
                         <outlet property="topScrollView" destination="4dy-KA-fz7" id="aA3-cz-6KL"/>
+                        <segue destination="Sto-XY-63p" kind="unwind" identifier="GLUnwindLogoutSegue" unwindAction="prepareForUnwind:" id="PQg-Mg-nw4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gdL-pc-Uus" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Sto-XY-63p" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5209" y="626"/>
         </scene>
@@ -1275,10 +1278,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yOu-fA-llI">
-                                <rect key="frame" x="60" y="583" width="480" height="35"/>
+                                <rect key="frame" x="60" y="560" width="480" height="60"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMe-kK-wyg">
-                                        <rect key="frame" x="0.0" y="0.0" width="480" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="480" height="60"/>
                                         <gestureRecognizers/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1294,13 +1297,13 @@
                                     <constraint firstAttribute="bottom" secondItem="SMe-kK-wyg" secondAttribute="bottom" id="2v1-Dl-KSK"/>
                                     <constraint firstAttribute="trailing" secondItem="SMe-kK-wyg" secondAttribute="trailing" id="3hj-sE-bVS"/>
                                     <constraint firstItem="SMe-kK-wyg" firstAttribute="top" secondItem="yOu-fA-llI" secondAttribute="top" id="5gC-SG-9tU"/>
-                                    <constraint firstAttribute="height" constant="35" id="Fax-6R-lKj"/>
+                                    <constraint firstAttribute="height" constant="60" id="Fax-6R-lKj"/>
                                     <constraint firstItem="SMe-kK-wyg" firstAttribute="leading" secondItem="yOu-fA-llI" secondAttribute="leading" id="Lga-nk-7wy"/>
                                     <constraint firstAttribute="width" constant="150" id="n6i-vT-XNf"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <real key="value" value="17.5"/>
+                                        <integer key="value" value="30"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
@@ -1316,7 +1319,7 @@
                             <constraint firstAttribute="trailing" secondItem="yOu-fA-llI" secondAttribute="trailing" constant="60" id="23g-5Y-qzl"/>
                             <constraint firstItem="mTd-rU-0kc" firstAttribute="top" secondItem="EgD-1S-13C" secondAttribute="top" id="7EU-b3-ynx"/>
                             <constraint firstItem="Yna-FJ-pWi" firstAttribute="leading" secondItem="T1t-VQ-alY" secondAttribute="leading" id="Aj9-NW-EW7"/>
-                            <constraint firstItem="EgD-1S-13C" firstAttribute="top" secondItem="yOu-fA-llI" secondAttribute="bottom" constant="-18" id="DSc-Km-hzS"/>
+                            <constraint firstItem="EgD-1S-13C" firstAttribute="top" secondItem="yOu-fA-llI" secondAttribute="bottom" constant="-20" id="DSc-Km-hzS"/>
                             <constraint firstAttribute="trailing" secondItem="EgD-1S-13C" secondAttribute="trailing" id="FrU-xK-ACa"/>
                             <constraint firstItem="Yna-FJ-pWi" firstAttribute="top" secondItem="F1V-8S-1za" secondAttribute="bottom" id="L9X-c1-Xbd"/>
                             <constraint firstItem="EgD-1S-13C" firstAttribute="leading" secondItem="T1t-VQ-alY" secondAttribute="leading" id="T0C-ev-YFm"/>
@@ -1358,9 +1361,11 @@
                         <outletCollection property="categoryButtons" destination="lY8-Fm-iBb" id="IKk-S4-zG4"/>
                         <outletCollection property="categoryButtons" destination="nHq-ES-cAY" id="Fvl-RE-ktu"/>
                         <segue destination="I5F-zT-EYa" kind="show" identifier="GLShowCategorySegue" id="cqH-Ex-SiD"/>
+                        <segue destination="1fw-QY-kxW" kind="unwind" identifier="GLUnwindLogoutSegue" unwindAction="prepareForUnwind:" id="fQD-Cx-Zqa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uXX-DS-dzs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="1fw-QY-kxW" userLabel="Exit" sceneMemberID="exit"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="GhZ-pi-UT0">
                     <connections>
                         <action selector="panCategories:" destination="Nd1-sj-1cg" id="lHM-zr-bSG"/>
@@ -1371,6 +1376,11 @@
                         <action selector="categoriesTapped:" destination="Nd1-sj-1cg" id="FzU-7H-MLB"/>
                     </connections>
                 </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="8UH-L7-OX8">
+                    <connections>
+                        <action selector="panCategories:" destination="Nd1-sj-1cg" id="4PC-yx-ufn"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5851" y="1462"/>
         </scene>
@@ -1494,9 +1504,11 @@
                         <outlet property="pageControl" destination="JPu-Xb-y5R" id="ptK-Fd-q01"/>
                         <outlet property="tableView" destination="K1c-47-RID" id="qT4-YN-CIe"/>
                         <outlet property="topScrollView" destination="Bcw-I8-DeO" id="Bz7-h2-MZy"/>
+                        <segue destination="G7v-dw-s94" kind="unwind" identifier="GLUnwindLogoutSegue" unwindAction="prepareForUnwind:" id="U6r-68-oBf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tl6-Xy-zK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="G7v-dw-s94" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6568" y="1462"/>
         </scene>
@@ -1626,7 +1638,7 @@
         <image name="storeBG" width="531" height="199"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3Hx-k2-IWW"/>
-        <segue reference="SFg-sM-uFX"/>
+        <segue reference="pOy-MG-hfe"/>
+        <segue reference="3DS-xU-DdP"/>
     </inferredMetricsTieBreakers>
 </document>

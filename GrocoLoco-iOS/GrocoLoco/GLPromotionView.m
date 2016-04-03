@@ -37,7 +37,7 @@
 
 - (IBAction)viewTapped:(id)sender
 {
-    [GLNetworkingManager addToGroceryList:[[GLUserManager sharedManager] storeName] items:@[[self.item objectAsDictionary]] recommended:NO completion:^(NSDictionary *response, NSError *error) {
+    [[GLNetworkingManager sharedManager] addToGroceryList:[[GLUserManager sharedManager] storeName] items:@[[self.item objectAsDictionary]] recommended:NO completion:^(NSDictionary *response, NSError *error) {
         if(error){
             NSLog(@"%@",error);
         }

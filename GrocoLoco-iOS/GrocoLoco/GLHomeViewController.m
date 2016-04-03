@@ -182,7 +182,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSDictionary *groceryListDict = self.data[indexPath.section];
         GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
-        [GLNetworkingManager deleteGroceryItem:groceryListDict[@"GroceryListName"]
+        [[GLNetworkingManager sharedManager] deleteGroceryItem:groceryListDict[@"GroceryListName"]
                                         itemID:item.ID
                                     completion:^(NSDictionary *response, NSError *error) {
                                         if (error) {
@@ -208,7 +208,7 @@
     NSDictionary *groceryListDict = self.data[indexPath.section];
     GLGroceryItem *item = groceryListDict[@"List"][indexPath.row];
     
-    [GLNetworkingManager editGroceryItemComment:[GLUserManager sharedManager].storeName
+    [[GLNetworkingManager sharedManager] editGroceryItemComment:[GLUserManager sharedManager].storeName
                                          itemID:item.ID
                                         comment:textField.text
                                      completion:^(NSDictionary *response, NSError *error) {
@@ -240,7 +240,7 @@
 - (IBAction)clearListPressed:(id)sender
 {
     if ([self.data[0][@"List"] count] > 0){
-        [GLNetworkingManager deleteGroceryItems:[GLUserManager sharedManager].storeName
+        [[GLNetworkingManager sharedManager] deleteGroceryItems:[GLUserManager sharedManager].storeName
                                      completion:^(NSDictionary *response, NSError *error) {
                                          if (error) {
                                              [self showError:error];
@@ -258,7 +258,7 @@
 {
     [self showFullScreenHUD];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [GLNetworkingManager getGroceryListsForCurrentUserCompletion:^(NSArray *response, NSError *error) {
+        [[GLNetworkingManager sharedManager] getGroceryListsForCurrentUserCompletion:^(NSArray *response, NSError *error) {
             if (refreshControl) {
                 [refreshControl endRefreshing];
             }
