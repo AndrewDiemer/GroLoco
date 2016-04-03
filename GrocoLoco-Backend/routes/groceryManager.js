@@ -32,7 +32,7 @@ module.exports = function (app){
 
         for (var i = 0; i < Things.length; i++) {
             var temp = {}
-            
+
             var newItem = new GroceryItem({
                 Category       : Things[i].Category,
                 Price          : Things[i].Price,   
@@ -90,5 +90,6 @@ var isAuthenticated = function (req, res, next) {
     // if the user is not authenticated then redirect him to the login page
     var fail = 'Sorry a user is not logged in'
     console.log(fail)
-    res.status(511)
+    res.send(511)
+    
 }
